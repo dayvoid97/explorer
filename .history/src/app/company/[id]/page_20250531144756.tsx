@@ -1,0 +1,59 @@
+'use client'
+
+import { useParams } from 'next/navigation'
+import { usePublicCard } from '@/app/hooks/usePublicCard'
+import { useRouter } from 'next/navigation'
+
+export default function CompanyCardPublicPage() {
+  const router = useRouter()
+  const { id } = useParams()
+  const { data: card, loading } = usePublicCard(id as string)
+
+  if (loading)
+    return <div className="min-h-screen flex justify-center items-center">Loading...</div>
+  if (!card) return <div className="text-center pt-20">Card not found or private</div>
+
+  return (
+    <div className="max-w-5xl mx-auto px-6 py-10 space-y-10">
+      <div className="space-y-1">
+        <h1 className="text-3xl font-bold">{card.cardTicker}</h1>
+        <p className="text-muted-foreground text-sm cursor-pointer ">
+          {card.companyName} · Posted by{' '}
+          <button onClick={() => router.push(`/publicprofile/${card.username}`)}>
+            <span className="text-blue-600">@{card.username}</span>
+          </button>
+        </p>
+      </div>
+
+      <div className="space-y-6">
+        {card.items.map((item, idx) => (
+          <div key={idx} className="p-4 border rounded-xl space-y-2">
+            <h3 className="font-semibold text-lg">{item.title}</h3>
+            {item.categories && (
+              <p className="text-xs text-gray-500">Category: {item.categories}</p>
+            )}
+            {item.description && <p className="text-sm text-gray-600">{item.description}</p>}
+            {item.content && <p className="text-base">{item.content}</p>}
+            {item.externalLink && (
+              <a
+                href={item.externalLink}
+                className="text-sm text-blue-600 hover:underline"
+                target="_blank"
+                rel="noreferrer"
+              >
+                {item.externalLink}
+              </a>
+            )}
+            <div className="text-muted-foreground flex gap-4 text-xs pt-2">
+              {item.uploadedAt && (
+                <span>Uploaded: {new Date(item.uploadedAt).toLocaleDateString()}</span>
+              )}
+              <span>Views: {item.viewCount || 0}</span>
+              <span>Saves: {item.saveCount || 0}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}

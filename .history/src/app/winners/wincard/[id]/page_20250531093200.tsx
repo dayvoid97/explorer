@@ -1,0 +1,81 @@
+'use client'
+
+import React, { useEffect, useState } from 'react'
+import { useParams, useRouter } from 'next/navigation'
+import { ArrowUp } from 'lucide-react'
+
+const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+
+export default function WinDetailPage() {
+  const router = useRouter()
+  const params = useParams()
+  const winId = params?.id as string
+  const [win, setWin] = useState<any>(null)
+
+  useEffect(() => {
+    if (!winId) return
+    fetch(`${API_URL}/gurkha/wins/${winId}`)
+      .then((res) => res.json())
+      .then((data) => setWin(data))
+      .catch(console.error)
+  }, [winId])
+
+  if (!win) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-500 text-xl">
+        Loading…
+      </div>
+    )
+  }
+
+  return (
+    <div className="min-h-screen px-4 py-12 max-w-4xl mx-auto space-y-10">
+      {/* Win Title & Metadata */}
+      <div className="space-y-2">
+        <h1 className="text-4xl font-bold tracking-tight">{win.title}</h1>
+
+        <div
+          className="text-muted-foreground text-sm hover:underline cursor-pointer"
+          onClick={() => router.push(`/publicprofile/${win.username}`)}
+        >
+          Posted by{' '}
+          <span className="font-semibold text-blue-600 dark:text-blue-400">@{win.username}</span> on{' '}
+          {new Date(win.createdAt).toLocaleDateString()}
+        </div>
+      </div>
+
+      {/* Win Body */}
+      <div className="space-y-6">
+        {win.paragraphs?.map((text: string, idx: number) => (
+          <p key={idx} className="text-lg leading-relaxed tracking-wide">
+            {text}
+          </p>
+        ))}
+      </div>
+
+      {/* Media */}
+      {win.mediaUrls?.length > 0 && (
+        <section className="grid sm:grid-cols-2 gap-5">
+          {win.mediaUrls.map((url: string, idx: number) => (
+            <div
+              key={idx}
+              className="group bg-muted/20 overflow-hidden rounded-xl border transition hover:shadow-lg"
+            >
+              <img
+                src={url}
+                alt={`Win media ${idx}`}
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+              />
+            </div>
+          ))}
+        </section>
+      )}
+
+      {/* Upvotes */}
+      <div className="flex items-center gap-2 text-blue-600 dark:text-blue-400 text-sm pt-2">
+        <ArrowUp size={18} />
+        {win.upvotes || 0} upvotes
+      </div>
+    </div>
+  )
+}
