@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 import { getToken } from '../lib/auth'
 import Image from 'next/image'
 
-import careerStaked from '../../../public/career-staked.png'
+import careerStaked from '../../app/static/career-staked.png'
 
 declare global {
   interface Window {

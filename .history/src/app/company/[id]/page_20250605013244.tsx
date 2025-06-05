@@ -4,7 +4,7 @@ import { useParams } from 'next/navigation'
 import { usePublicCard } from '@/app/hooks/usePublicCard'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
-import careerStaked from '../../../../public/career-staked.png'
+import careerStaked from '@/app/static/career-staked.png'
 
 export default function CompanyCardPublicPage() {
   const router = useRouter()
