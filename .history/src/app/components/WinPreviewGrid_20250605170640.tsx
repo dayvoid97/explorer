@@ -20,7 +20,7 @@ export default function WinPreviewGrid() {
   }, [])
 
   const adIndex = useMemo(() => {
-    return wins.length > 5 ? Math.floor(Math.random() * (wins.length - 2)) + 5 : null
+    return wins.length > 5 ? Math.floor(Math.random(2) * (wins.length - 2)) + 2 : null
   }, [wins])
 
   return (

@@ -114,7 +114,7 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
         </div>
 
         {/* Google AdSense Block */}
-        {/* <div ref={adRef} className="mt-4">
+        <div ref={adRef} className="mt-4">
           <ins
             className="adsbygoogle"
             style={{ display: 'block', backgroundColor: 'transparent' }}
@@ -123,7 +123,7 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
             data-ad-format="fluid"
             data-ad-layout-key="-6q+e9+15-2u+4y"
           ></ins>
-        </div> */}
+        </div>
       </div>
     </div>
   )
