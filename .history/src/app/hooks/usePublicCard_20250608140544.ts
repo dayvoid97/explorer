@@ -9,6 +9,7 @@ export interface CardItem {
   mimeType?: string
   externalLink?: string
   paragraphs?: string[] // ✅ Add this
+
   content?: string
   categories?: string
   unitId?: string

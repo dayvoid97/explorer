@@ -56,20 +56,9 @@ export default function CompanyCardPublicPage() {
             {item.description && (
               <p className="text-sm text-gray-600 dark:text-gray-300">{item.description}</p>
             )}
-            {/* Render paragraphs if available, otherwise fallback to content */}
-            {Array.isArray(item.paragraphs) && item.paragraphs.length > 0 ? (
-              <div className="space-y-3 text-base leading-relaxed text-gray-800 dark:text-gray-100">
-                {item.paragraphs.map((para, i) => (
-                  <p key={i} className="whitespace-pre-line">
-                    {para}
-                  </p>
-                ))}
-              </div>
-            ) : item.content ? (
-              <p className="whitespace-pre-line text-base text-gray-800 dark:text-gray-100">
-                {item.content}
-              </p>
-            ) : null}
+            {item.content && (
+              <p className="text-base text-gray-800 dark:text-gray-100">{item.content}</p>
+            )}
             {item.externalLink && (
               <a
                 href={item.externalLink}

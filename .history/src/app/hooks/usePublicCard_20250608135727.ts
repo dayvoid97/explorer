@@ -9,6 +9,7 @@ export interface CardItem {
   mimeType?: string
   externalLink?: string
   paragraphs?: string[] // ✅ Add this
+
   content?: string
   categories?: string
   unitId?: string
@@ -46,8 +47,6 @@ export function usePublicCard(cardId: string) {
     }
     load()
   }, [cardId])
-
-  console.log(data)
 
   return { data, loading }
 }

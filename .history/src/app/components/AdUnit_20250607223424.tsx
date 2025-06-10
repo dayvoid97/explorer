@@ -3,12 +3,12 @@
 import { useEffect, useRef } from 'react'
 
 export default function AdUnit() {
-  const adRef = useRef<HTMLModElement | null>(null)
+  const adRef = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     try {
       if (typeof window !== 'undefined' && window.adsbygoogle && adRef.current) {
-        // Prevent re-initializing if ad is already rendered
+        // Prevent re-pushing if already initialized
         if (!adRef.current.getAttribute('data-ad-status')) {
           ;(window.adsbygoogle = window.adsbygoogle || []).push({})
         }

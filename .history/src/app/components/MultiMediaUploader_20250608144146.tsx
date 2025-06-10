@@ -109,6 +109,7 @@ export default function MultiMediaUploader({
       'video/mkv',
       'video/m4v',
       'video/3gp',
+      'video/quicktime',
     ],
   }
 
