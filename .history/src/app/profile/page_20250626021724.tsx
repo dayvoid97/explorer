@@ -127,7 +127,7 @@ export default function ProfilePage() {
   if (!hasToken) {
     return (
       <main className="max-w-md mx-auto py-20 px-4">
-        <div className="text-center space-y-6 border rounded-xl shadow-sm p-8">
+        <div className="text-center space-y-6 border  rounded-xl shadow-sm p-8">
           <h1 className="text-2xl font-bold">Authentication Required</h1>
           <p className="">You need to be logged in to view your profile.</p>
           <button

@@ -34,8 +34,7 @@ export default function ProfilePage() {
     if (!token) {
       setHasToken(false)
       setLoading(false)
-      // Option 1: Automatically redirect (uncomment if you want this)
-      // router.push('/login')
+      router.push('/login') // Redirect immediately if no token
       return
     }
     setHasToken(true)
@@ -47,8 +46,7 @@ export default function ProfilePage() {
     setError(errMessage)
     removeTokens() // Clear both access and refresh tokens
     setHasToken(false)
-    // Option 1: Automatically redirect (uncomment if you want this)
-    // router.push('/login')
+    router.push('/login') // Always redirect to login on any auth error
   }
 
   const handleLoginRedirect = () => {
@@ -79,15 +77,8 @@ export default function ProfilePage() {
       setBio(data.bio || '')
     } catch (err: any) {
       console.error('Frontend profile fetch error:', err)
-      // Catch errors thrown by authFetch (e.g., when refresh fails or no token initially)
-      if (
-        err.message === 'Authentication required. Please log in again.' ||
-        err.message.includes('No authentication token')
-      ) {
-        handleAuthRedirect(err.message)
-      } else {
-        setError(err.message) // Set other non-auth related errors
-      }
+      // Redirect to login on ANY error to be safe
+      handleAuthRedirect('Unable to load profile. Please log in again.')
     } finally {
       setLoading(false)
     }
@@ -112,14 +103,8 @@ export default function ProfilePage() {
       setSuccess('✅ Profile updated!')
     } catch (err: any) {
       console.error('Frontend profile update error:', err)
-      if (
-        err.message === 'Authentication required. Please log in again.' ||
-        err.message.includes('No authentication token')
-      ) {
-        handleAuthRedirect(err.message)
-      } else {
-        setError(err.message)
-      }
+      // Redirect to login on ANY error to be safe
+      handleAuthRedirect('Unable to update profile. Please log in again.')
     }
   }
 
@@ -127,12 +112,13 @@ export default function ProfilePage() {
   if (!hasToken) {
     return (
       <main className="max-w-md mx-auto py-20 px-4">
-        <div className="text-center space-y-6 border rounded-xl shadow-sm p-8">
-          <h1 className="text-2xl font-bold">Authentication Required</h1>
-          <p className="">You need to be logged in to view your profile.</p>
+        <div className="text-center space-y-6 border border-gray-200 rounded-xl shadow-sm p-8">
+          <div className="text-6xl">🔒</div>
+          <h1 className="text-2xl font-bold text-gray-800">Authentication Required</h1>
+          <p className="text-gray-600">You need to be logged in to view your profile.</p>
           <button
             onClick={handleLoginRedirect}
-            className="px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             Go to Login
           </button>

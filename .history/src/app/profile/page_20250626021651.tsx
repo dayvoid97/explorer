@@ -127,12 +127,12 @@ export default function ProfilePage() {
   if (!hasToken) {
     return (
       <main className="max-w-md mx-auto py-20 px-4">
-        <div className="text-center space-y-6 border rounded-xl shadow-sm p-8">
-          <h1 className="text-2xl font-bold">Authentication Required</h1>
-          <p className="">You need to be logged in to view your profile.</p>
+        <div className="text-center space-y-6 border border-gray-200 rounded-xl shadow-sm p-8">
+          <h1 className="text-2xl font-bold text-gray-800">Authentication Required</h1>
+          <p className="text-gray-600">You need to be logged in to view your profile.</p>
           <button
             onClick={handleLoginRedirect}
-            className="px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition-colors font-medium"
           >
             Go to Login
           </button>
