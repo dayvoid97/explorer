@@ -19,12 +19,13 @@ export default function AboutLandingPage() {
           onClick={() => router.push('/about/akash')}
         >
           <Image
-            src="/avatars/akash.jpg"
+            src="/akash.jpg"
             alt="Akash Pariyar"
             width={200}
             height={200}
-            className="rounded-full object-cover"
+            className="rounded-full object-cover w-[200px] h-[200px]"
           />
+
           <p className="mt-4 text-lg font-medium text-gray-800 dark:text-gray-200">Akash</p>
         </div>
 
@@ -33,12 +34,13 @@ export default function AboutLandingPage() {
           onClick={() => router.push('/about/kanchan')}
         >
           <Image
-            src="/avatars/kanchan.jpg"
+            src="/kanchan.jpg"
             alt="Kanchan Sharma"
             width={200}
             height={200}
-            className="rounded-full object-cover"
+            className="rounded-full object-cover w-[200px] h-[200px]"
           />
+
           <p className="mt-4 text-lg font-medium text-gray-800 dark:text-gray-200">Kanchan</p>
         </div>
       </div>

@@ -9,9 +9,7 @@ export default function AboutPage() {
         {/* Header */}
         <header className="text-center space-y-4">
           <h1 className="text-4xl font-bold tracking-tight">About Financial Gurkha</h1>
-          <p className="text-lg text-gray-600 dark:text-gray-400">
-            Stocks isn't difficult. Trust me, I have a Masters in Finance.
-          </p>
+          <p className="text-lg text-gray-600 dark:text-gray-400">Passionate about technology</p>
         </header>
 
         {/* Mission Section */}
@@ -66,7 +64,18 @@ export default function AboutPage() {
             Raised by the Gurkhas, taught by the Yankees.
           </p>
         </section>
-        <section>Download the Strum-Vibe Together App on the iOS App Store.</section>
+        <section>
+          <a href="https://apps.apple.com/us/app/strum-vibe-together/id6654898214">
+            <b>Download</b>
+          </a>{' '}
+          the Strum-Vibe Together App on the iOS App Store.
+        </section>
+        <section>
+          Find me on{' '}
+          <a href="https://www.instagram.com/kanchan.strum/">
+            <b>Instagram</b>{' '}
+          </a>
+        </section>
       </div>
     </main>
   )
