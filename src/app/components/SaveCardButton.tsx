@@ -86,7 +86,7 @@ export default function SaveCardButton({
     setError(null)
     try {
       const endpoint = isSaved ? `/gurkha/cards/unsave/${cardId}` : `/gurkha/cards/save/${cardId}`
-      const method = isSaved ? 'PUT' : 'PUT' // Both are POST in this design (using path params)
+      const method = 'PUT'
 
       const res = await authFetch(`${API_BASE}${endpoint}`, { method })
 

@@ -120,6 +120,17 @@ export default function MultiMediaUploader({
       'audio/aac',
       'audio/m4a',
       'audio/flac',
+      'audio/opus',
+      'audio/wma',
+      'audio/amr',
+      'audio/3gpp',
+      'audio/3gpp2',
+      'audio/midi',
+      'audio/x-midi',
+      'audio/ape',
+      'audio/alac',
+      'audio/wv',
+      'audio/tta',
     ],
   }
 
@@ -152,6 +163,7 @@ export default function MultiMediaUploader({
   const getFileIcon = (file: File): JSX.Element => {
     const isImage = file.type.startsWith('image/')
     const isVideo = file.type.startsWith('video/')
+    const isAudio = file.type.startsWith('audio/')
 
     if (isImage) {
       return (
@@ -165,6 +177,14 @@ export default function MultiMediaUploader({
       return (
         <div className="w-8 h-8 bg-purple-100 rounded flex items-center justify-center">
           <Video className="w-5 h-5 text-purple-600" />
+        </div>
+      )
+    }
+
+    if (isAudio) {
+      return (
+        <div className="w-8 h-8 bg-green-100 rounded flex items-center justify-center">
+          <Volume2 className="w-5 h-5 text-green-600" />
         </div>
       )
     }
@@ -206,6 +226,15 @@ export default function MultiMediaUploader({
         }
         video.onerror = () => resolve(metadata)
         video.src = URL.createObjectURL(file)
+      } else if (file.type.startsWith('audio/')) {
+        const audio = document.createElement('audio')
+        audio.onloadedmetadata = () => {
+          metadata.duration = audio.duration
+          resolve(metadata)
+          URL.revokeObjectURL(audio.src)
+        }
+        audio.onerror = () => resolve(metadata)
+        audio.src = URL.createObjectURL(file)
       } else {
         resolve(metadata)
       }
@@ -238,6 +267,13 @@ export default function MultiMediaUploader({
       // Basic video validation
       if (file.size < 1000) {
         return 'Video file appears to be corrupted or too small'
+      }
+    }
+
+    if (file.type.startsWith('audio/')) {
+      // Basic audio validation
+      if (file.size < 100) {
+        return 'Audio file appears to be corrupted or too small'
       }
     }
 
@@ -277,7 +313,13 @@ export default function MultiMediaUploader({
   const generatePreview = (file: File) => {
     const url = URL.createObjectURL(file)
     setPreviewContent(url)
-    setMediaType(file.type.startsWith('image/') ? 'image' : 'video')
+    if (file.type.startsWith('image/')) {
+      setMediaType('image')
+    } else if (file.type.startsWith('video/')) {
+      setMediaType('video')
+    } else if (file.type.startsWith('audio/')) {
+      setMediaType('video') // Use video player for audio preview
+    }
   }
 
   const handlePreview = () => {
@@ -413,10 +455,10 @@ export default function MultiMediaUploader({
       case 'video':
         return 'Videos (MP4, WebM, AVI, MOV, etc.)'
       case 'audio':
-        return 'Audio (MP3, WAV, AAC, etc.)'
+        return 'Audio (MP3, WAV, AAC, OGG, FLAC, M4A, OPUS, WMA, etc.)'
       case 'both':
       default:
-        return 'Images & Videos'
+        return 'Images, Videos & Audio'
     }
   }
 

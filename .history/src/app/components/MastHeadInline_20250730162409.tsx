@@ -1,0 +1,40 @@
+// components/MastheadInline.tsx
+'use client'
+
+import { useRouter } from 'next/navigation'
+import { ArrowRight } from 'lucide-react'
+
+export default function MastheadInline() {
+  const router = useRouter()
+
+  return (
+    <div className="hidden md:flex flex-col text-center items-center justify-center py-6 space-y-3 w-full">
+      <div className="text-3xl lg:text-5xl font-extrabold">
+        <h1>
+          <span className="bg-gradient-to-r from-blue-900 via-blue-300 to-white bg-clip-text text-transparent">
+            financial
+          </span>{' '}
+          <span className="bg-gradient-to-r from-white via-red-300 to-red-900 bg-clip-text text-transparent">
+            gurkha
+          </span>
+        </h1>
+      </div>
+      <div className="text-xs sm:text-sm text-white/80 space-x-3 tracking-wide">
+        <span>crypto + stocks</span>
+        <span>search engine</span>
+      </div>
+      <div className="flex items-center justify-center gap-2">
+        <p className="text-white text-[10px] tracking-widest uppercase">
+          A Kanchan Sharma Production
+        </p>
+        <button
+          onClick={() => router.push('/about')}
+          className="p-2 rounded-full bg-white text-black hover:bg-gray-200 transition"
+          aria-label="About Financial Gurkha"
+        >
+          <ArrowRight className="w-4 h-4" />
+        </button>
+      </div>
+    </div>
+  )
+}

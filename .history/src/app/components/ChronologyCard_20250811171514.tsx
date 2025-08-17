@@ -1,0 +1,180 @@
+'use client'
+
+import Link from 'next/link'
+import Image from 'next/image'
+import React, { useState } from 'react'
+import { Heart, Repeat2, Share, Eye } from 'lucide-react'
+
+const placeholderPfp = '/audio.png'
+
+export type ChronologyCardHydrated = {
+  id: string
+  name: string
+  description: string
+  createdAt: number
+  createdBy: string
+  categories: string[]
+  collaborators?: string[]
+  stats?: {
+    winsCount: number
+    totalUpvotes: number
+    totalViews: number
+    totalCelebrations: number
+    totalComments: number
+    lastWinAt: number
+  }
+  creator?: { display: string; pfp?: string | null }
+  previewMedia?: string[]
+}
+
+const isLoggedIn = () => true
+const getAccessToken = () => Promise.resolve('mock-token')
+
+export default function ChronologyCard(props: ChronologyCardHydrated) {
+  const {
+    id,
+    name,
+    description,
+    createdAt,
+    createdBy,
+    categories = [],
+    stats,
+    creator,
+    previewMedia = [],
+  } = props
+
+  const [activeButton, setActiveButton] = useState<null | 'like' | 'repost' | 'share'>(null)
+
+  const interact = async (type: 'like' | 'save' | 'share' | 'repost') => {
+    if (!isLoggedIn()) return alert('Please log in to interact.')
+    const token = await getAccessToken()
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/${id}/${type}`
+    await fetch(url, { method: 'POST', headers: { Authorization: `Bearer ${token}` } })
+    if (type === 'share') {
+      try {
+        await navigator.share?.({ url: `/chronoW/${id}`, title: name })
+      } catch {}
+    }
+  }
+
+  const pfpUrl = creator?.pfp || placeholderPfp
+  const handleButtonPress = (button: 'like' | 'repost' | 'share') => {
+    setActiveButton(button)
+    setTimeout(() => setActiveButton(null), 400)
+  }
+
+  return (
+    <article className="group relative overflow-hidden rounded-xl bg-neutral-900 border border-neutral-700 p-6 transition-all duration-300 hover:shadow-lg hover:border-neutral-500 max-w-4xl mx-auto">
+      <Link href={`/chronoW/${id}`} className="block space-y-3">
+        <h3 className="text-xl font-semibold text-white line-clamp-2 group-hover:text-neutral-200 transition-colors">
+          {name}
+        </h3>
+        <p className="text-neutral-400 text-sm line-clamp-3 group-hover:text-neutral-300 transition-colors">
+          {description}
+        </p>
+      </Link>
+
+      {categories.length > 0 && (
+        <div className="mt-4 flex flex-wrap gap-2">
+          {categories.slice(0, 4).map((cat, i) => (
+            <span
+              key={i}
+              className="bg-neutral-800 border border-neutral-600 text-neutral-300 rounded-full px-3 py-1 text-xs"
+            >
+              #{cat}
+            </span>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-4 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <Image
+            src={pfpUrl}
+            alt="Profile Picture"
+            width={36}
+            height={36}
+            className="rounded-full border border-neutral-600"
+          />
+          <div>
+            <span className="text-neutral-200 text-sm font-medium">
+              @{creator?.display || createdBy}
+            </span>
+            <div className="text-neutral-500 text-xs">
+              {new Date(stats?.lastWinAt || createdAt).toLocaleDateString()}
+            </div>
+          </div>
+        </div>
+        {stats && (
+          <div className="flex items-center gap-4 text-neutral-500 text-xs">
+            <div className="flex items-center gap-1">
+              <Eye className="w-4 h-4" />
+              {stats.totalViews?.toLocaleString() || 0}
+            </div>
+            <div className="flex items-center gap-1">
+              <Heart className="w-4 h-4" />
+              {stats.totalUpvotes?.toLocaleString() || 0}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {previewMedia.length > 0 && (
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {previewMedia.slice(0, 3).map((u, i) => (
+            <div key={i} className="relative h-28 rounded-lg overflow-hidden bg-neutral-800">
+              <Image
+                src={u}
+                alt="Media Preview"
+                fill
+                className="object-cover hover:scale-105 transition-transform duration-300"
+              />
+            </div>
+          ))}
+        </div>
+      )}
+
+      <div className="mt-6 flex items-center justify-between">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={() => {
+              interact('like')
+              handleButtonPress('like')
+            }}
+            className={`flex items-center gap-1 px-3 py-2 rounded-lg border border-neutral-700 text-neutral-400 hover:text-red-400 hover:border-red-400 transition-colors ${
+              activeButton === 'like' ? 'text-red-500 border-red-500' : ''
+            }`}
+          >
+            <Heart className="w-4 h-4" />
+            {stats?.totalUpvotes || 0}
+          </button>
+
+          <button
+            onClick={() => {
+              interact('repost')
+              handleButtonPress('repost')
+            }}
+            className={`flex items-center gap-1 px-3 py-2 rounded-lg border border-neutral-700 text-neutral-400 hover:text-green-400 hover:border-green-400 transition-colors ${
+              activeButton === 'repost' ? 'text-green-500 border-green-500' : ''
+            }`}
+          >
+            <Repeat2 className="w-4 h-4" />
+          </button>
+
+          <button
+            onClick={() => {
+              interact('share')
+              handleButtonPress('share')
+            }}
+            className={`flex items-center gap-1 px-3 py-2 rounded-lg border border-neutral-700 text-neutral-400 hover:text-blue-400 hover:border-blue-400 transition-colors ${
+              activeButton === 'share' ? 'text-blue-500 border-blue-500' : ''
+            }`}
+          >
+            <Share className="w-4 h-4" />
+          </button>
+        </div>
+        <div className="text-neutral-500 text-xs">{stats?.totalComments || 0} comments</div>
+      </div>
+    </article>
+  )
+}
