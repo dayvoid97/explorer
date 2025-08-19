@@ -18,56 +18,63 @@ export default function WinnersNavbar() {
   return (
     <>
       {/* Main Header */}
-      <div className="sticky top-0 z-50 bg-white dark:bg-gray-900 ">
-        <div className="max-w-2xl mx-auto px-4 py-4 flex flex-col items-center text-center space-y-1">
-          <div className="text-xxl font-semibold uppercase  ">Only Ws in the Chat 🏆</div>
-          <div className="flex justify-between items-center w-full">
-            {/* Center Title */}
-            <h1 className="text-lg sm:text-xl font-bold mx-auto">
-              FINANCIAL GURKHA IS FOR THE WINNERS
+
+      <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
+        <div className="sticky top-0 z-50 flex items-center justify-between h-16 sm:h-20">
+          {/* Logo Section */}
+          <div className="flex-1 min-w-0">
+            <h1 className="text-base sm:text-lg lg:text-xl font-bold text-gray-900 dark:text-white truncate">
+              ONLY WS IN THE CHAT 🏆
             </h1>
-
-            {/* Right Actions */}
-            <div className="flex items-center gap-2">
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex items-center space-x-2">
-                <Link
-                  href="/wins"
-                  className="flex items-center gap-1 px-3 py-1 text-xs rounded-full "
-                >
-                  <PlusCircle size={50} />
-                  DROP IT
-                </Link>
-
-                <Link
-                  href="/profile"
-                  className="w-8 h-8 flex items-center justify-center rounded-full"
-                >
-                  <Image
-                    src={pippin}
-                    alt="Profile"
-                    width={24}
-                    height={24}
-                    className="rounded-full"
-                  />
-                </Link>
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                onClick={toggleMobileMenu}
-                className="md:hidden w-8 h-8 flex items-center justify-center rounded-full border border-gray-300 dark:border-gray-600"
-                aria-label="Toggle menu"
+            <Link
+              href="/"
+              className="inline-flex items-center text-xs sm:text-sm font-medium text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+            >
+              FINANCIAL GURKHA
+              <sup className="ml-1 text-xs text-blue-500">BETA</sup>
+            </Link>
+            <div className="hidden md:flex items-center space-x-4">
+              <Link
+                href="/winners"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors"
               >
-                <Menu size={16} />
-              </button>
+                Winners Gallery
+              </Link>
+
+              <Link
+                href="/wins"
+                className="inline-flex items-center px-4 py-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors"
+              >
+                <PlusCircle className="w-4 h-4 mr-2" />
+                DROP IT
+              </Link>
+
+              <Link href="/profile" className="ml-4">
+                <Image src={pippin} alt="Profile" width={32} height={32} className="rounded-full" />
+              </Link>
             </div>
           </div>
 
-          {/* Masthead */}
-          <div className="w-full">
-            <MastheadInline />
-          </div>
+          {/* Desktop Navigation */}
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={toggleMobileMenu}
+            className="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+            aria-label="Toggle menu"
+          >
+            <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+          </button>
+        </div>
+
+        {/* Mobile Masthead */}
+        <div className="md:hidden pb-4">
+          <MastheadInline />
+        </div>
+
+        {/* Desktop Masthead */}
+        <div className="hidden md:block pb-4">
+          <MastheadInline />
         </div>
       </div>
 

@@ -22,6 +22,8 @@ export default function WinnersNavbar() {
         <div className="max-w-2xl mx-auto px-4 py-4 flex flex-col items-center text-center space-y-1">
           <div className="text-xxl font-semibold uppercase  ">Only Ws in the Chat 🏆</div>
           <div className="flex justify-between items-center w-full">
+            {/* Logo Section */}
+
             {/* Center Title */}
             <h1 className="text-lg sm:text-xl font-bold mx-auto">
               FINANCIAL GURKHA IS FOR THE WINNERS

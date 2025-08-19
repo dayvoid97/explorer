@@ -2,6 +2,13 @@
 
 import { useEffect, useRef, useCallback } from 'react'
 
+// Extend Window interface for TypeScript
+declare global {
+  interface Window {
+    adsbygoogle: any[]
+  }
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
 interface AdMetrics {

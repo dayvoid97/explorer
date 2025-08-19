@@ -18,10 +18,12 @@ export default function WinnersNavbar() {
   return (
     <>
       {/* Main Header */}
-      <div className="sticky top-0 z-50 bg-white dark:bg-gray-900 ">
+      <div className="sticky top-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800 shadow-sm">
         <div className="max-w-2xl mx-auto px-4 py-4 flex flex-col items-center text-center space-y-1">
           <div className="text-xxl font-semibold uppercase  ">Only Ws in the Chat 🏆</div>
           <div className="flex justify-between items-center w-full">
+            {/* Logo Section */}
+
             {/* Center Title */}
             <h1 className="text-lg sm:text-xl font-bold mx-auto">
               FINANCIAL GURKHA IS FOR THE WINNERS
@@ -33,7 +35,7 @@ export default function WinnersNavbar() {
               <div className="hidden md:flex items-center space-x-2">
                 <Link
                   href="/wins"
-                  className="flex items-center gap-1 px-3 py-1 text-xs rounded-full "
+                  className="flex items-center gap-1 px-3 py-1 text-xs rounded-full bg-blue-600 text-white hover:bg-blue-700 transition-colors"
                 >
                   <PlusCircle size={50} />
                   DROP IT

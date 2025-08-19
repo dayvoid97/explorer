@@ -33,14 +33,6 @@ export default function WinsByDateGrid({ date }: WinsByDateGridProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
-  // Ad slot configuration
-  const adSlots = [
-    '1234567890', // Replace with your actual ad slot IDs
-    '2345678901',
-    '3456789012',
-    '4567890123',
-  ]
-
   // Data fetching effect
   useEffect(() => {
     const fetchWinsByDate = async (): Promise<void> => {
@@ -135,24 +127,6 @@ export default function WinsByDateGrid({ date }: WinsByDateGridProps) {
         {wins.map((win, index) => (
           <React.Fragment key={win.id}>
             <WinCard win={win} />
-            {/* Insert ad unit after every 6th item with rotating ad slots */}
-            {(index + 1) % 6 === 0 && (
-              <div className="sm:col-span-2 lg:col-span-3">
-                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-2 border-dashed border-gray-200 dark:border-gray-600">
-                  <div className="text-xs text-gray-400 text-center mb-2">Advertisement</div>
-                  <AdUnit
-                    adSlot={adSlots[Math.floor(index / 6) % adSlots.length]}
-                    className="w-full"
-                    style={{
-                      display: 'block',
-                      width: '100%',
-                      minHeight: '200px',
-                      maxHeight: '300px',
-                    }}
-                  />
-                </div>
-              </div>
-            )}
           </React.Fragment>
         ))}
       </div>
