@@ -1,3 +1,4 @@
+'use client'
 import './globals.css'
 import type { Metadata } from 'next'
 import NavBarClientWrapper from './components/NavBarClientWrapper'
@@ -73,6 +74,22 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }
             `}
         </Script>
+
+        {/* ✅ Google Adsense */}
+        <Script
+          id="adsense-script"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8441965953327461"
+          strategy="afterInteractive"
+          crossOrigin="anonymous"
+          onLoad={() => {
+            // Optional: Log when AdSense loads successfully
+            console.log('AdSense script loaded successfully')
+          }}
+          onError={(e) => {
+            // Optional: Handle loading errors
+            console.error('AdSense script failed to load:', e)
+          }}
+        />
 
         <NavBarClientWrapper />
         <main className="flex-grow">{children}</main>

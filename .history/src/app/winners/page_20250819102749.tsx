@@ -185,52 +185,18 @@ export default function WinnersPage() {
     }
   }, [loadingMore, hasMore, loadWins])
 
-  // Random ad placement with multiple ad slots
-  const randomAdIndices = useMemo(() => {
-    if (wins.length === 0) return new Set<number>()
-
+  const adIndices = useMemo(() => {
     const indices = new Set<number>()
-    const minAdSpacing = 4 // Minimum wins between ads
-    const maxAdSpacing = 8 // Maximum wins between ads
-    const adProbability = 0.15 // 15% chance of ad after each win (after minimum spacing)
+    const adInterval = 6
+    const startAdAfter = 3
 
-    let lastAdIndex = -minAdSpacing // Start allowing ads from the beginning
-
-    for (let i = 2; i < wins.length; i++) {
-      // Start from index 2 (3rd item)
-      const spacing = i - lastAdIndex
-
-      if (spacing >= minAdSpacing) {
-        // Calculate probability based on spacing
-        const spacingFactor = Math.min(spacing / maxAdSpacing, 1)
-        const adjustedProbability = adProbability * spacingFactor
-
-        if (Math.random() < adjustedProbability) {
-          indices.add(i)
-          lastAdIndex = i
-        }
+    for (let i = startAdAfter; i < wins.length; i += adInterval) {
+      if (i < wins.length) {
+        indices.add(i)
       }
     }
-
-    return indices
+    return [...indices].sort((a, b) => a - b)
   }, [wins])
-
-  // Array of different ad slot IDs for variety
-  const adSlots = [
-    '1234567890', // Replace with your actual ad slot IDs
-    '2345678901',
-    '3456789012',
-    '4567890123',
-    '5678901234',
-  ]
-
-  // Get a random ad slot for each ad position
-  const getRandomAdSlot = useCallback(
-    (index: number) => {
-      return adSlots[index % adSlots.length]
-    },
-    [adSlots]
-  )
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-8" style={{ scrollBehavior: 'smooth' }}>
@@ -252,60 +218,27 @@ export default function WinnersPage() {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
           {wins.map((win, index) => (
             <React.Fragment key={win.id}>
-              {/* Win Card */}
               <div className="transition-all duration-300 ease-in-out transform hover:scale-[1.02]">
                 <WinCard win={win} />
               </div>
-
-              {/* Random Ad Placement */}
-              {randomAdIndices.has(index) && (
-                <div className="sm:col-span-2 md:col-span-3 transition-all duration-300 ease-in-out">
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <div className="text-xs text-gray-400 text-center mb-2">Advertisement</div>
-                    <AdUnit
-                      adSlot={getRandomAdSlot(index)}
-                      className="w-full"
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        minHeight: '200px',
-                        maxHeight: '300px',
-                      }}
-                    />
-                  </div>
+              {adIndices.includes(index) && (
+                <div className="transition-all duration-300 ease-in-out">
+                  <AdUnit
+                    adSlot={adSlots[0]}
+                    className="mb-4"
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      minHeight: '600px',
+                    }}
+                    adFormat="vertical"
+                  />
                 </div>
               )}
             </React.Fragment>
           ))}
         </div>
       )}
-
-      {/* Sidebar Ads for larger screens */}
-      <div className="hidden lg:block fixed left-4 top-1/2 transform -translate-y-1/2 w-40">
-        <AdUnit
-          adSlot={adSlots[0]}
-          className="mb-4"
-          style={{
-            display: 'block',
-            width: '100%',
-            minHeight: '600px',
-          }}
-          adFormat="vertical"
-        />
-      </div>
-
-      <div className="hidden lg:block fixed right-4 top-1/2 transform -translate-y-1/2 w-40">
-        <AdUnit
-          adSlot={adSlots[1]}
-          className="mb-4"
-          style={{
-            display: 'block',
-            width: '100%',
-            minHeight: '600px',
-          }}
-          adFormat="vertical"
-        />
-      </div>
 
       {/* Optional fallback button if auto-load fails */}
       {hasMore && wins.length > 0 && !loading && (
@@ -314,7 +247,7 @@ export default function WinnersPage() {
             ref={loadMoreButtonRef}
             onClick={handleLoadMore}
             disabled={loadingMore}
-            className="px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105 bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+            className="px-8 py-3 rounded-lg font-semibold transition-all duration-200 transform hover:scale-105"
           >
             {loadingMore ? 'Loading More Wins...' : 'Load More Wins'}
           </button>
