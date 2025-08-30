@@ -54,6 +54,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" className="dark scroll-smooth antialiased">
       <head>
         <meta name="google-adsense-account" content="ca-pub-8441965953327461" />
+        <meta
+          name="google-site-verification"
+          content="kCNuZr5CtsCqdB-qpgskyWfPOdIs_CWW--FeTAmOXK0"
+        />
       </head>
       <body className="flex flex-col min-h-screen bg-white dark:bg-gray-900 ">
         {/* ✅ Google Analytics */}
