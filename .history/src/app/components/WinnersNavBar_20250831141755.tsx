@@ -10,6 +10,7 @@ import { PlusCircle, Menu, X } from 'lucide-react'
 
 export default function WinnersNavbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const { resolvedTheme } = useTheme()
 
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen)
   const closeMobileMenu = () => setIsMobileMenuOpen(false)
@@ -17,9 +18,9 @@ export default function WinnersNavbar() {
   return (
     <>
       {/* Main Header */}
-      <div className="z-50 bg-white dark:bg-gray-900 ">
+      <div className="sticky z-50 bg-white dark:bg-gray-900 ">
         <div className="mx-auto px-4 py-4 flex flex-col  text-center space-y-1">
-          <div className="text-xxl font-semibold uppercase">Only Ws in the Chat 🏆</div>
+          <div className="text-xxl font-semibold uppercase  ">Only Ws in the Chat 🏆</div>
           <div className="flex justify-between w-full">
             {/* Center Title */}
             <h1 className="text-lg sm:text-xl font-bold mx-auto">

@@ -33,18 +33,17 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Financial Gurkha',
     description:
-      'Discover your favorite topics on Financial Gurkha. Generate income as a content creator.',
-    url: 'https://financialgurkha.com/winners',
+      'Explore cards, wins, and insights. The Financial Gurkha Explorer is your search engine for investing and markets.',
+    url: 'https://financialgurkha.com',
     siteName: 'Financial Gurkha',
     images: [
       {
         url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Only Ws in the Chat',
+        alt: 'Financial Gurkha Logo',
       },
     ],
-    locale: 'en_US',
     type: 'website',
   },
 }
@@ -57,11 +56,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta
           name="google-site-verification"
           content="kCNuZr5CtsCqdB-qpgskyWfPOdIs_CWW--FeTAmOXK0"
-        />
-        <meta name="robots" content="index, follow" />
-        <meta
-          name="googlebot"
-          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
         />
       </head>
       <body className="flex flex-col min-h-screen bg-white dark:bg-gray-900 ">

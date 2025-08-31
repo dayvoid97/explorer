@@ -280,6 +280,20 @@ export default function WinnersPage() {
         </div>
       )}
 
+      {/* Sidebar Ads for larger screens */}
+      <div className="hidden lg:block fixed left-4 top-1/2 transform -translate-y-1/2 w-40">
+        <AdUnit
+          adSlot={adSlots[0]}
+          className="mb-4"
+          style={{
+            display: 'block',
+            width: '100%',
+            minHeight: '600px',
+          }}
+          adFormat="vertical"
+        />
+      </div>
+
       <div className="hidden lg:block fixed right-4 top-1/2 transform -translate-y-1/2 w-40">
         <AdUnit
           adSlot={adSlots[1]}

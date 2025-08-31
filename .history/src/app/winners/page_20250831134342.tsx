@@ -237,7 +237,7 @@ export default function WinnersPage() {
       {/* Top reference point for smooth scrolling */}
       <div ref={topRef} className="absolute -top-10" />
 
-      <WinnersNavbar />
+      {/* <WinnersNavbar /> */}
 
       {/* Conditional Rendering for Loading/No Wins/Content */}
       {loading && wins.length === 0 ? (
@@ -279,6 +279,20 @@ export default function WinnersPage() {
           ))}
         </div>
       )}
+
+      {/* Sidebar Ads for larger screens */}
+      <div className="hidden lg:block fixed left-4 top-1/2 transform -translate-y-1/2 w-40">
+        <AdUnit
+          adSlot={adSlots[0]}
+          className="mb-4"
+          style={{
+            display: 'block',
+            width: '100%',
+            minHeight: '600px',
+          }}
+          adFormat="vertical"
+        />
+      </div>
 
       <div className="hidden lg:block fixed right-4 top-1/2 transform -translate-y-1/2 w-40">
         <AdUnit

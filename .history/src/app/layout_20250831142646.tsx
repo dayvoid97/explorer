@@ -44,7 +44,6 @@ export const metadata: Metadata = {
         alt: 'Only Ws in the Chat',
       },
     ],
-    locale: 'en_US',
     type: 'website',
   },
 }
