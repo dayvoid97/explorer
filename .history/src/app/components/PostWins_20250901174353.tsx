@@ -50,14 +50,10 @@ const initialUIState: UIState = {
 
 export default function PostWinForm() {
   const router = useRouter()
-  const [mounted, setMounted] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
-
   const [formState, setFormState] = useState<FormState>(initialFormState)
   const [uiState, setUIState] = useState<UIState>(initialUIState)
   const [externalPreview, setExternalPreview] = useState<ExternalLinkInfo | null>(null)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-  const [loadingUser, setLoadingUser] = useState(true)
 
   // Memoized external link processing
   const processedExternalLink = useMemo(() => {
@@ -83,16 +79,12 @@ export default function PostWinForm() {
   // Get user info from token
   useEffect(() => {
     if (isLoggedIn()) {
-      setLoggedIn(true)
       const token = getAccessToken()
       const username = getUsernameFromToken(token)
       if (username) {
         setUserInfo({ username })
       }
-    } else {
-      setLoggedIn(false)
     }
-    setLoadingUser(false)
   }, [])
 
   const handleAuthRedirect = useCallback(
@@ -323,12 +315,11 @@ export default function PostWinForm() {
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white">POST YOUR DROP</h2>
 
         {/* User Info Display */}
-        {/* User Info Display */}
-        {loggedIn && (
+        {isLoggedIn() && (
           <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             <span className="text-sm text-gray-700 dark:text-gray-300">
-              {loadingUser ? (
+              {uiState ? (
                 'Loading...'
               ) : userInfo ? (
                 <>

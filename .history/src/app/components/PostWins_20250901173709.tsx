@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { authFetch } from '../lib/api'
-import { removeTokens, isLoggedIn, getUsernameFromToken, getAccessToken } from '../lib/auth'
+import { removeTokens, isLoggedIn } from '../lib/auth'
 import { ImagePlus, User } from 'lucide-react'
 import {
   classifyExternalLink,
@@ -50,14 +50,11 @@ const initialUIState: UIState = {
 
 export default function PostWinForm() {
   const router = useRouter()
-  const [mounted, setMounted] = useState(false)
-  const [loggedIn, setLoggedIn] = useState(false)
-
   const [formState, setFormState] = useState<FormState>(initialFormState)
   const [uiState, setUIState] = useState<UIState>(initialUIState)
   const [externalPreview, setExternalPreview] = useState<ExternalLinkInfo | null>(null)
   const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
-  const [loadingUser, setLoadingUser] = useState(true)
+  const [loadingUser, setLoadingUser] = useState(false)
 
   // Memoized external link processing
   const processedExternalLink = useMemo(() => {
@@ -80,19 +77,36 @@ export default function PostWinForm() {
     setExternalPreview(processedExternalLink)
   }, [processedExternalLink])
 
-  // Get user info from token
+  // Fetch user info when component mounts
   useEffect(() => {
-    if (isLoggedIn()) {
-      setLoggedIn(true)
-      const token = getAccessToken()
-      const username = getUsernameFromToken(token)
-      if (username) {
-        setUserInfo({ username })
+    const fetchUserInfo = async () => {
+      if (!isLoggedIn()) return
+
+      setLoadingUser(true)
+      try {
+        const res = await authFetch(`${NEXT_PUBLIC_API_BASE_URL}/gurkha/users/me`, {
+          method: 'GET',
+          headers: { 'Content-Type': 'application/json' },
+        })
+
+        if (res.ok) {
+          const userData = await res.json()
+          setUserInfo({
+            username: userData.username,
+            displayName: userData.displayName || userData.name,
+          })
+        } else if (res.status === 401) {
+          // Handle unauthorized - user needs to log in again
+          handleAuthRedirect()
+        }
+      } catch (error) {
+        console.error('Failed to fetch user info:', error)
+      } finally {
+        setLoadingUser(false)
       }
-    } else {
-      setLoggedIn(false)
     }
-    setLoadingUser(false)
+
+    fetchUserInfo()
   }, [])
 
   const handleAuthRedirect = useCallback(
@@ -323,8 +337,7 @@ export default function PostWinForm() {
         <h2 className="text-4xl font-bold text-gray-900 dark:text-white">POST YOUR DROP</h2>
 
         {/* User Info Display */}
-        {/* User Info Display */}
-        {loggedIn && (
+        {isLoggedIn() && (
           <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
             <span className="text-sm text-gray-700 dark:text-gray-300">

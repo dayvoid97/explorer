@@ -148,7 +148,7 @@ function MediaCarousel({
   })
 
   // Shuffle array randomly to mix media types
-  const shuffledItems = [...allMediaItems]
+  const shuffledItems = [...allMediaItems].sort(() => Math.random() - 0.5)
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
@@ -198,7 +198,7 @@ function MediaCarousel({
     <div className="relative">
       {/* Carousel Container */}
       <div
-        className="rounded-xxl relative overflow-hidden "
+        className="rounded-xxl relative overflow-hidden border dark:border-gray-700 bg-gray-100 dark:bg-gray-800"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -227,7 +227,7 @@ function MediaCarousel({
           className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Previous media"
         >
-          <ChevronLeft size={20} color="red" />
+          <ChevronLeft size={20} />
         </button>
 
         <button

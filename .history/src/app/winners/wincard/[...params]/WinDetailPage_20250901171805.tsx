@@ -9,6 +9,7 @@ import { authFetch } from '@/app/lib/api'
 import { removeTokens } from '@/app/lib/auth'
 import { celebrateWin } from '@/app/hooks/useCelebrateWins'
 import { updatePageMetadata } from '@/app/lib/utils'
+import SocialShareButtons from '@/app/components/SocialShareButton'
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -22,133 +23,19 @@ function extractYouTubeVideoId(url: string): string | null {
   }
 }
 
-// Utility functions for social media
-function extractTikTokVideoId(url: string): string | null {
-  try {
-    const match = url.match(
-      /(?:tiktok\.com\/.*\/video\/|vm\.tiktok\.com\/|tiktok\.com\/@.*\/video\/)(\d+)/
-    )
-    return match ? match[1] : null
-  } catch {
-    return null
-  }
-}
-
-function getTikTokEmbedUrl(videoId: string): string {
-  return `https://www.tiktok.com/embed/v2/${videoId}`
-}
-
-// Media item interface
-interface MediaItem {
-  type: 'file' | 'youtube' | 'tiktok' | 'social'
-  url: string
-  mimeType?: string
-  platform?: string
-  title?: string
-  previewImage?: string
-}
-
 // Media Carousel Component
 interface MediaCarouselProps {
-  mediaUrls?: string[]
-  mimeTypes?: string[]
-  externalLink?: {
-    url: string
-    platform: string
-    type: string
-    previewImage?: string
-  }
-  socialLinks?: Array<{
-    url: string
-    platform: string
-    previewImage?: string
-    title?: string
-  }>
+  mediaUrls: string[]
+  mimeTypes: string[]
+  externalLink?: []
 }
 
-function MediaCarousel({
-  mediaUrls = [],
-  mimeTypes = [],
-  externalLink,
-  socialLinks = [],
-}: MediaCarouselProps) {
+function MediaCarousel({ mediaUrls, mimeTypes }: MediaCarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [touchStart, setTouchStart] = useState<number | null>(null)
   const [touchEnd, setTouchEnd] = useState<number | null>(null)
 
   const minSwipeDistance = 50
-
-  // Combine all media items into one array
-  const allMediaItems: MediaItem[] = []
-
-  // Add file media items
-  if (mediaUrls && mimeTypes && mediaUrls.length === mimeTypes.length) {
-    mediaUrls.forEach((url, idx) => {
-      allMediaItems.push({
-        type: 'file',
-        url,
-        mimeType: mimeTypes[idx],
-      })
-    })
-  }
-
-  // Add external link (YouTube/TikTok/etc)
-  if (externalLink?.url) {
-    if (externalLink.platform === 'youtube') {
-      allMediaItems.push({
-        type: 'youtube',
-        url: externalLink.url,
-        platform: externalLink.platform,
-        previewImage: externalLink.previewImage,
-      })
-    } else if (externalLink.platform === 'tiktok') {
-      allMediaItems.push({
-        type: 'tiktok',
-        url: externalLink.url,
-        platform: externalLink.platform,
-        previewImage: externalLink.previewImage,
-      })
-    } else {
-      allMediaItems.push({
-        type: 'social',
-        url: externalLink.url,
-        platform: externalLink.platform,
-        previewImage: externalLink.previewImage,
-      })
-    }
-  }
-
-  // Add social links
-  socialLinks.forEach((link) => {
-    if (link.platform === 'youtube') {
-      allMediaItems.push({
-        type: 'youtube',
-        url: link.url,
-        platform: link.platform,
-        previewImage: link.previewImage,
-        title: link.title,
-      })
-    } else if (link.platform === 'tiktok') {
-      allMediaItems.push({
-        type: 'tiktok',
-        url: link.url,
-        platform: link.platform,
-        previewImage: link.previewImage,
-        title: link.title,
-      })
-    } else {
-      allMediaItems.push({
-        type: 'social',
-        url: link.url,
-        platform: link.platform,
-        previewImage: link.previewImage,
-        title: link.title,
-      })
-    }
-  })
-
-  // Shuffle array randomly to mix media types
-  const shuffledItems = [...allMediaItems]
 
   const onTouchStart = (e: React.TouchEvent) => {
     setTouchEnd(null)
@@ -165,7 +52,7 @@ function MediaCarousel({
     const isLeftSwipe = distance > minSwipeDistance
     const isRightSwipe = distance < -minSwipeDistance
 
-    if (isLeftSwipe && currentIndex < shuffledItems.length - 1) {
+    if (isLeftSwipe && currentIndex < mediaUrls.length - 1) {
       setCurrentIndex(currentIndex + 1)
     }
     if (isRightSwipe && currentIndex > 0) {
@@ -174,22 +61,33 @@ function MediaCarousel({
   }
 
   const goToPrevious = () => {
-    setCurrentIndex(currentIndex > 0 ? currentIndex - 1 : shuffledItems.length - 1)
+    setCurrentIndex(currentIndex > 0 ? currentIndex - 1 : mediaUrls.length - 1)
   }
 
   const goToNext = () => {
-    setCurrentIndex(currentIndex < shuffledItems.length - 1 ? currentIndex + 1 : 0)
+    setCurrentIndex(currentIndex < mediaUrls.length - 1 ? currentIndex + 1 : 0)
   }
 
-  if (shuffledItems.length === 0) return null
+  if (mediaUrls.length === 0) return null
 
   // Single media item - no carousel needed
-  if (shuffledItems.length === 1) {
-    const item = shuffledItems[0]
+  if (mediaUrls.length === 1) {
+    const type = mimeTypes[0]
+    const url = mediaUrls[0]
 
     return (
       <div className="rounded-xl overflow-hidden border dark:border-gray-700">
-        {renderMediaItem(item)}
+        {type.startsWith('image/') && (
+          <img src={url} alt="Media" className="w-full object-contain" />
+        )}
+        {type.startsWith('video/') && (
+          <video controls src={url} className="w-full aspect-video object-contain" />
+        )}
+        {type.startsWith('audio/') && (
+          <audio controls className="w-full p-2">
+            <source src={url} type={type} />
+          </audio>
+        )}
       </div>
     )
   }
@@ -198,14 +96,15 @@ function MediaCarousel({
     <div className="relative">
       {/* Carousel Container */}
       <div
-        className="rounded-xxl relative overflow-hidden "
+        className="relative rounded-xl overflow-hidden border dark:border-gray-700 bg-gray-100 dark:bg-gray-800"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
       >
         {/* Media Display */}
         <div className="relative w-full min-h-[300px] flex items-center justify-center">
-          {shuffledItems.map((item, idx) => {
+          {mediaUrls.map((url, idx) => {
+            const type = mimeTypes[idx]
             const isActive = idx === currentIndex
 
             return (
@@ -215,19 +114,40 @@ function MediaCarousel({
                   isActive ? 'opacity-100' : 'opacity-0'
                 }`}
               >
-                {renderMediaItem(item)}
+                {type.startsWith('image/') && (
+                  <img
+                    src={url}
+                    alt={`Media ${idx + 1}`}
+                    className="max-w-full max-h-full object-contain"
+                  />
+                )}
+                {type.startsWith('video/') && (
+                  <video
+                    controls
+                    src={url}
+                    className="w-full max-h-full object-contain"
+                    poster=""
+                  />
+                )}
+                {type.startsWith('audio/') && (
+                  <div className="w-full p-4 flex items-center justify-center">
+                    <audio controls className="w-full max-w-md">
+                      <source src={url} type={type} />
+                    </audio>
+                  </div>
+                )}
               </div>
             )
           })}
         </div>
 
-        {/* Navigation Arrows */}
+        {/* Navigation Arrows - Hidden on touch devices, visible on hover for desktop */}
         <button
           onClick={goToPrevious}
           className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Previous media"
         >
-          <ChevronLeft size={20} color="red" />
+          <ChevronLeft size={20} />
         </button>
 
         <button
@@ -241,7 +161,7 @@ function MediaCarousel({
 
       {/* Dots Indicator */}
       <div className="flex justify-center mt-4 space-x-2">
-        {shuffledItems.map((_, idx) => (
+        {mediaUrls.map((_, idx) => (
           <button
             key={idx}
             onClick={() => setCurrentIndex(idx)}
@@ -255,131 +175,14 @@ function MediaCarousel({
 
       {/* Counter */}
       <div className="text-center mt-2 text-sm text-gray-500 dark:text-gray-400">
-        {currentIndex + 1} / {shuffledItems.length}
+        {currentIndex + 1} / {mediaUrls.length}
       </div>
-    </div>
-  )
-}
-
-// Helper function to render different media types
-function renderMediaItem(item: MediaItem) {
-  switch (item.type) {
-    case 'file':
-      if (item.mimeType?.startsWith('image/')) {
-        return <img src={item.url} alt="Media" className="max-w-full max-h-full object-contain" />
-      }
-      if (item.mimeType?.startsWith('video/')) {
-        return (
-          <video controls src={item.url} className="w-full max-h-full object-contain" poster="" />
-        )
-      }
-      if (item.mimeType?.startsWith('audio/')) {
-        return (
-          <div className="w-full p-4 flex items-center justify-center">
-            <audio controls className="w-full max-w-md">
-              <source src={item.url} type={item.mimeType} />
-            </audio>
-          </div>
-        )
-      }
-      break
-
-    case 'youtube':
-      const youtubeId = extractYouTubeVideoId(item.url)
-      if (youtubeId) {
-        return (
-          <iframe
-            width="100%"
-            height="315"
-            src={`https://www.youtube.com/embed/${youtubeId}`}
-            title="YouTube video player"
-            allowFullScreen
-            className="rounded-lg aspect-video"
-          />
-        )
-      }
-      break
-
-    case 'tiktok':
-      const tiktokId = extractTikTokVideoId(item.url)
-      if (tiktokId) {
-        return (
-          <iframe
-            width="100%"
-            height="500"
-            src={getTikTokEmbedUrl(tiktokId)}
-            title="TikTok video player"
-            allowFullScreen
-            className="rounded-lg"
-          />
-        )
-      }
-      break
-
-    case 'social':
-      return (
-        <div className="w-full p-4 text-center space-y-3">
-          {item.previewImage && (
-            <img
-              src={item.previewImage}
-              alt="Preview"
-              className="max-w-full h-64 object-cover rounded-lg mx-auto"
-            />
-          )}
-          <div className="space-y-2">
-            {item.title && <h3 className="font-semibold text-lg">{item.title}</h3>}
-            <p className="text-sm text-gray-700 dark:text-gray-300 capitalize">
-              {item.platform === 'youtube' && item.url.includes('/channel/')
-                ? `Explore more on ${item.platform}`
-                : `View on ${item.platform}`}
-            </p>
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-block px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition-colors"
-            >
-              Open Link
-            </a>
-          </div>
-        </div>
-      )
-  }
-
-  // Fallback for unknown types
-  return (
-    <div className="w-full p-4 text-center">
-      <p className="text-gray-500">Unsupported media type</p>
     </div>
   )
 }
 
 interface Props {
   winId: string // Now passed as prop instead of from useParams\
-}
-
-function SocialShareButtons({ win }: { win: any }) {
-  const shareUrl = typeof window !== 'undefined' ? window.location.href : ''
-  const title = win.title
-
-  const shareOnTwitter = () => {
-    // Format: Redub @username Title of article
-    // [Link on new line]
-    const tweetText = `Redub @${win.username} ${win.title}\n\n${shareUrl}`
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
-    window.open(twitterUrl, '_blank')
-  }
-
-  return (
-    <div className="flex justify-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
-      <button
-        onClick={shareOnTwitter}
-        className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
-      >
-        Redub on X
-      </button>
-    </div>
-  )
 }
 
 export default function WinDetailPage({ winId }: Props) {
@@ -454,6 +257,11 @@ export default function WinDetailPage({ winId }: Props) {
       </div>
     )
   }
+
+  const youTubeEmbedId =
+    win.externalLink?.platform === 'youtube' && win.externalLink?.type === 'content'
+      ? extractYouTubeVideoId(win.externalLink.url)
+      : null
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-white">
@@ -539,7 +347,7 @@ export default function WinDetailPage({ winId }: Props) {
           ))}
         </div>
 
-        {/* Unified Media Carousel - Replaces both External Link Preview and Media Section */}
+        {/* Unified Media Carousel - Includes files, external links, and social links */}
         {((win.mediaUrls?.length > 0 && win.mimeTypes?.length === win.mediaUrls.length) ||
           win.externalLink?.url ||
           win.socialLinks?.length > 0) && (

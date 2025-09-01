@@ -227,7 +227,7 @@ function MediaCarousel({
           className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Previous media"
         >
-          <ChevronLeft size={20} color="red" />
+          <ChevronLeft size={20} />
         </button>
 
         <button

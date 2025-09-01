@@ -197,12 +197,7 @@ function MediaCarousel({
   return (
     <div className="relative">
       {/* Carousel Container */}
-      <div
-        className="rounded-xxl relative overflow-hidden "
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
-      >
+      <div className="rounded-xxl relative overflow-hidden ">
         {/* Media Display */}
         <div className="relative w-full min-h-[300px] flex items-center justify-center">
           {shuffledItems.map((item, idx) => {
@@ -227,7 +222,7 @@ function MediaCarousel({
           className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Previous media"
         >
-          <ChevronLeft size={20} color="red" />
+          <ChevronLeft size={20} />
         </button>
 
         <button
