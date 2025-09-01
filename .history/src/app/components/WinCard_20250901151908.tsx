@@ -12,7 +12,6 @@ import { removeTokens } from '../lib/auth' // Assuming lib/auth.ts is in this re
 // IMPORTANT: Your 'celebrateWin' hook/function also needs to be updated internally
 // to use 'authFetch' for its API calls, otherwise it will still break on token expiry.
 import { celebrateWin } from '../hooks/useCelebrateWins' // This hook needs to be updated separately
-import { createSlug } from '../lib/utils'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -91,10 +90,7 @@ export default function WinCard({ win }: WinProps) {
 
   const imageSrc: string | undefined = win.externalLink?.previewImage || win.previewImageUrl
 
-  const goToDetail = () => {
-    const slug = createSlug(win.title)
-    router.push(`/winners/wincard/${win.id}/${slug}`)
-  }
+  const goToDetail = () => router.push(`/winners/wincard/${win.id}`)
 
   // Helper for consistent auth redirection
   const handleAuthRedirect = (

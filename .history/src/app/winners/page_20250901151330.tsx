@@ -252,33 +252,14 @@ export default function WinnersPage() {
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
-          {wins.map((win, index) => (
-            <React.Fragment key={win.id}>
-              {/* Win Card */}
-              <div className="transition-all duration-300 ease-in-out transform hover:scale-[1.02]">
-                <WinCard win={win} />
-              </div>
-
-              {/* Random Ad Placement */}
-              {randomAdIndices.has(index) && (
-                <div className="sm:col-span-2 md:col-span-3 transition-all duration-300 ease-in-out">
-                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-2 border-dashed border-gray-200 dark:border-gray-600">
-                    <div className="text-xs text-gray-400 text-center mb-2">Advertisement</div>
-                    <AdUnit
-                      adSlot={getRandomAdSlot(index)}
-                      className="w-full"
-                      style={{
-                        display: 'block',
-                        width: '100%',
-                        minHeight: '200px',
-                        maxHeight: '300px',
-                      }}
-                    />
-                  </div>
-                </div>
-              )}
-            </React.Fragment>
-          ))}
+          {wins.map((win) => {
+            const slug = createSlug(win.title)
+            return (
+              <Link key={win.id} href={`/winners/wincard/${win.id}/${slug}`}>
+                {win.title}
+              </Link>
+            )
+          })}
         </div>
       )}
 
