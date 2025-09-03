@@ -1,17 +1,14 @@
 'use client'
-
-import React, { useEffect, useMemo, useState } from 'react' // Added useEffect for potential auth redirect
-import { Bookmark, PartyPopper, MessageCircle } from 'lucide-react'
+import React, { useMemo, useState } from 'react'
+import { Bookmark, PartyPopper, MessageCircle, Save, Repeat2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import audioIcon from '../../../public/audio.png'
-// UPDATED IMPORTS: Use authFetch for API calls, and removeTokens (plural) for logout
-import { authFetch } from '../lib/api' // Assuming lib/api.ts is in this relative path
-import { removeTokens } from '../lib/auth' // Assuming lib/auth.ts is in this relative path
+import { authFetch } from '../lib/api'
+import { removeTokens } from '../lib/auth'
 
-// IMPORTANT: Your 'celebrateWin' hook/function also needs to be updated internally
-// to use 'authFetch' for its API calls, otherwise it will still break on token expiry.
-import { celebrateWin } from '../hooks/useCelebrateWins' // This hook needs to be updated separately
+import { celebrateWin } from '../hooks/useCelebrateWins'
+import { createSlug } from '../lib/utils'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -27,7 +24,6 @@ export interface WinProps {
     upvotes?: number
     previewImageUrl?: string // this can still be computed upstream for convenience
     commentCount?: number
-
     externalLink?: {
       url: string
       type: 'channel' | 'content'
@@ -91,24 +87,61 @@ export default function WinCard({ win }: WinProps) {
 
   const imageSrc: string | undefined = win.externalLink?.previewImage || win.previewImageUrl
 
-  const goToDetail = () => router.push(`/winners/wincard/${win.id}`)
+  const goToDetail = () => {
+    const slug = createSlug(win.title)
+    router.push(`/winners/wincard/${win.id}/${slug}`)
+  }
 
   // Helper for consistent auth redirection
   const handleAuthRedirect = (
     errMessage: string = 'Authentication required. Please log in again.'
   ) => {
-    setState((s) => ({ ...s, error: errMessage })) // Display error on card
-    removeTokens() // Clear both access and refresh tokens
-    router.push('/login') // Redirect to login page
+    setState((s) => ({ ...s, error: errMessage }))
+    removeTokens()
+    router.push('/login')
   }
 
   const handleSave = async (e: React.MouseEvent) => {
+    e.stopPropagation()
+    setState((s) => ({ ...s, error: null }))
+
+    try {
+      // CHANGED: Use authFetch for this authenticated call
+      const res = await authFetch(`${API_BASE_URL}/gurkha/wins/save/${win.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if (res.ok || res.status === 409) {
+        // 409 Conflict might mean already saved
+        setState((s) => ({ ...s, saved: true }))
+      } else {
+        const data = await res.json()
+        throw new Error(data.message || data.error || `Failed to save win (Status: ${res.status}).`)
+      }
+    } catch (err: any) {
+      console.error('WinCard save error:', err)
+      // Catch errors thrown by authFetch (e.g., when refresh fails or no token initially)
+      if (
+        err.message === 'Authentication required. Please log in again.' ||
+        err.message.includes('No authentication token')
+      ) {
+        handleAuthRedirect(err.message)
+      } else {
+        setState((s) => ({ ...s, error: err.message || 'Save failed.' }))
+      }
+    }
+  }
+
+  const handleRepost = async (e: React.MouseEvent) => {
     e.stopPropagation() // Prevent card click event from firing
     setState((s) => ({ ...s, error: null })) // Clear previous errors
 
     try {
       // CHANGED: Use authFetch for this authenticated call
-      const res = await authFetch(`${API_BASE_URL}/gurkha/wins/save/${win.id}`, {
+      const res = await authFetch(`${API_BASE_URL}/gurkha/wins/repost/${win.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

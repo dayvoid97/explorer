@@ -5,7 +5,10 @@ import { fetchExploreWins } from '../lib/fetchWins'
 import WinCard from '../components/WinCard'
 import AdUnit from '../components/AdUnit'
 import { ChevronUp } from 'lucide-react'
-import Navbar from '../components/NavBar'
+import WinnersNavbar from '../components/WinnersNavBar'
+
+import Link from 'next/link'
+
 const SORT_OPTIONS = [
   { label: 'Most Recent', value: 'recent' },
   { label: 'Most Celebrated', value: 'celebrated' },
@@ -235,8 +238,6 @@ export default function WinnersPage() {
 
   return (
     <div className="max-w-6xl mx-auto px-6 py-10 space-y-8" style={{ scrollBehavior: 'smooth' }}>
-      <Navbar />
-
       {/* Top reference point for smooth scrolling */}
       <div ref={topRef} className="absolute -top-10" />
 

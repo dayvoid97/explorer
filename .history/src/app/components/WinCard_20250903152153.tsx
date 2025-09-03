@@ -22,7 +22,7 @@ export interface WinProps {
     mediaUrls?: string[]
     mimeTypes?: string[]
     upvotes?: number
-    previewImageUrl?: string
+    previewImageUrl?: string // this can still be computed upstream for convenience
     commentCount?: number
     externalLink?: {
       url: string

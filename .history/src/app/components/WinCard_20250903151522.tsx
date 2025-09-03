@@ -1,6 +1,6 @@
 'use client'
 import React, { useMemo, useState } from 'react'
-import { Bookmark, PartyPopper, MessageCircle } from 'lucide-react'
+import { Bookmark, PartyPopper, MessageCircle, Save, Repeat2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import audioIcon from '../../../public/audio.png'
@@ -22,7 +22,7 @@ export interface WinProps {
     mediaUrls?: string[]
     mimeTypes?: string[]
     upvotes?: number
-    previewImageUrl?: string
+    previewImageUrl?: string // this can still be computed upstream for convenience
     commentCount?: number
     externalLink?: {
       url: string
@@ -123,6 +123,7 @@ export default function WinCard({ win }: WinProps) {
       }
     } catch (err: any) {
       console.error('WinCard save error:', err)
+
       if (
         err.message === 'Authentication required. Please log in again.' ||
         err.message.includes('No authentication token')

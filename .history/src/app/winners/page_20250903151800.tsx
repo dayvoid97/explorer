@@ -6,6 +6,9 @@ import WinCard from '../components/WinCard'
 import AdUnit from '../components/AdUnit'
 import { ChevronUp } from 'lucide-react'
 import Navbar from '../components/NavBar'
+
+import Link from 'next/link'
+
 const SORT_OPTIONS = [
   { label: 'Most Recent', value: 'recent' },
   { label: 'Most Celebrated', value: 'celebrated' },

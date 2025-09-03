@@ -1,13 +1,17 @@
 'use client'
-import React, { useMemo, useState } from 'react'
-import { Bookmark, PartyPopper, MessageCircle } from 'lucide-react'
+
+import React, { useMemo, useState } from 'react' // Added useEffect for potential auth redirect
+import { Bookmark, PartyPopper, MessageCircle, Save, Repeat2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import Image from 'next/image'
 import audioIcon from '../../../public/audio.png'
-import { authFetch } from '../lib/api'
-import { removeTokens } from '../lib/auth'
+// UPDATED IMPORTS: Use authFetch for API calls, and removeTokens (plural) for logout
+import { authFetch } from '../lib/api' // Assuming lib/api.ts is in this relative path
+import { removeTokens } from '../lib/auth' // Assuming lib/auth.ts is in this relative path
 
-import { celebrateWin } from '../hooks/useCelebrateWins'
+// IMPORTANT: Your 'celebrateWin' hook/function also needs to be updated internally
+// to use 'authFetch' for its API calls, otherwise it will still break on token expiry.
+import { celebrateWin } from '../hooks/useCelebrateWins' // This hook needs to be updated separately
 import { createSlug } from '../lib/utils'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -22,7 +26,7 @@ export interface WinProps {
     mediaUrls?: string[]
     mimeTypes?: string[]
     upvotes?: number
-    previewImageUrl?: string
+    previewImageUrl?: string // this can still be computed upstream for convenience
     commentCount?: number
     externalLink?: {
       url: string
@@ -96,14 +100,14 @@ export default function WinCard({ win }: WinProps) {
   const handleAuthRedirect = (
     errMessage: string = 'Authentication required. Please log in again.'
   ) => {
-    setState((s) => ({ ...s, error: errMessage }))
-    removeTokens()
-    router.push('/login')
+    setState((s) => ({ ...s, error: errMessage })) // Display error on card
+    removeTokens() // Clear both access and refresh tokens
+    router.push('/login') // Redirect to login page
   }
 
   const handleSave = async (e: React.MouseEvent) => {
-    e.stopPropagation()
-    setState((s) => ({ ...s, error: null }))
+    e.stopPropagation() // Prevent card click event from firing
+    setState((s) => ({ ...s, error: null })) // Clear previous errors
 
     try {
       // CHANGED: Use authFetch for this authenticated call
@@ -123,6 +127,7 @@ export default function WinCard({ win }: WinProps) {
       }
     } catch (err: any) {
       console.error('WinCard save error:', err)
+      // Catch errors thrown by authFetch (e.g., when refresh fails or no token initially)
       if (
         err.message === 'Authentication required. Please log in again.' ||
         err.message.includes('No authentication token')
