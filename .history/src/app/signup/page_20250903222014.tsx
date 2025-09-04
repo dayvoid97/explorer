@@ -122,7 +122,7 @@ export default function SignUpPage() {
             name="experience"
             value={form.experience}
             onChange={handleChange}
-            placeholder="Please briefly describe your life experience"
+            placeholder="Briefly describe your market experience"
             rows={3}
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           ></textarea>

@@ -350,7 +350,7 @@ function SocialShareButtons({ win }: { win: any }) {
     window.open(twitterUrl, '_blank')
   }
   return (
-    <div className="flex justify-center mt-2 ">
+    <div className="flex justify-center mt-6 pt-4 border-t border-gray-200 ">
       <button
         onClick={shareOnTwitter}
         className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"

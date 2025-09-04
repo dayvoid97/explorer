@@ -217,14 +217,14 @@ function MediaCarousel({
           className="absolute left-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Previous media"
         >
-          <ChevronLeft size={20} />
+          <ChevronLeft size={20} color="red" />
         </button>
         <button
           onClick={goToNext}
           className="absolute right-2 top-1/2 transform -translate-y-1/2 w-10 h-10 bg-black/50 text-white rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-200 hidden sm:flex"
           aria-label="Next media"
         >
-          <ChevronRight size={20} />
+          <ChevronRight size={20} color="white" />
         </button>
       </div>
       <div className="flex justify-center mt-4 space-x-2">
@@ -350,7 +350,7 @@ function SocialShareButtons({ win }: { win: any }) {
     window.open(twitterUrl, '_blank')
   }
   return (
-    <div className="flex justify-center mt-2 ">
+    <div className="flex justify-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
       <button
         onClick={shareOnTwitter}
         className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
@@ -591,7 +591,7 @@ export default function WinDetailPage({ winId }: Props) {
           </div>
 
           {!isLoadingNavigation && navigationData.length > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-1">
+            <div className="flex items-center justify-center gap-4 mt-2">
               <button
                 onClick={goToPrevious}
                 disabled={!hasPrevious}
@@ -602,7 +602,7 @@ export default function WinDetailPage({ winId }: Props) {
                 }`}
                 title={hasPrevious ? 'Previous win' : 'No previous win'}
               >
-                <ChevronLeft size={30} color="white" />
+                <ChevronLeft size={30} color="black" />
               </button>
 
               <div className="text-xs text-gray-500 dark:text-gray-400 px-2">
@@ -622,12 +622,12 @@ export default function WinDetailPage({ winId }: Props) {
                 }`}
                 title={hasNext ? 'Next win' : 'No next win'}
               >
-                <ChevronRight size={30} color="white" />
+                <ChevronRight size={30} color="black" />
               </button>
             </div>
           )}
 
-          <div className="text-sm text-center">
+          <div className="text-sm text-center text-gray-500 dark:text-gray-400">
             Posted by{' '}
             <span
               className="font-semibold hover:underline cursor-pointer"
@@ -652,7 +652,11 @@ export default function WinDetailPage({ winId }: Props) {
             show={showSortToggle}
           />
 
-          {isLoadingNavigation && <div className="text-xs mt-2">Loading navigation...</div>}
+          {isLoadingNavigation && (
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Loading navigation...
+            </div>
+          )}
           <div>
             <SocialShareButtons win={win} />
           </div>

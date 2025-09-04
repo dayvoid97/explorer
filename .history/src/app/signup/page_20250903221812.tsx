@@ -83,7 +83,9 @@ export default function SignUpPage() {
   return (
     <main className="max-w-md mx-auto py-16 px-6">
       <h1 className="text-3xl font-bold mb-6 text-center">
-        {step === 'signup' ? 'SIGN UP FOR FINANCIAL GURKHA' : 'Verify Your Email'}
+        {step === 'signup'
+          ? 'Join FINANCIAL GURKHA TO BEGIN SHARING YOUR INTEL'
+          : 'Verify Your Email'}
       </h1>
 
       {step === 'signup' ? (
@@ -93,7 +95,7 @@ export default function SignUpPage() {
             name="username"
             value={form.username}
             onChange={handleChange}
-            placeholder="Please enter your desired username"
+            placeholder="Username (letters and numbers only)"
             pattern="[a-zA-Z0-9]+"
             title="Username must be letters and numbers only"
             required
@@ -105,7 +107,7 @@ export default function SignUpPage() {
             name="email"
             value={form.email}
             onChange={handleChange}
-            placeholder="Please enter your email address"
+            placeholder="Email"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           />
@@ -114,7 +116,7 @@ export default function SignUpPage() {
             name="password"
             value={form.password}
             onChange={handleChange}
-            placeholder="Please enter your password"
+            placeholder="Password"
             required
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           />
@@ -122,7 +124,7 @@ export default function SignUpPage() {
             name="experience"
             value={form.experience}
             onChange={handleChange}
-            placeholder="Please briefly describe your life experience"
+            placeholder="Briefly describe your market experience"
             rows={3}
             className="w-full px-4 py-2 border border-gray-300 rounded-md"
           ></textarea>

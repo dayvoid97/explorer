@@ -320,7 +320,7 @@ export default function PostWinForm() {
       className=" rounded-2xl shadow-lg p-8 space-y-6 bg-white dark:bg-gray-900"
     >
       <div className="flex items-center justify-between">
-        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">POST YOUR DUBS</h2>
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">DROP YOUR DUBS</h2>
         {loggedIn && (
           <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
             <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
@@ -348,7 +348,7 @@ export default function PostWinForm() {
         onChange={(e) => updateFormState('title', e.target.value)}
         placeholder="HEADLINE YOUR DUB"
         required
-        className="w-full px-4 py-2 rounded-md bg-gray-50 dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
+        className="w-full px-4 py-2 rounded-md  dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
       />
 
       <textarea
@@ -375,7 +375,7 @@ export default function PostWinForm() {
         type="url"
         value={formState.externalLink}
         onChange={(e) => updateFormState('externalLink', e.target.value)}
-        placeholder="Paste an external link. Youtube/ Tiktok/ Website"
+        placeholder="Paste a YouTube/TikTok link (optional)"
         className="w-full px-4 py-2 rounded-md bg-gray-50 dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
       />
 

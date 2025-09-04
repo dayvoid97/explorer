@@ -350,7 +350,7 @@ function SocialShareButtons({ win }: { win: any }) {
     window.open(twitterUrl, '_blank')
   }
   return (
-    <div className="flex justify-center mt-2 ">
+    <div className="flex justify-center mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
       <button
         onClick={shareOnTwitter}
         className="flex items-center gap-2 px-6 py-3 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors text-sm font-medium"
@@ -591,7 +591,7 @@ export default function WinDetailPage({ winId }: Props) {
           </div>
 
           {!isLoadingNavigation && navigationData.length > 1 && (
-            <div className="flex items-center justify-center gap-4 mt-1">
+            <div className="flex items-center justify-center gap-4 mt-2">
               <button
                 onClick={goToPrevious}
                 disabled={!hasPrevious}
@@ -602,7 +602,7 @@ export default function WinDetailPage({ winId }: Props) {
                 }`}
                 title={hasPrevious ? 'Previous win' : 'No previous win'}
               >
-                <ChevronLeft size={30} color="white" />
+                <ChevronLeft size={30} />
               </button>
 
               <div className="text-xs text-gray-500 dark:text-gray-400 px-2">
@@ -622,12 +622,12 @@ export default function WinDetailPage({ winId }: Props) {
                 }`}
                 title={hasNext ? 'Next win' : 'No next win'}
               >
-                <ChevronRight size={30} color="white" />
+                <ChevronRight size={30} />
               </button>
             </div>
           )}
 
-          <div className="text-sm text-center">
+          <div className="text-sm text-center text-gray-500 dark:text-gray-400">
             Posted by{' '}
             <span
               className="font-semibold hover:underline cursor-pointer"
@@ -652,7 +652,11 @@ export default function WinDetailPage({ winId }: Props) {
             show={showSortToggle}
           />
 
-          {isLoadingNavigation && <div className="text-xs mt-2">Loading navigation...</div>}
+          {isLoadingNavigation && (
+            <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
+              Loading navigation...
+            </div>
+          )}
           <div>
             <SocialShareButtons win={win} />
           </div>
