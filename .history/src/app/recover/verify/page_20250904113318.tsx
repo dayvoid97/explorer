@@ -63,7 +63,7 @@ export default function VerifyCodePage() {
       </form>
       <p>
         If you're having issues logging in, please contact us at strum.tips@gmail.com. Or simply
-        create a new account :D
+        create a new account :)
       </p>
       {error && <p className="text-red-600 mt-4">{error}</p>}
     </main>

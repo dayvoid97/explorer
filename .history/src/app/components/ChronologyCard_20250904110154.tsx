@@ -281,10 +281,11 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
                 key={i}
                 className="relative h-24 rounded-lg overflow-hidden bg-white/40 border border-white/40"
               >
-                <img
+                <Image
                   src={u}
                   alt="Media Preview"
-                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}

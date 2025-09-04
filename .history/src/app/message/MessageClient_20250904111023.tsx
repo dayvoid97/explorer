@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { authFetch } from '@/app/lib/api'
 import { removeTokens, isLoggedIn } from '@/app/lib/auth'
 import { ArrowLeft, Send, User, Loader2 } from 'lucide-react'
-import StardustBackground from '../components/Stardust'
 
 interface Message {
   id: string
@@ -361,7 +360,6 @@ export default function MessageClient() {
       </div>
 
       {/* Message Input */}
-
       <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
         <div className="flex gap-3 items-end">
           <div className="flex-1 relative">

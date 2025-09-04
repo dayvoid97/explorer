@@ -121,7 +121,7 @@ export default function WinCard({ win }: WinProps) {
     } catch (err: any) {
       console.error('WinCard save error:', err)
       if (
-        err.message === ' Please log in again.' ||
+        err.message === 'Authentication required. Please log in again.' ||
         err.message.includes('No authentication token')
       ) {
         handleAuthRedirect(err.message)

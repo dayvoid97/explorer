@@ -253,10 +253,12 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
         <div className="mt-5 flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div className="relative">
-              <img
+              <Image
                 src={pfpUrl}
                 alt="Profile Picture"
-                className="w-9 h-9 rounded-full border-2 border-white/60 shadow-sm object-cover"
+                width={36}
+                height={36}
+                className="rounded-full border-2 border-white/60 shadow-sm"
               />
             </div>
             <div>
@@ -281,10 +283,11 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
                 key={i}
                 className="relative h-24 rounded-lg overflow-hidden bg-white/40 border border-white/40"
               >
-                <img
+                <Image
                   src={u}
                   alt="Media Preview"
-                  className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  fill
+                  className="object-cover hover:scale-105 transition-transform duration-300"
                 />
               </div>
             ))}

@@ -302,100 +302,112 @@ export default function MessageClient() {
 
   // Main chat interface
   return (
-    <div className="max-w-4xl mx-auto h-screen flex flex-col bg-white dark:bg-gray-900">
-      {/* Header */}
-      <div className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-10">
-        <div className="flex items-center gap-4 p-4">
-          <button
-            onClick={() => router.back()}
-            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
-          </button>
-
-          <img
-            src={chat.profilePictureUrl || '/audio.png'}
-            className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
-            alt="Profile"
-          />
-
-          <div className="flex-1 min-w-0">
-            <h2
-              onClick={() => router.push(`/publicprofile/${chat.userName}`)}
-              className="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate"
+    
+      <div className="max-w-4xl mx-auto h-screen flex flex-col bg-white dark:bg-gray-900">
+        {/* Header */}
+        <div className="border-b border-gray-200 dark:border-gray-700 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm sticky top-0 z-10">
+          <div className="flex items-center gap-4 p-4">
+            <button
+              onClick={() => router.back()}
+              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
             >
-              @{chat.userName}
-            </h2>
-            <p className="text-sm text-gray-500 dark:text-gray-400">
-              {chat.messages.length} messages
-            </p>
-          </div>
-        </div>
-      </div>
+              <ArrowLeft className="w-5 h-5 text-gray-600 dark:text-gray-400" />
+            </button>
 
-      {/* Messages Container */}
-      <div
-        ref={messagesContainerRef}
-        className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950"
-      >
-        <div className="p-4 space-y-1">
-          {chat.messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-64 text-center">
-              <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
-                <User className="w-8 h-8 text-gray-400" />
-              </div>
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
-                Start a conversation
-              </h3>
+            <img
+              src={chat.profilePictureUrl || '/audio.png'}
+              className="w-10 h-10 rounded-full object-cover border-2 border-gray-200 dark:border-gray-700"
+              alt="Profile"
+            />
+
+            <div className="flex-1 min-w-0">
+              <h2
+                onClick={() => router.push(`/publicprofile/${chat.userName}`)}
+                className="text-lg font-semibold text-gray-900 dark:text-white cursor-pointer hover:text-blue-600 dark:hover:text-blue-400 transition-colors truncate"
+              >
+                @{chat.userName}
+              </h2>
               <p className="text-sm text-gray-500 dark:text-gray-400">
-                Send a message to @{chat.userName}
+                {chat.messages.length} messages
               </p>
             </div>
-          ) : (
-            chat.messages.map((msg) => (
-              <MessageBubble key={msg.id} message={msg} isSender={msg.senderId === chat.senderId} />
-            ))
-          )}
-          <div ref={chatBottomRef} />
-        </div>
-      </div>
-
-      {/* Message Input */}
-
-      <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
-        <div className="flex gap-3 items-end">
-          <div className="flex-1 relative">
-            <textarea
-              className="w-full px-4 py-3 pr-12 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none max-h-32 min-h-[48px]"
-              placeholder={`Message @${chat.userName}...`}
-              value={newMessage}
-              onChange={(e) => setNewMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              rows={1}
-              style={{
-                height: 'auto',
-                minHeight: '48px',
-                maxHeight: '128px',
-              }}
-              onInput={(e) => {
-                const target = e.target as HTMLTextAreaElement
-                target.style.height = 'auto'
-                target.style.height = Math.min(target.scrollHeight, 128) + 'px'
-              }}
-            />
           </div>
-
-          <button
-            onClick={sendMessage}
-            disabled={!newMessage.trim() || sending}
-            className="p-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white rounded-2xl transition-colors disabled:cursor-not-allowed flex items-center justify-center min-w-[48px]"
-          >
-            {sending ? <Loader2 className="w-5 h-5 animate-spin" /> : <Send className="w-5 h-5" />}
-          </button>
         </div>
 
-        {error && <p className="mt-2 text-sm text-red-500 dark:text-red-400">{error}</p>}
+        {/* Messages Container */}
+        <div
+          ref={messagesContainerRef}
+          className="flex-1 overflow-y-auto bg-gray-50 dark:bg-gray-950"
+        >
+          <div className="p-4 space-y-1">
+            {chat.messages.length === 0 ? (
+              <div className="flex flex-col items-center justify-center h-64 text-center">
+                <div className="w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center mb-4">
+                  <User className="w-8 h-8 text-gray-400" />
+                </div>
+                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">
+                  Start a conversation
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  Send a message to @{chat.userName}
+                </p>
+              </div>
+            ) : (
+              chat.messages.map((msg) => (
+                <MessageBubble
+                  key={msg.id}
+                  message={msg}
+                  isSender={msg.senderId === chat.senderId}
+                />
+              ))
+            )}
+            <div ref={chatBottomRef} />
+          </div>
+        </div>
+
+        {/* Message Input */}
+        <StardustBackground>
+        <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 p-4">
+          <div className="flex gap-3 items-end">
+            <div className="flex-1 relative">
+              <textarea
+                className="w-full px-4 py-3 pr-12 rounded-2xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none max-h-32 min-h-[48px]"
+                placeholder={`Message @${chat.userName}...`}
+                value={newMessage}
+                onChange={(e) => setNewMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                rows={1}
+                style={{
+                  height: 'auto',
+                  minHeight: '48px',
+                  maxHeight: '128px',
+                }}
+                onInput={(e) => {
+                  const target = e.target as HTMLTextAreaElement
+                  target.style.height = 'auto'
+                  target.style.height = Math.min(target.scrollHeight, 128) + 'px'
+                }}
+              />
+            </div>
+            
+
+            <button
+              onClick={sendMessage}
+              disabled={!newMessage.trim() || sending}
+              className="p-3 bg-blue-500 hover:bg-blue-600 disabled:bg-gray-300 dark:disabled:bg-gray-700 text-white rounded-2xl transition-colors disabled:cursor-not-allowed flex items-center justify-center min-w-[48px]"
+            >
+              {sending ? (
+                <Loader2 className="w-5 h-5 animate-spin" />
+              ) : (
+                <Send className="w-5 h-5" />
+              )}
+            </button>
+          </div>
+          </StardustBackground>
+
+          {error && <p className="mt-2 text-sm text-red-500 dark:text-red-400">{error}</p>}
+        </div>
       </div>
-    </div>
+    
   )
 }

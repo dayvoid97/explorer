@@ -92,7 +92,9 @@ export default function WinCard({ win }: WinProps) {
   }
 
   // Helper for consistent auth redirection
-  const handleAuthRedirect = (errMessage: string = 'Please log in again to perform action') => {
+  const handleAuthRedirect = (
+    errMessage: string = 'Authentication required. Please log in again.'
+  ) => {
     setState((s) => ({ ...s, error: errMessage }))
     removeTokens()
     router.push('/login')
@@ -121,7 +123,7 @@ export default function WinCard({ win }: WinProps) {
     } catch (err: any) {
       console.error('WinCard save error:', err)
       if (
-        err.message === ' Please log in again.' ||
+        err.message === 'Authentication required. Please log in again.' ||
         err.message.includes('No authentication token')
       ) {
         handleAuthRedirect(err.message)

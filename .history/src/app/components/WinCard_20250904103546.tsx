@@ -2,6 +2,7 @@
 import React, { useMemo, useState } from 'react'
 import { Bookmark, PartyPopper, MessageCircle } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import Image from 'next/image'
 import audioIcon from '../../../public/audio.png'
 import { authFetch } from '../lib/api'
 import { removeTokens } from '../lib/auth'
@@ -92,7 +93,9 @@ export default function WinCard({ win }: WinProps) {
   }
 
   // Helper for consistent auth redirection
-  const handleAuthRedirect = (errMessage: string = 'Please log in again to perform action') => {
+  const handleAuthRedirect = (
+    errMessage: string = 'Authentication required. Please log in again.'
+  ) => {
     setState((s) => ({ ...s, error: errMessage }))
     removeTokens()
     router.push('/login')
@@ -121,7 +124,7 @@ export default function WinCard({ win }: WinProps) {
     } catch (err: any) {
       console.error('WinCard save error:', err)
       if (
-        err.message === ' Please log in again.' ||
+        err.message === 'Authentication required. Please log in again.' ||
         err.message.includes('No authentication token')
       ) {
         handleAuthRedirect(err.message)
@@ -236,13 +239,15 @@ export default function WinCard({ win }: WinProps) {
         {imageSrc && (
           <div className="w-24 sm:w-28 md:w-32 h-24 md:h-28 flex-shrink-0 rounded-md overflow-hidden bg-gray-100 dark:bg-gray-700 flex items-center justify-center">
             {mediaType === 'audio' || mediaType === 'video' ? (
-              <img
-                src={audioIcon.src}
-                alt="Media Placeholder"
-                className="w-12 h-12 object-contain"
-              />
+              <img src={audioIcon} alt="Media Placeholder" className="object-contain" />
             ) : (
-              <img src={imageSrc} alt="Win Preview" className="w-32 h-28 object-cover rounded" />
+              <Image
+                src={imageSrc}
+                alt="Win Preview"
+                width={128}
+                height={128}
+                className="object-cover rounded"
+              />
             )}
           </div>
         )}

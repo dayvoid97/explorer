@@ -119,7 +119,7 @@ export default function SaveCardButton({
       variant={isSaved ? 'default' : 'outline'} // Change variant based on saved status
       className="flex items-center gap-2"
     >
-      <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
+      <Bookmark className={`w-10 h-10 ${isSaved ? 'fill-current' : ''}`} />
 
       {error && <span className="ml-2 text-green-500 text-xs">{error}</span>}
     </Button>

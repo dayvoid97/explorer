@@ -8,7 +8,7 @@ import AudioItem from '@/app/components/cards/AudioItem'
 import VideoItem from '@/app/components/cards/VideoItem'
 import DocumentItem from '@/app/components/cards/DocumentItem'
 import ImageItem from '@/app/components/cards/ImageItem'
-import SaveCardButton from '@/app/components/SaveCardButton'
+import SaveCardButton from '@/app/components/SaveCardButton' // The button we just created
 
 export default function CompanyCardPublicPage() {
   const router = useRouter()

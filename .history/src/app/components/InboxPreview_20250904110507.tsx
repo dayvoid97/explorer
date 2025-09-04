@@ -2,6 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
+// UPDATED IMPORTS: Use authFetch for API calls, and removeTokens/isLoggedIn for checks/redirect
 import { authFetch } from '@/app/lib/api' // Make sure this path is correct
 import { removeTokens, isLoggedIn } from '@/app/lib/auth' // isLoggedIn for initial check
 
