@@ -52,8 +52,8 @@ export default function LoginPage() {
 
   return (
     <main className="max-w-md mx-auto py-16 px-6">
-      <h1 className="text-3xl font-bold  mb-6 text-center">Welcome Back</h1>
-      <h1 className="text-3xl font-bold  mb-6 text-center">Let us get you in</h1>
+      <h1 className="text-3xl font-bold text-white mb-6 text-center">Welcome Back</h1>
+      <h1 className="text-3xl font-bold text-white mb-6 text-center">Let us get you in</h1>
 
       {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 

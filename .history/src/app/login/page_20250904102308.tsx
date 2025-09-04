@@ -51,48 +51,50 @@ export default function LoginPage() {
   }
 
   return (
-    <main className="max-w-md mx-auto py-16 px-6">
-      <h1 className="text-3xl font-bold  mb-6 text-center">Welcome Back</h1>
-      <h1 className="text-3xl font-bold  mb-6 text-center">Let us get you in</h1>
+    <StardustBackground>
+      <main className="max-w-md mx-auto py-16 px-6">
+        <h1 className="text-3xl font-bold text-white mb-6 text-center">Welcome Back</h1>
+        <h1 className="text-3xl font-bold text-white mb-6 text-center">Let us get you in</h1>
 
-      {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          name="username"
-          placeholder="Enter your username"
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-        />
-        <input
-          name="password"
-          placeholder="Password"
-          type="password"
-          onChange={handleChange}
-          required
-          className="w-full px-4 py-2 border border-gray-300 rounded-md"
-        />
-        <button
-          type="submit"
-          className="bg-blue-600 text-white w-full py-2 rounded-md hover:bg-blue-700 transition"
-        >
-          Log In
-        </button>
-      </form>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <input
+            name="username"
+            placeholder="Enter your username"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border text-white border-gray-300 rounded-md"
+          />
+          <input
+            name="password"
+            placeholder="Password"
+            type="password"
+            onChange={handleChange}
+            required
+            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+          />
+          <button
+            type="submit"
+            className="bg-blue-600 text-white w-full py-2 rounded-md hover:bg-blue-700 transition"
+          >
+            Log In
+          </button>
+        </form>
 
-      <div className="mt-10 mb-10 text-center text-xl space-y-2">
-        <a href="/signup" className=" underline">
-          New Here? SIGN UP
-        </a>
-        <div>
-          <p className="mt-5">
-            <a href="/recover" className=" underline">
-              Recover Your Account.
-            </a>
-          </p>
+        <div className="mt-10 mb-10 text-center text-xl space-y-2">
+          <a href="/signup" className=" underline">
+            New Here? SIGN UP
+          </a>
+          <div>
+            <p className="mt-5">
+              <a href="/recover" className=" underline">
+                Recover Your Account.
+              </a>
+            </p>
+          </div>
         </div>
-      </div>
-    </main>
+      </main>
+    </StardustBackground>
   )
 }

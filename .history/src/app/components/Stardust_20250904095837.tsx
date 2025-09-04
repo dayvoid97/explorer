@@ -37,7 +37,7 @@ export default function StardustBackground({ children }: StardustBackgroundProps
 
     const animate = () => {
       // Clear canvas
-      ctx.fillStyle = '#0a0a1e'
+      ctx.fillStyle = '#f9f9ffff'
       ctx.fillRect(0, 0, canvas.width, canvas.height)
 
       time += 0.01
@@ -70,8 +70,7 @@ export default function StardustBackground({ children }: StardustBackgroundProps
       <div
         className="-z-5 fixed inset-0"
         style={{
-          background:
-            'linear-gradient(135deg, rgba(1, 1, 50, 0.6) 0%, rgba(98, 36, 234, 0.7) 100%)',
+          background: 'linear-gradient(135deg, rgba(1, 1, 50, 0.9) 0%, rgba(0, 0, 0, 0.6) 100%)',
         }}
       />
 

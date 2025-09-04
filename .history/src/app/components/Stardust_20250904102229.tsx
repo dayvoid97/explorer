@@ -71,7 +71,7 @@ export default function StardustBackground({ children }: StardustBackgroundProps
         className="-z-5 fixed inset-0"
         style={{
           background:
-            'linear-gradient(135deg, rgba(1, 1, 50, 0.6) 0%, rgba(98, 36, 234, 0.7) 100%)',
+            'linear-gradient(135deg, rgba(1, 1, 50, 0.9) 0%, rgba(98, 36, 234, 0.6) 100%)',
         }}
       />
 
