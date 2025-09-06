@@ -612,7 +612,6 @@ export default function WinDetailPage({ winId }: Props) {
                   return <></>
                 })()}
               </div>
-              <SignUpButton />
 
               <button
                 onClick={goToNext}

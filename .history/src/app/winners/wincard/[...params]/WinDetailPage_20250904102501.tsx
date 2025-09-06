@@ -10,7 +10,6 @@ import { removeTokens } from '@/app/lib/auth'
 import { celebrateWin } from '@/app/hooks/useCelebrateWins'
 import { updatePageMetadata, createSlug } from '@/app/lib/utils'
 import { fetchExploreWins } from '@/app/lib/fetchWins'
-import SignUpButton from '@/app/components/ui/SignUp'
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -612,7 +611,6 @@ export default function WinDetailPage({ winId }: Props) {
                   return <></>
                 })()}
               </div>
-              <SignUpButton />
 
               <button
                 onClick={goToNext}
