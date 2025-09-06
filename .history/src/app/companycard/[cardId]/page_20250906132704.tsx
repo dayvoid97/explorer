@@ -433,12 +433,13 @@ export default function CompanyCardPage() {
             items.map((item: any, i: number) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-sm px-4 py-3 border dark:border-gray-700"
+                className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg transition-shadow duration-200 p-6 border border-gray-200 dark:border-gray-700"
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <div className="flex items-center gap-2">
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
+                {/* Header Section */}
+                <div className="flex justify-between items-start mb-4">
+                  <div className="flex-1">
+                    <div className="flex items-center gap-3 mb-2">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white leading-tight">
                         {item.title}
                       </h3>
                       {item.externalLink && (
@@ -446,49 +447,110 @@ export default function CompanyCardPage() {
                           href={item.externalLink}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-green-600 hover:underline text-sm flex items-center gap-1 dark:text-green-400"
+                          className="inline-flex items-center gap-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 transition-colors duration-150 text-sm font-medium"
+                          title="Open external link"
                         >
-                          ↗ External
+                          <span>↗</span>
+                          <span>External</span>
                         </a>
                       )}
                     </div>
 
-                    <p className="font-italic font-semibold text-sm  mt-1 dark:text-gray-300">
-                      {item.description}
-                    </p>
-
-                    <p className="text-sm text-gray-600 mt-1 dark:text-gray-300">
-                      {item.paragraphs}
-                    </p>
-
-                    <div className="flex gap-4 mt-2 text-xs text-gray-500 items-center dark:text-gray-400">
-                      <span>🕒 {timeAgo(item.uploadedAt)}</span>
-                      <span>👁️ {item.viewCount} views</span>
-                      <span>💾 {item.saveCount} saves</span>
+                    {/* Status Badge */}
+                    <div className="flex items-center gap-2">
+                      <span
+                        className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${
+                          item.isDraft
+                            ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400'
+                            : 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400'
+                        }`}
+                      >
+                        {item.isDraft ? '🔒 Private' : '🌐 Public'}
+                      </span>
                     </div>
                   </div>
+                </div>
 
-                  <div className="flex items-center gap-4">
-                    <span
-                      className={`text-xs font-semibold px-2 py-1 rounded ${
-                        item.isDraft
-                          ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-950 dark:text-yellow-300'
-                          : 'bg-green-100 text-green-700 dark:bg-green-950 dark:text-green-300'
-                      }`}
-                    >
-                      {item.isDraft ? 'Private' : 'Public'}
+                {/* Description Section */}
+                {item.description && (
+                  <div className="mb-4">
+                    <p className="text-gray-700 dark:text-gray-300 font-medium leading-relaxed">
+                      {item.description}
+                    </p>
+                  </div>
+                )}
+
+                {/* Content Section */}
+                {item.paragraphs && (
+                  <div className="mb-4">
+                    <div className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                      {/* Handle multiple paragraphs if it's an array, or single paragraph if string */}
+                      {Array.isArray(item.paragraphs) ? (
+                        item.paragraphs.map((paragraph: string, pIndex: number) => (
+                          <p key={pIndex} className="mb-2 last:mb-0">
+                            {paragraph}
+                          </p>
+                        ))
+                      ) : (
+                        <p>{item.paragraphs}</p>
+                      )}
+                    </div>
+                  </div>
+                )}
+
+                {/* Links Section */}
+                {item.links && item.links.length > 0 && (
+                  <div className="mb-4">
+                    <h4 className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
+                      📎 Related Links:
+                    </h4>
+                    <div className="space-y-1">
+                      {item.links.map((link: any, linkIndex: number) => (
+                        <a
+                          key={linkIndex}
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 hover:underline transition-colors duration-150"
+                          title={link.description || link.url}
+                        >
+                          • {link.title || link.url}
+                        </a>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Footer Section */}
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-4 border-t border-gray-100 dark:border-gray-700">
+                  {/* Stats */}
+                  <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
+                    <span className="flex items-center gap-1">
+                      <span>🕒</span>
+                      <span>{timeAgo(item.uploadedAt)}</span>
                     </span>
+                    <span className="flex items-center gap-1">
+                      <span>👁️</span>
+                      <span>{item.viewCount} views</span>
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <span>💾</span>
+                      <span>{item.saveCount} saves</span>
+                    </span>
+                  </div>
 
+                  {/* Action Buttons */}
+                  <div className="flex items-center gap-3">
                     <button
                       onClick={() => handleItemPublishToggle(item)}
-                      className="text-blue-600 hover:underline text-sm dark:text-blue-400"
+                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/20 dark:hover:bg-blue-900/30 rounded-md transition-colors duration-150"
                     >
                       {item.isDraft ? 'Make Public' : 'Make Private'}
                     </button>
 
                     <button
                       onClick={() => handleItemDelete(item)}
-                      className="text-red-600 hover:underline text-sm dark:text-red-400"
+                      className="inline-flex items-center px-3 py-1.5 text-xs font-medium text-red-600 hover:text-red-700 dark:text-red-400 dark:hover:text-red-300 bg-red-50 hover:bg-red-100 dark:bg-red-900/20 dark:hover:bg-red-900/30 rounded-md transition-colors duration-150"
                     >
                       Delete
                     </button>

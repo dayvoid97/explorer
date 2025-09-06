@@ -453,7 +453,7 @@ export default function CompanyCardPage() {
                       )}
                     </div>
 
-                    <p className="font-italic font-semibold text-sm  mt-1 dark:text-gray-300">
+                    <p className="font-semibold-italic text-sm  mt-1 dark:text-gray-300">
                       {item.description}
                     </p>
 

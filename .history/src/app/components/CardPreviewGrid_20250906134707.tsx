@@ -47,7 +47,7 @@ export default function CardPreviewGrid() {
           <TrendingUp className="w-8 h-8 text-black dark:text-white" />
         </div>
         <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-          In-depth analysis, insights and signals from the BEST of the Financial Gurkhas
+          In-depth analysis and insights from the FG Community
         </p>
       </div>
 
