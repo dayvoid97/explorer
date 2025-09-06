@@ -11,6 +11,13 @@ export default function WinPreviewGrid() {
   const [wins, setWins] = useState<any[]>([])
   const router = useRouter()
 
+  // Ad slots for rotation
+  const adSlots = [
+    '1234567890', // Replace with your actual ad slot IDs
+    '2345678901',
+    '3456789012',
+  ]
+
   useEffect(() => {
     const getData = async () => {
       const data = await fetchWins()
@@ -29,7 +36,23 @@ export default function WinPreviewGrid() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {wins.map((win, index) => (
           <React.Fragment key={win.id}>
-            {adIndex === index && <AdUnit />}
+            {adIndex === index && (
+              <div className="sm:col-span-2 md:col-span-3">
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border-2 border-dashed border-gray-200 dark:border-gray-600">
+                  <div className="text-xs text-gray-400 text-center mb-2">Advertisement</div>
+                  <AdUnit
+                    adSlot={adSlots[0]} // Using first ad slot, or you can randomize
+                    className="w-full"
+                    style={{
+                      display: 'block',
+                      width: '100%',
+                      minHeight: '200px',
+                      maxHeight: '300px',
+                    }}
+                  />
+                </div>
+              </div>
+            )}
             <WinCard win={win} />
           </React.Fragment>
         ))}

@@ -44,8 +44,6 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
           `❌ Ad impression ping failed (Status: ${res.status}):`,
           errorData.message || res.statusText
         )
-      } else {
-        console.log('✅ Ad impression recorded successfully')
       }
     } catch (err: any) {
       console.error('❌ Ad impression ping failed:', err.message)

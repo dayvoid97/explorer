@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { authFetch } from '../lib/api'
 import { isLoggedIn } from '../lib/auth'
@@ -18,17 +18,12 @@ interface PromoBannerProps {
 export default function PromoBanner({ winId }: PromoBannerProps) {
   const router = useRouter()
   const pingInterval = useRef<NodeJS.Timeout | null>(null)
-  const containerRef = useRef<HTMLDivElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
-  const [hasBeenVisible, setHasBeenVisible] = useState(false)
 
   const sendImpressionPing = async () => {
     const payload = {
       adSlot: AD_SLOT,
-      winId: winId || 'unknown', // Ensure winId is never null
-      adClient: LOCATION, // Using location as adClient identifier
-      event: 'impression', // Specify the event type
-      timestamp: Date.now(), // Current timestamp
+      location: LOCATION,
+      winId: winId || null,
     }
 
     try {
@@ -44,8 +39,6 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
           `❌ Ad impression ping failed (Status: ${res.status}):`,
           errorData.message || res.statusText
         )
-      } else {
-        console.log('✅ Ad impression recorded successfully')
       }
     } catch (err: any) {
       console.error('❌ Ad impression ping failed:', err.message)
@@ -53,62 +46,26 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
   }
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true)
-            if (!hasBeenVisible) {
-              setHasBeenVisible(true)
-              // Fire initial impression when first coming into view
-              sendImpressionPing()
+    // Fire initial impression
+    sendImpressionPing()
 
-              // Start interval pings every 5 seconds while visible
-              pingInterval.current = setInterval(() => {
-                sendImpressionPing()
-              }, 5000)
-            }
-          } else {
-            setIsVisible(false)
-            // Stop pings when not visible
-            if (pingInterval.current) {
-              clearInterval(pingInterval.current)
-              pingInterval.current = null
-            }
-          }
-        })
-      },
-      {
-        threshold: 0.5, // Trigger when 50% of the ad is visible
-        rootMargin: '0px 0px -50px 0px', // Slight offset to ensure meaningful visibility
-      }
-    )
+    // Fire pings every 5 seconds
+    pingInterval.current = setInterval(() => {
+      sendImpressionPing()
+    }, 5000)
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current)
-    }
-
+    // Cleanup
     return () => {
       if (pingInterval.current) clearInterval(pingInterval.current)
-      observer.disconnect()
     }
-  }, [winId, hasBeenVisible])
-
-  // Resume pings when component becomes visible again (if it was already visible once)
-  useEffect(() => {
-    if (isVisible && hasBeenVisible && !pingInterval.current) {
-      pingInterval.current = setInterval(() => {
-        sendImpressionPing()
-      }, 5000)
-    }
-  }, [isVisible, hasBeenVisible])
+  }, [winId])
 
   const handleClick = () => {
     router.push(isLoggedIn() ? '/wins' : '/login')
   }
 
   return (
-    <div ref={containerRef} className="relative mt-8 p-0">
+    <div className="relative mt-8 p-0">
       <div
         className="rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition hover:shadow-md bg-white dark:bg-gray-800"
         style={{ padding: '1.5rem' }}
@@ -140,13 +97,6 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
           </a>
         </div>
       </div>
-
-      {/* Debug indicator - remove in production */}
-      {process.env.NODE_ENV === 'development' && (
-        <div className="absolute top-2 right-2 text-xs bg-black text-white px-2 py-1 rounded">
-          {isVisible ? '👁️ Visible' : '🙈 Hidden'}
-        </div>
-      )}
     </div>
   )
 }

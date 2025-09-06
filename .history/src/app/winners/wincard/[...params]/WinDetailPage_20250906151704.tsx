@@ -11,7 +11,6 @@ import { celebrateWin } from '@/app/hooks/useCelebrateWins'
 import { updatePageMetadata, createSlug } from '@/app/lib/utils'
 import { fetchExploreWins } from '@/app/lib/fetchWins'
 import SignUpButton from '@/app/components/ui/SignUp'
-import AdUnit from '@/app/components/AdUnit'
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -479,6 +478,11 @@ export default function WinDetailPage({ winId }: Props) {
         setApiError(err.toString())
         setWin(null)
       })
+    authFetch(`${API_URL}/gurkha/wins/increment-view`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ winId }),
+    }).catch(() => {})
   }, [winId])
 
   useEffect(() => {
@@ -675,7 +679,6 @@ export default function WinDetailPage({ winId }: Props) {
             socialLinks={win.socialLinks}
           />
         )}
-
         <CommentSection winId={winId} />
         <PromoBanner winId={winId} />
       </main>

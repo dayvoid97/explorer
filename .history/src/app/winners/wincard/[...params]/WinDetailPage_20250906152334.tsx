@@ -675,7 +675,7 @@ export default function WinDetailPage({ winId }: Props) {
             socialLinks={win.socialLinks}
           />
         )}
-
+        <AdUnit adSlot="winDetail" winId={winId} />
         <CommentSection winId={winId} />
         <PromoBanner winId={winId} />
       </main>

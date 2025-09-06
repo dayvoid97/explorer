@@ -38,15 +38,12 @@ export default function useFetchCards(): UseFetchCardsReturn {
       setLoading(true)
       setError(null)
 
-      const response = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/fetchCards`,
-        {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        }
-      )
+      const response = await authFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/fetchCards`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
 
       if (!response.ok) {
         const errorData = await response.json()
@@ -74,4 +71,4 @@ export default function useFetchCards(): UseFetchCardsReturn {
     error,
     refetch: fetchCards,
   }
-}
+} 

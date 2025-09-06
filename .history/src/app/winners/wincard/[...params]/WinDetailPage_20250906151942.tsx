@@ -479,6 +479,11 @@ export default function WinDetailPage({ winId }: Props) {
         setApiError(err.toString())
         setWin(null)
       })
+    authFetch(`${API_URL}/gurkha/wins/increment-view`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ winId }),
+    }).catch(() => {})
   }, [winId])
 
   useEffect(() => {
@@ -675,7 +680,7 @@ export default function WinDetailPage({ winId }: Props) {
             socialLinks={win.socialLinks}
           />
         )}
-
+        <AdUnit adSlot="winDetail" winId={winId} />
         <CommentSection winId={winId} />
         <PromoBanner winId={winId} />
       </main>

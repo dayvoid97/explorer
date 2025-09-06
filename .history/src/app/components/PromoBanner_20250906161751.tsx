@@ -25,10 +25,8 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
   const sendImpressionPing = async () => {
     const payload = {
       adSlot: AD_SLOT,
-      winId: winId || 'unknown', // Ensure winId is never null
-      adClient: LOCATION, // Using location as adClient identifier
-      event: 'impression', // Specify the event type
-      timestamp: Date.now(), // Current timestamp
+      location: LOCATION,
+      winId: winId || null,
     }
 
     try {
@@ -44,8 +42,6 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
           `❌ Ad impression ping failed (Status: ${res.status}):`,
           errorData.message || res.statusText
         )
-      } else {
-        console.log('✅ Ad impression recorded successfully')
       }
     } catch (err: any) {
       console.error('❌ Ad impression ping failed:', err.message)

@@ -10,12 +10,6 @@ import Image from 'next/image'
 
 import careerStaked from '../../../public/career-staked.png' // Assuming this path is correct
 
-declare global {
-  interface Window {
-    adsbygoogle: any
-  }
-}
-
 const AD_SLOT = '7604243956'
 const LOCATION = 'PromoBanner'
 
@@ -108,33 +102,32 @@ export default function PromoBanner({ winId }: PromoBannerProps) {
         style={{ padding: '1.5rem' }} // Keep padding
       >
         <div className="space-y-1">
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            🌟 Inspired by this win?
-          </h3>{' '}
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white">GET INSPIRED</h3>{' '}
           {/* Dark mode text */}
-          <p className="text-gray-500 dark:text-gray-400 text-sm">
+          <p className="text-sm">
             {' '}
             {/* Dark mode text */}
-            Share your own milestone and inspire others.
+            Share your milestones, dubs, and life scoops.
           </p>
           <button
             onClick={handleClick}
             className="mt-3 text-sm font-medium text-blue-600 hover:underline dark:text-blue-400 dark:hover:text-blue-300"
           >
-            Add Your Win
+            Post your Dubs
           </button>
         </div>
         <div className="mt-5 w-full space-y-2">
           <p className="text-gray-500 dark:text-gray-400 text-xs uppercase tracking-wide">
             Sponsored
           </p>{' '}
-          {/* Dark mode text */}
-          <Image
-            src={careerStaked}
-            alt="Career Staked Promo"
-            className="rounded-lg w-full h-auto object-cover"
-            priority
-          />
+          <a href=" https://apps.apple.com/us/app/strum-vibe-together/id6654898214">
+            <Image
+              src={careerStaked}
+              alt="Strum Vibe Together App on the iOS App Store"
+              className="rounded-lg w-full h-auto object-cover"
+              priority
+            />
+          </a>
         </div>
       </div>
     </div>

@@ -20,7 +20,7 @@ interface AdMetrics {
 }
 
 interface AdUnitProps {
-  adSlot: string
+  adSlot?: string // Made optional with default
   className?: string
   style?: React.CSSProperties
   adFormat?: string
