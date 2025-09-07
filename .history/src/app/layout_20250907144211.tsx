@@ -7,10 +7,11 @@ import Script from 'next/script'
 export const metadata: Metadata = {
   title: 'Financial Gurkha',
   description:
-    'Only Ws in the Chat. Try the Financial Gurkha Explorer at financialgurkha.com/explorer. Sister domain: www.thefederalreserve.com.',
+    'Only Ws in the Chat. FINANCIAL GURKHA IS FOR THE WINNERS. Post Your Dubs, Make Money Online',
   keywords: [
     'financial gurkha',
     'investing',
+    'make money online',
     'only ws in the chat',
     'only won the chat',
     'only win the chat',
@@ -18,15 +19,13 @@ export const metadata: Metadata = {
     '@onlywinthechat',
     'stock market',
     'crypto market',
-    'explorer',
+    'feed explorer',
     'market watcher',
     'crypto analysis',
-    'macroeconomics',
-    'microeconomics',
     'platform to post Ws',
     'platform to post dubs',
   ],
-  authors: [{ name: 'Kanchan Sharma', url: 'https://financialgurkha.com' }],
+  authors: [{ name: 'Kanchan Sharma', url: 'https://financialgurkha.com/about/kanchan' }],
   creator: 'Financial Gurkha',
   icons: {
     icon: '/favicon.ico',
@@ -34,17 +33,18 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Financial Gurkha',
     description:
-      'Explore cards, wins, and insights. The Financial Gurkha Explorer is your search engine for investing and markets.',
-    url: 'https://financialgurkha.com',
+      'Discover your favorite topics on Financial Gurkha. Generate income as a content creator.',
+    url: 'https://financialgurkha.com/winners',
     siteName: 'Financial Gurkha',
     images: [
       {
-        url: '/og-preview.png',
+        url: '/logo.png',
         width: 1200,
         height: 630,
-        alt: 'Financial Gurkha Preview',
+        alt: 'Only Ws in the Chat',
       },
     ],
+    locale: 'en_US',
     type: 'website',
   },
 }
@@ -52,7 +52,17 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="dark scroll-smooth antialiased">
-      <head />
+      <head>
+        <meta
+          name="google-site-verification"
+          content="kCNuZr5CtsCqdB-qpgskyWfPOdIs_CWW--FeTAmOXK0"
+        />
+        <meta name="robots" content="index, follow" />
+        <meta
+          name="googlebot"
+          content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
+        />
+      </head>
       <body className="flex flex-col min-h-screen bg-white dark:bg-gray-900 ">
         {/* ✅ Google Analytics */}
         <Script
@@ -71,15 +81,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }
             `}
         </Script>
-
-        {/* ✅ Google Adsense */}
-        <Script
-          id="adsense-script"
-          strategy="afterInteractive"
-          async
-          crossOrigin="anonymous"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8441965953327461"
-        />
 
         <NavBarClientWrapper />
         <main className="flex-grow">{children}</main>
