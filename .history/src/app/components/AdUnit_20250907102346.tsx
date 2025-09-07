@@ -221,6 +221,14 @@ export default function AdUnit({
         data-ad-format={adFormat}
         data-full-width-responsive="true"
       />
+
+      {/* Debug indicator - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute top-2 right-2 text-xs bg-black text-white px-2 py-1 rounded z-10">
+          {isVisible ? '👁️ Visible' : '🙈 Hidden'}
+          {hasBeenViewed && ' ✅ Viewed'}
+        </div>
+      )}
     </div>
   )
 }

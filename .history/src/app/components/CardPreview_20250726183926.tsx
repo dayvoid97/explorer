@@ -1,6 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { useRouter } from 'next/navigation'
-import { Calendar, User, Building2, Share2, TrendingUp } from 'lucide-react'
+import {
+  Calendar,
+  User,
+  Building2,
+  Share2,
+  TrendingUp
+} from 'lucide-react'
 import type { CardData } from '../hooks/useFetchCards'
 
 interface CardPreviewProps {
@@ -12,9 +18,7 @@ export default function CardPreview({ card }: CardPreviewProps) {
   const [showShareMenu, setShowShareMenu] = useState(false)
   const shareMenuRef = useRef<HTMLDivElement>(null)
 
-  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/company/${
-    card.cardId
-  }`
+  const url = `${typeof window !== 'undefined' ? window.location.origin : ''}/company/${card.cardId}`
   const title = `Check out this card on Financial Gurkha: ${card.companyName}`
   const text = card.items?.[0]?.title || card.items?.[0]?.description || ''
 
@@ -34,7 +38,7 @@ export default function CardPreview({ card }: CardPreviewProps) {
     if (navigator.share) {
       navigator.share({ title, text, url }).catch(() => {})
     } else {
-      setShowShareMenu((v) => !v)
+      setShowShareMenu(v => !v)
     }
   }
 
@@ -46,7 +50,7 @@ export default function CardPreview({ card }: CardPreviewProps) {
   return (
     <div
       onClick={() => router.push(`/company/${card.cardId}`)}
-      className="group w-full max-w-md mx-auto sm:mx-0 cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-md hover:shadow-xl transform hover:scale-[1.01] transition-all duration-200 ease-in-out p-6"
+      className="w-full max-w-md mx-auto sm:mx-0 cursor-pointer bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-md hover:shadow-xl transform hover:scale-[1.01] transition-all duration-200 ease-in-out p-6 group"
     >
       {/* Top Row: User, Date, Share */}
       <div className="flex justify-between items-center mb-4">
@@ -68,12 +72,10 @@ export default function CardPreview({ card }: CardPreviewProps) {
             <div
               ref={shareMenuRef}
               className="absolute right-0 top-8 z-50 bg-white dark:bg-zinc-900 border border-gray-200 dark:border-gray-700 rounded-lg shadow-md p-2 flex flex-col gap-1 min-w-[160px]"
-              onClick={(e) => e.stopPropagation()}
+              onClick={e => e.stopPropagation()}
             >
               <a
-                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(
-                  url
-                )}&text=${encodeURIComponent(title)}`}
+                href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-600 dark:text-blue-300 text-xs"
@@ -89,9 +91,7 @@ export default function CardPreview({ card }: CardPreviewProps) {
                 Facebook
               </a>
               <a
-                href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(
-                  url
-                )}&title=${encodeURIComponent(title)}`}
+                href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2 px-2 py-1 rounded hover:bg-blue-50 dark:hover:bg-blue-900/20 text-blue-800 dark:text-blue-200 text-xs"

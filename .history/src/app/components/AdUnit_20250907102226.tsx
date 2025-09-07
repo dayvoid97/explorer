@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useCallback, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid'
+import { AD_CONFIG } from '../config/adConfig'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -221,6 +222,14 @@ export default function AdUnit({
         data-ad-format={adFormat}
         data-full-width-responsive="true"
       />
+
+      {/* Debug indicator - remove in production */}
+      {process.env.NODE_ENV === 'development' && (
+        <div className="absolute top-2 right-2 text-xs bg-black text-white px-2 py-1 rounded z-10">
+          {isVisible ? '👁️ Visible' : '🙈 Hidden'}
+          {hasBeenViewed && ' ✅ Viewed'}
+        </div>
+      )}
     </div>
   )
 }

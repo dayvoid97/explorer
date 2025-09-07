@@ -656,7 +656,6 @@ export default function WinDetailPage({ winId }: Props) {
           </div>
         </div>
       </div>
-      <AdUnit adSlot="7779271603" />
 
       <main className="max-w-2xl mx-auto px-4 py-8 space-y-10">
         <div className="space-y-4 text-center">

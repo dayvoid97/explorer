@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import React, { useState } from 'react'
 import { Heart, Repeat2, Share, Eye, Bookmark, Palette } from 'lucide-react'
 import { authFetch } from '../lib/api'

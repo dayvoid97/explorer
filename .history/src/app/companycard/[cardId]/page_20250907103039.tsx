@@ -501,22 +501,7 @@ export default function CompanyCardPage() {
           )}
         </div>
       </div>
-      <div className="w-full lg:w-80 flex-shrink-0">
-        <div className="sticky top-6">
-          <AdUnit
-            adSlot={AD_CONFIG.AD_SLOTS.COMPANY_CARD_SKYSCRAPER}
-            winId={cardId}
-            className="w-full"
-            style={{
-              display: 'block',
-              width: '100%',
-              minHeight: '600px', // Typical skyscraper height
-              maxWidth: '320px',
-              margin: '0 auto',
-            }}
-          />
-        </div>
-      </div>
+      {/* Custom Delete Confirmation Modal */}
       {confirmDeleteItemId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">

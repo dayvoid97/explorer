@@ -8,9 +8,7 @@ import { removeTokens, isLoggedIn } from '@/app/lib/auth' // isLoggedIn for init
 import MediaUploader from '@/app/components/MediaUploader' // Already updated
 import { timeAgo } from '@/app/lib/time' // Assuming this utility is correct
 import { Pencil, Save } from 'lucide-react'
-import AdUnit from '@/app/components/AdUnit'
 import StarButton from '@/app/components/StarButton'
-import { AD_CONFIG } from '@/app/config/adConfig'
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -501,22 +499,7 @@ export default function CompanyCardPage() {
           )}
         </div>
       </div>
-      <div className="w-full lg:w-80 flex-shrink-0">
-        <div className="sticky top-6">
-          <AdUnit
-            adSlot={AD_CONFIG.AD_SLOTS.COMPANY_CARD_SKYSCRAPER}
-            winId={cardId}
-            className="w-full"
-            style={{
-              display: 'block',
-              width: '100%',
-              minHeight: '600px', // Typical skyscraper height
-              maxWidth: '320px',
-              margin: '0 auto',
-            }}
-          />
-        </div>
-      </div>
+      {/* Custom Delete Confirmation Modal */}
       {confirmDeleteItemId && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-full max-w-sm text-center">
