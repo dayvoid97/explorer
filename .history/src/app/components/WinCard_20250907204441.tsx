@@ -336,7 +336,7 @@ export default function WinCard({ win }: WinProps) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && goToDetail()}
-      className="mb-20"
+      className="underline"
     >
       {/* Main Content Area */}
       <div className="flex gap-3 sm:gap-4">

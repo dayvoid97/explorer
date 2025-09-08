@@ -336,7 +336,7 @@ export default function WinCard({ win }: WinProps) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && goToDetail()}
-      className="mb-20"
+      className="group dark:hover:bg-gray-750 w-full cursor-pointer bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 hover:bg-gray-50 transition-all duration-200 px-10 py-10"
     >
       {/* Main Content Area */}
       <div className="flex gap-3 sm:gap-4">
