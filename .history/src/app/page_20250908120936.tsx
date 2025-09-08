@@ -1,7 +1,6 @@
 export default function Home() {
   return (
-    <div className="min-h-screen">
-      {' '}
+    <div className="min-h-screen bg-white">
       <header className="bg-black text-white py-8">
         <div className="max-w-4xl mx-auto px-6">
           <h1 className="text-3xl md:text-4xl font-bold text-center">
@@ -25,6 +24,7 @@ export default function Home() {
           </p>
         </div>
       </header>
+
       <main className="max-w-4xl mx-auto px-6 py-12">
         <section className="mb-16">
           <div className="border-l-4 border-gray-800 pl-6">
@@ -102,15 +102,14 @@ export default function Home() {
             </div>
             <div className="bg-black p-6 rounded-lg">
               <h3 className="text-xl text-white font-semibold mb-3">SHARE ACROSS MEDIAS</h3>
-              <p className="mb-4 text-white">
+              <p className="mb-4">
                 Nepal might do dark anytime soon. Make sure you're sharing what's going on in Nepal.
               </p>
-
-              <p className="text-white font-extrabold mb-10">
-                <a href="htttps://financialgurkha.com/signup">
+              <a href="htttps://financialgurkha.com/signup">
+                <p className="text-green-900 font-bold mb-4">
                   Click here to create an account to post
-                </a>
-              </p>
+                </p>
+              </a>
             </div>
           </div>
         </section>
@@ -164,6 +163,7 @@ export default function Home() {
           </div>
         </section>
       </main>
+
       {/* Footer */}
       <footer className="bg-gray-900 text-white py-8 mt-16">
         <div className="max-w-4xl mx-auto px-6 text-center">

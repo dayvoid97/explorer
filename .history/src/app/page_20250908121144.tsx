@@ -1,6 +1,14 @@
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div
+      className="min-h-screen bg-black text-white"
+      style={{
+        backgroundImage: "url('/your-background.jpg')", // change this path to your image
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed', // makes background stay fixed while scrolling
+      }}
+    >
       {' '}
       <header className="bg-black text-white py-8">
         <div className="max-w-4xl mx-auto px-6">

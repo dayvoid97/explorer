@@ -1,6 +1,15 @@
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div
+      className="min-h-screen "
+      style={{
+        backgroundImage:
+          "url('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.instagram.com%2Fp%2FDOSV_elEc3g%2F&psig=AOvVaw0jmNRV3GUkskUnkXBC7SfT&ust=1757431250445000&source=images&cd=vfe&opi=89978449&ved=0CBcQjRxqFwoTCPjK89y7yY8DFQAAAAAdAAAAABBB')", // change this path to your image
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed', // makes background stay fixed while scrolling
+      }}
+    >
       {' '}
       <header className="bg-black text-white py-8">
         <div className="max-w-4xl mx-auto px-6">

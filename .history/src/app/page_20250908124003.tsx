@@ -13,7 +13,13 @@ export default function Home() {
             POLITICAL REGIME OF NEPAL, THE CORRUPT POLITICINS, THE CORRUPT BUREAUCRACY
           </p>
         </div>
-        <div className="max-w-4xl mx-auto px-6">
+        <div
+          className="max-w-4xl mx-auto px-6
+        style={{
+        
+        backgroundSize: 'cover',
+      }}"
+        >
           <h1 className="text-3xl md:text-4xl font-bold text-center">SHAME ON YOU, NEWS MEDIAS</h1>
           <p className="text-lg text-center mt-2 ">
             SHAME on you, The New York Times, BBC,Al Jazeera for portraying the GEN-Z protest of

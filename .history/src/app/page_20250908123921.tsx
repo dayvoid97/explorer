@@ -1,6 +1,14 @@
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div
+      className="min-h-screen"
+      style={{
+        backgroundImage: `url("https://opnepal.files.wordpress.com/2015/06/nepal-flag.jpg")`, // example direct link
+        backgroundSize: 'contain',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed',
+      }}
+    >
       {' '}
       <header className="bg-black text-white py-8">
         <div className="max-w-4xl mx-auto px-6">

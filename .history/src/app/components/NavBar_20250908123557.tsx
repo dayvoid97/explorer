@@ -96,12 +96,12 @@ export default function Navbar() {
 
 // Desktop NavLinks
 function NavLinks() {
-  const linkClasses = 'text-m sm:text-base font-medium hover:text-blue-400 transition'
+  const linkClasses = 'text-sm sm:text-base font-medium hover:text-blue-400 transition'
 
   return (
     <>
       <Link href="/wins" className={linkClasses}>
-        POST IT
+        PRESS IT
       </Link>
       <Link
         href="/winners"
