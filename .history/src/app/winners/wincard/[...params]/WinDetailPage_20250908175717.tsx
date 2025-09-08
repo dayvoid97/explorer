@@ -11,7 +11,6 @@ import { celebrateWin } from '@/app/hooks/useCelebrateWins'
 import { updatePageMetadata, createSlug } from '@/app/lib/utils'
 import { fetchExploreWins } from '@/app/lib/fetchWins'
 import AdUnit from '@/app/components/AdUnit'
-import Link from 'next/link'
 
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
@@ -359,6 +358,12 @@ function SocialShareButtons({ win }: { win: any }) {
       >
         Redub on X
       </button>
+      <button
+        onClick={shareOnTwitter}
+        className="text-m flex items-center gap-2 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors font-medium"
+      >
+        Redub on X
+      </button>
     </div>
   )
 }
@@ -665,12 +670,6 @@ export default function WinDetailPage({ winId }: Props) {
           {isLoadingNavigation && <div className="text-xs mt-2">Loading navigation...</div>}
           <div>
             <SocialShareButtons win={win} />
-            <Link href="/genznepal">
-              <div className="cursor-pointer text-red-600 font-bold hover:underline">
-                NEPAL IS BURNING. INNOCENT KIDS ARE BEING KILLED BY THE GOVERNMENT. PLEASE WORRY
-                ABOUT US.
-              </div>
-            </Link>
           </div>
         </div>
       </div>

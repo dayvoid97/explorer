@@ -12,7 +12,7 @@ export default function Home() {
           <p className="text-lg text-center mt-2 text-gray-300">SOLIDARITY FOR THE GEN-Z PROTEST</p>
           <p className="text-lg text-center mt-2 font-bold ">
             THIS IS NOT A PROTEST AGAINST SOCIAL MEDIA BAN. THIS IS A PROTEST AGAINST THE CORRUPT
-            POLITICAL REGIME OF NEPAL, THE CORRUPT POLITICIANS, THE CORRUPT BUREAUCRACY
+            POLITICAL REGIME OF NEPAL, THE CORRUPT POLITICINS, THE CORRUPT BUREAUCRACY
           </p>
         </div>
         <div className="max-w-4xl mx-auto px-6">
@@ -23,7 +23,7 @@ export default function Home() {
           </p>
           <p className="text-lg text-center mt-2 font-bold ">
             THIS IS NOT A PROTEST AGAINST SOCIAL MEDIA BAN. THIS IS A PROTEST AGAINST THE CORRUPT
-            POLITICAL REGIME OF NEPAL, THE CORRUPT POLITICIANS, THE CORRUPT BUREAUCRACY
+            POLITICAL REGIME OF NEPAL, THE CORRUPT POLITICINS, THE CORRUPT BUREAUCRACY
           </p>
         </div>
       </header>
@@ -75,13 +75,6 @@ export default function Home() {
           <h2 className="text-2xl font-bold mb-6 text-gray-900">
             MEDIA FROM THE FRONT LINES AND ACROSS THE INTERNET
           </h2>
-          <div>
-            <p>
-              Nepal is burning. Nepal needs help. The younger generation protesting needs help and
-              attention of the world for their success. Please do not let the blood of the young and
-              innocent go in Vain.
-            </p>
-          </div>
           <ProtestCarousel />
         </section>
 
@@ -101,8 +94,7 @@ export default function Home() {
               </h3>
               <p className="text-gray-700 mb-4">
                 The protest is not stopping anytime soon. Keep your resources intact for the youth
-                of Nepal will need them very soon. FINANCIAL GURKHA will continuously update any and
-                all ways to help as we find them.
+                of Nepal will need them very soon.
               </p>
             </div>
             <div className="bg-red-50 p-6 rounded-lg">
@@ -120,12 +112,7 @@ export default function Home() {
             <div className="bg-black p-6 rounded-lg">
               <h3 className="text-xl text-white font-semibold mb-3">SHARE ACROSS MEDIAS</h3>
               <p className="mb-4 text-white">
-                To our friends and well wishers across the world, please share what's going on in
-                Nepal.
-                <p>
-                  Nepal might do dark anytime soon. Make sure you're sharing what's going on in
-                  Nepal.
-                </p>
+                Nepal might do dark anytime soon. Make sure you're sharing what's going on in Nepal.
               </p>
 
               <p className="text-white font-extrabold mb-10">

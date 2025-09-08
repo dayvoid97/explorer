@@ -665,7 +665,7 @@ export default function WinDetailPage({ winId }: Props) {
           {isLoadingNavigation && <div className="text-xs mt-2">Loading navigation...</div>}
           <div>
             <SocialShareButtons win={win} />
-            <Link href="/genznepal">
+            <Link href="/nepal">
               <div className="cursor-pointer text-red-600 font-bold hover:underline">
                 NEPAL IS BURNING. INNOCENT KIDS ARE BEING KILLED BY THE GOVERNMENT. PLEASE WORRY
                 ABOUT US.
