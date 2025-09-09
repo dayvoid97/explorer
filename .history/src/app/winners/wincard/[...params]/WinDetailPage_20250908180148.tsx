@@ -667,8 +667,8 @@ export default function WinDetailPage({ winId }: Props) {
             <SocialShareButtons win={win} />
             <Link href="/genznepal">
               <div className="cursor-pointer text-red-600 font-bold hover:underline">
-                NEPAL IS BURNING. INNOCENT KIDS ARE BEING KILLED BY THE GOVERNMENT. PLEASE PRAY WITH
-                US AND FIGHT THIS INJUSTICE WITH US.
+                NEPAL IS BURNING. INNOCENT KIDS ARE BEING KILLED BY THE GOVERNMENT. PLEASE WORRY
+                ABOUT US.
               </div>
             </Link>
           </div>
