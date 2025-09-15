@@ -40,7 +40,14 @@ export default function Navbar() {
 
         {/* Logo and Masthead */}
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          <div></div>
+          <div>
+            <Link href="/genznepal">
+              <p className="cursor-pointer text-red-600 font-bold hover:underline">
+                NEPAL IS BURNING. INNOCENT KIDS ARE BEING KILLED BY THE GOVERNMENT. PLEASE PRAY WITH
+                US AND FIGHT THIS INJUSTICE WITH US.
+              </p>
+            </Link>
+          </div>
           <Link
             href="/"
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black hover:scale-105 transition-transform duration-200 tracking-wider"

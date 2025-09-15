@@ -40,7 +40,13 @@ export default function Navbar() {
 
         {/* Logo and Masthead */}
         <div className="flex-1 flex flex-col items-center justify-center text-center">
-          <div></div>
+          <div>
+            <Link href="/genznepal">
+              <p className="cursor-pointer text-red-600 font-bold hover:underline">
+                GEN Z PROTEST AGAINST THE GOVERNMENT IN NEPAL
+              </p>
+            </Link>
+          </div>
           <Link
             href="/"
             className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-black hover:scale-105 transition-transform duration-200 tracking-wider"

@@ -148,6 +148,21 @@ export default function ExplorerPage(): JSX.Element {
           ))}
         </div>
       )}
+
+      {/* Discover Chronologies CTA */}
+      <div className="mt-5 mb-5 text-center">
+        <div className="">
+          <div className="flex flex-col items-center space-y-4">
+            <div className="text-4xl mb-2">📚</div>
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+              ChronoDUBS by Financial Gurkha
+            </h2>
+            <p className="text-gray-600 dark:text-gray-300 max-w-md text-center">
+              Explore curated timelines of WINNERS. Only Ws in the Chat.
+            </p>
+          </div>
+        </div>
+      </div>
     </main>
   )
 }

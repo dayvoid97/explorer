@@ -411,7 +411,7 @@ export default function MediaUploader({ cardId }: { cardId: string }) {
           </div>
 
           {/* Type-Specific Content */}
-          {renderContentInput()}
+          {/* {renderContentInput()} */}
 
           {/* Upload Button */}
           <div className="border-border pt-4 border-t">
