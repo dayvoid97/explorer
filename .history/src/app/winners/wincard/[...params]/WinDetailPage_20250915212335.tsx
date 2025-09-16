@@ -666,7 +666,7 @@ export default function WinDetailPage({ winId }: Props) {
           <div>
             <SocialShareButtons win={win} />
             <Link href="/genznepal">
-              <div className="cursor-pointer text-green-600 font-bold hover:underline">
+              <div className="cursor-pointer text-red-600 font-bold hover:underline">
                 GenZ protest in Nepal
               </div>
             </Link>

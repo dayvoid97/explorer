@@ -21,15 +21,15 @@ export default function NepalProtest() {
           <h2 className="text-2xl md:text-3xl font-bold mb-6">
             72 martyrs sacrificed their lives for the protest against the corrupt government.
           </h2>
-          <p className="mb-4">
+          <p className=" mb-4">
             The government of Nepal opened fire on minors—children in school uniforms—innocent kids
             who could be their grandchildren’s age.
           </p>
         </section>
 
-        <section className="mb-16  p-8 rounded-lg">
+        <section className="mb-16 bg-gray-50 p-8 rounded-lg">
           <h2 className="text-2xl font-bold mb-6 text-center">Remembering the Victims</h2>
-          <p className="text-center  mb-6">
+          <p className="text-center text-gray-700 mb-6">
             Rest in peace, innocent souls. Your blood will not go in vain. To our injured brothers
             and sisters: the fight stays strong.
           </p>
@@ -80,14 +80,14 @@ export default function NepalProtest() {
           <div className="grid md:grid-cols-2 gap-12">
             <div>
               <h2 className="text-xl font-bold mb-4">About Us</h2>
-              <p className="">
+              <p className="text-gray-700">
                 I am Kanchan Sharma, a Gen-Z member running this website to amplify the protest from
                 afar. I will keep this site live and unfiltered to ensure the truth is visible.
               </p>
             </div>
             <div>
               <h2 className="text-xl font-bold mb-4">Contact</h2>
-              <div className="space-y-2 ">
+              <div className="space-y-2 text-gray-700">
                 <p>Email: sharma.kanchan3154@gmail.com</p>
                 <p>WhatsApp / Viber / Phone: +1-201-954-5235</p>
                 <div className="pt-2">
@@ -117,7 +117,7 @@ export default function NepalProtest() {
       </main>
 
       <footer className="bg-gray-900 text-white py-8 mt-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center text-gray-400">
           © {new Date().getFullYear()} Financial Gurkha | Strum Collective — Standing for freedom,
           justice, and against corruption.
         </div>

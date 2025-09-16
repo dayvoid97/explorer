@@ -117,7 +117,7 @@ export default function NepalProtest() {
       </main>
 
       <footer className="bg-gray-900 text-white py-8 mt-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center text-gray-400">
           © {new Date().getFullYear()} Financial Gurkha | Strum Collective — Standing for freedom,
           justice, and against corruption.
         </div>

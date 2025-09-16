@@ -7,6 +7,9 @@ import ProtestCarousel from '../components/CarouselCard'
 export default function NepalProtest() {
   return (
     <div className="min-h-screen bg-black text-white">
+      <h2 className="text-2xl md:text-3xl font-bold mb-6">
+        72 martyrs sacrificed their lives for the protest against the corrupt government.
+      </h2>
       {/* Highlight Section */}
       <section className="flex flex-col md:flex-row items-center justify-center gap-8 p-6 bg-black">
         <div className="flex-1 w-full">
@@ -18,9 +21,6 @@ export default function NepalProtest() {
 
       <main className="max-w-4xl mx-auto px-6 py-12 rounded-lg mt-8">
         <section className="mb-16">
-          <h2 className="text-2xl md:text-3xl font-bold mb-6">
-            72 martyrs sacrificed their lives for the protest against the corrupt government.
-          </h2>
           <p className="mb-4">
             The government of Nepal opened fire on minors—children in school uniforms—innocent kids
             who could be their grandchildren’s age.

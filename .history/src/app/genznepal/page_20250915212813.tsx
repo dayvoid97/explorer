@@ -90,26 +90,6 @@ export default function NepalProtest() {
               <div className="space-y-2 ">
                 <p>Email: sharma.kanchan3154@gmail.com</p>
                 <p>WhatsApp / Viber / Phone: +1-201-954-5235</p>
-                <div className="pt-2">
-                  <a
-                    href="https://www.facebook.com/dayvoid97"
-                    className="text-blue-600 hover:underline mr-4"
-                  >
-                    Facebook
-                  </a>
-                  <a
-                    href="https://x.com/strumcollective"
-                    className="text-blue-600 hover:underline mr-4"
-                  >
-                    X (Twitter)
-                  </a>
-                  <a
-                    href="https://www.instagram.com/kanchan.strum/"
-                    className="text-blue-600 hover:underline"
-                  >
-                    Instagram
-                  </a>
-                </div>
               </div>
             </div>
           </div>
@@ -117,7 +97,7 @@ export default function NepalProtest() {
       </main>
 
       <footer className="bg-gray-900 text-white py-8 mt-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-4xl mx-auto px-6 text-center text-gray-400">
           © {new Date().getFullYear()} Financial Gurkha | Strum Collective — Standing for freedom,
           justice, and against corruption.
         </div>
