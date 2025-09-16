@@ -3,8 +3,8 @@
 import React, { useState, useEffect, useCallback, useMemo } from 'react'
 import { useRouter } from 'next/navigation'
 import { authFetch } from '../lib/api'
-import { removeTokens, isLoggedIn } from '../lib/auth'
-import { ImagePlus } from 'lucide-react'
+import { removeTokens, isLoggedIn, getUsernameFromToken, getAccessToken } from '../lib/auth'
+import { ImagePlus, User } from 'lucide-react'
 import {
   classifyExternalLink,
   extractYouTubeThumbnail,
@@ -29,6 +29,11 @@ interface UIState {
   error: string
 }
 
+interface UserInfo {
+  username: string
+  displayName?: string
+}
+
 const initialFormState: FormState = {
   title: '',
   content: '',
@@ -45,9 +50,14 @@ const initialUIState: UIState = {
 
 export default function PostWinForm() {
   const router = useRouter()
+  const [mounted, setMounted] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+
   const [formState, setFormState] = useState<FormState>(initialFormState)
   const [uiState, setUIState] = useState<UIState>(initialUIState)
   const [externalPreview, setExternalPreview] = useState<ExternalLinkInfo | null>(null)
+  const [userInfo, setUserInfo] = useState<UserInfo | null>(null)
+  const [loadingUser, setLoadingUser] = useState(true)
 
   // Memoized external link processing
   const processedExternalLink = useMemo(() => {
@@ -69,6 +79,21 @@ export default function PostWinForm() {
   useEffect(() => {
     setExternalPreview(processedExternalLink)
   }, [processedExternalLink])
+
+  // Get user info from token
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setLoggedIn(true)
+      const token = getAccessToken()
+      const username = getUsernameFromToken(token)
+      if (username) {
+        setUserInfo({ username })
+      }
+    } else {
+      setLoggedIn(false)
+    }
+    setLoadingUser(false)
+  }, [])
 
   const handleAuthRedirect = useCallback(
     (errMessage = 'Session expired. Please log in again.') => {
@@ -292,15 +317,36 @@ export default function PostWinForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="border border-gray-200 dark:border-gray-700 rounded-2xl shadow-lg p-8 space-y-6 bg-white dark:bg-gray-900"
+      className=" rounded-2xl shadow-lg p-8 space-y-6 bg-white dark:bg-gray-900"
     >
-      <h2 className="text-4xl font-bold text-gray-900 dark:text-white">POST YOUR DROP</h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-4xl font-bold text-gray-900 dark:text-white">POST YOUR DUBS</h2>
+        {loggedIn && (
+          <div className="flex items-center gap-2 px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg">
+            <User className="w-4 h-4 text-gray-600 dark:text-gray-400" />
+            <span className="text-sm text-gray-700 dark:text-gray-300">
+              {loadingUser ? (
+                'Loading...'
+              ) : userInfo ? (
+                <>
+                  Posting as{' '}
+                  <span className="font-medium text-gray-900 dark:text-white">
+                    {userInfo.displayName || userInfo.username}
+                  </span>
+                </>
+              ) : (
+                'Login to post'
+              )}
+            </span>
+          </div>
+        )}
+      </div>
 
       <input
         type="text"
         value={formState.title}
         onChange={(e) => updateFormState('title', e.target.value)}
-        placeholder="Start with a strong headline"
+        placeholder="HEADLINE YOUR DUB"
         required
         className="w-full px-4 py-2 rounded-md bg-gray-50 dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
       />
@@ -309,13 +355,12 @@ export default function PostWinForm() {
         rows={8}
         value={formState.content}
         onChange={(e) => updateFormState('content', e.target.value)}
-        placeholder="Write about your dub or drop the intel..."
+        placeholder=" DROP YOUR DUB. LET'S GOOOO!!!"
         className="w-full px-4 py-2 rounded-md bg-gray-50 dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
       />
 
       {/* Post Type Toggle */}
       <div className="flex gap-4 items-center">
-        \
         <PostTypeButton type="dub" emoji="🎯" label="DUB" isActive={formState.postType === 'dub'} />
         <PostTypeButton
           type="intel"
@@ -330,7 +375,7 @@ export default function PostWinForm() {
         type="url"
         value={formState.externalLink}
         onChange={(e) => updateFormState('externalLink', e.target.value)}
-        placeholder="Paste a YouTube/TikTok link (optional)"
+        placeholder="Paste an external link. Youtube/ Tiktok/ Website"
         className="w-full px-4 py-2 rounded-md bg-gray-50 dark:bg-gray-800 border text-gray-900 dark:text-gray-200"
       />
 
