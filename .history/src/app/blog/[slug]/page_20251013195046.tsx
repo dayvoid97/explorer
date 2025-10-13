@@ -44,7 +44,7 @@ const components = {
       className="mb-3"
       style={{
         fontFamily: 'Times New Roman',
-        fontSize: 20,
+        fontSize: 10,
         fontStyle: 'normal',
       }}
       {...props}

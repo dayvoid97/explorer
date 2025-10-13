@@ -37,7 +37,7 @@ export function ShareButtons({ title, subtitle }: { title: string; subtitle: str
           className="p-2 rounded-full hover:bg-blue-50 transition"
           title="Share on Twitter"
         >
-          <X size={20} className="text-black" />
+          <X size={40} className="text-black" />
         </a>
         <a
           href={shareLinks.facebook}
@@ -55,14 +55,14 @@ export function ShareButtons({ title, subtitle }: { title: string; subtitle: str
           className="p-2 rounded-full hover:bg-blue-50 transition"
           title="Share on LinkedIn"
         >
-          <Linkedin size={20} className="text-blue-700 bg-black " />
+          <Linkedin size={20} className="text-blue-700" />
         </a>
         <button
           onClick={handleCopyLink}
           className="p-2 rounded-full hover:bg-gray-100 transition"
           title="Copy link"
         >
-          <Share2 size={20} className="text-green-600" />
+          <Share2 size={20} className="text-gray-600" />
         </button>
         {copied && <span className="text-xs text-green-600 font-medium">Copied!</span>}
       </div>

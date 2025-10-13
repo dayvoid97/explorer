@@ -41,10 +41,9 @@ const components = {
   ),
   p: (props: any) => (
     <p
-      className="mb-3"
       style={{
-        fontFamily: 'Times New Roman',
-        fontSize: 20,
+        fontFamily: 'Helvetica',
+        fontWeight: 400,
         fontStyle: 'normal',
       }}
       {...props}
@@ -109,7 +108,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
     <main className="max-w-3xl mx-auto p-8 bg-[#3b3a3c]">
       <Link
         href="/blog"
-        className="inline-flex items-center bg-red-700 hover:text-gray-900 mb-8 transition"
+        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition"
       >
         <span className="mr-2">←</span>
         Back to Blog

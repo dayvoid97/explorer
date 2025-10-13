@@ -43,8 +43,8 @@ const components = {
     <p
       className="mb-3"
       style={{
-        fontFamily: 'Times New Roman',
-        fontSize: 20,
+        fontFamily: 'Helvetica',
+
         fontStyle: 'normal',
       }}
       {...props}

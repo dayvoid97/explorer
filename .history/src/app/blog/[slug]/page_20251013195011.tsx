@@ -39,17 +39,7 @@ const components = {
       {...props}
     />
   ),
-  p: (props: any) => (
-    <p
-      className="mb-3"
-      style={{
-        fontFamily: 'Times New Roman',
-        fontSize: 20,
-        fontStyle: 'normal',
-      }}
-      {...props}
-    />
-  ),
+  p: (props: any) => <p className="mb-3" {...props} />,
   a: (props: any) => <a className="bg-green-800 rounded font-bold hover:underline" {...props} />,
   ul: (props: any) => <ul className="list-disc  mb-4 space-y-2" {...props} />,
   ol: (props: any) => <ol className="list-decimal  mb-4 space-y-2" {...props} />,

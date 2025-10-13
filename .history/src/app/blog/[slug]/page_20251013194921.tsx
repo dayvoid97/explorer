@@ -41,10 +41,11 @@ const components = {
   ),
   p: (props: any) => (
     <p
-      className="mb-3"
+      className="mb-10"
       style={{
-        fontFamily: 'Times New Roman',
-        fontSize: 20,
+        fontFamily: 'Helvetica',
+        fontWeight: 400,
+
         fontStyle: 'normal',
       }}
       {...props}

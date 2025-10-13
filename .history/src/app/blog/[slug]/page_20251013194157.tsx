@@ -41,16 +41,15 @@ const components = {
   ),
   p: (props: any) => (
     <p
-      className="mb-3"
       style={{
-        fontFamily: 'Times New Roman',
-        fontSize: 20,
+        fontFamily: 'Helvetica',
+        fontWeight: 400,
         fontStyle: 'normal',
       }}
       {...props}
     />
   ),
-  a: (props: any) => <a className="bg-green-800 rounded font-bold hover:underline" {...props} />,
+  a: (props: any) => <a className="text-green-600 hover:underline" {...props} />,
   ul: (props: any) => <ul className="list-disc  mb-4 space-y-2" {...props} />,
   ol: (props: any) => <ol className="list-decimal  mb-4 space-y-2" {...props} />,
   li: (props: any) => <li className="ml-2" {...props} />,
@@ -106,10 +105,10 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const contentWithAds = injectAdsIntoContent(post.content)
 
   return (
-    <main className="max-w-3xl mx-auto p-8 bg-[#3b3a3c]">
+    <main className="max-w-3xl mx-auto p-8">
       <Link
         href="/blog"
-        className="inline-flex items-center bg-red-700 hover:text-gray-900 mb-8 transition"
+        className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition"
       >
         <span className="mr-2">←</span>
         Back to Blog
