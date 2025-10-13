@@ -1,0 +1,155 @@
+/* 1️⃣ Tailwind import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* 2️⃣ Theme variables */
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+/* 3️⃣ Body defaults */
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+  line-height: 1.6;
+}
+
+/* 4️⃣ Links */
+a {
+  @apply text-indigo-600 hover:text-indigo-800 underline;
+}
+
+/* 5️⃣ Responsive images */
+img {
+  @apply max-w-full h-auto rounded-lg;
+}
+
+/* 6️⃣ Code blocks */
+pre {
+  @apply bg-gray-100 p-4 rounded-lg overflow-x-auto text-sm;
+}
+
+code {
+  @apply bg-gray-100 px-1 py-0.5 rounded text-sm font-mono;
+}
+
+/* 7️⃣ Blockquotes */
+blockquote {
+  @apply border-l-4 border-gray-300 pl-4 italic text-gray-700;
+}
+
+/* 8️⃣ Prose for blog articles */
+.prose {
+  @apply max-w-none; /* allow full width content */
+}
+
+.prose a {
+  @apply text-indigo-600 no-underline hover:underline;
+}
+
+.prose img {
+  @apply rounded-xl my-4;
+}
+
+/* 9️⃣ Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* 🔥 10️⃣ Animations (keep your existing ones) */
+@layer utilities {
+  .animate-fadeIn {
+    animation: fadeIn 0.3s ease-out forwards;
+  }
+
+  .animate-fadeOut {
+    animation: fadeOut 0.3s ease-in forwards;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-0.5rem);
+    }
+  }
+
+  .animate-marquee {
+    animation: marquee 30s linear infinite;
+  }
+
+  @keyframes marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+}
+
+/* 11️⃣ Custom font */
+@font-face {
+  font-family: 'New Science Mono';
+  src: url('/fonts/NewScienceMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+}
+
+/* 12️⃣ Optional dark mode tweaks */
+@media (prefers-color-scheme: dark) {
+  body {
+    @apply bg-gray-900 text-gray-100;
+  }
+
+  .prose {
+    @apply prose-invert;
+  }
+
+  a {
+    @apply text-indigo-400 hover:text-indigo-200;
+  }
+
+  blockquote {
+    @apply border-gray-600 text-gray-300;
+  }
+
+  pre {
+    @apply bg-gray-800 text-gray-100;
+  }
+
+  code {
+    @apply bg-gray-800 text-gray-100;
+  }
+}
