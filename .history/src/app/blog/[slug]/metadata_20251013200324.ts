@@ -15,10 +15,9 @@ export interface BlogPost {
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }): Promise<Metadata> {
-  const { slug } = await params
-  const post = await getPostBySlug(slug)
+  const post = await getPostBySlug(params.slug)
 
   return {
     title: `${post.title} | Financial Gurkha Blogs`,
@@ -29,13 +28,6 @@ export async function generateMetadata({
       description: post.subtitle,
       images: post.image ? [{ url: post.image }] : undefined,
       type: 'article',
-      url: `https://financialgurkha.com/blog/${slug}`,
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: post.title,
-      description: post.subtitle,
-      images: post.image ? [post.image] : undefined,
     },
   }
 }

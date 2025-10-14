@@ -29,7 +29,7 @@ export async function generateMetadata({
       description: post.subtitle,
       images: post.image ? [{ url: post.image }] : undefined,
       type: 'article',
-      url: `https://financialgurkha.com/blog/${slug}`,
+      url: `https://yoursite.com/blog/${slug}`,
     },
     twitter: {
       card: 'summary_large_image',

@@ -33,8 +33,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Financial Gurkha',
-    description:
-      'Discover your favorite topics on Financial Gurkha. Generate income as a content creator.',
+    description: 'Only Ws in the Chat. ',
     url: 'https://financialgurkha.com/winners',
     siteName: 'Financial Gurkha',
     images: [

@@ -1,16 +1,18 @@
 'use client'
 
-import { Share2, Facebook, Twitter } from 'lucide-react'
+import { Share2, Facebook, Linkedin, Twitter } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
 export function ShareButtons({
   title,
   subtitle,
   image,
+  categories,
 }: {
   title: string
   subtitle: string
   image?: string
+  categories?: string[]
 }) {
   const [url, setUrl] = useState('')
   const [copied, setCopied] = useState(false)
@@ -21,26 +23,14 @@ export function ShareButtons({
 
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
+  const encodedDescription = encodeURIComponent(subtitle)
+  const encodedImage = image ? encodeURIComponent(image) : ''
 
   const shareLinks = {
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}&via=FinancialGurkha`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedTitle}`,
-  }
-
-  const handleShareToOthers = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: title,
-          text: subtitle,
-          url: url,
-        })
-      } catch (err) {
-        console.log('Share cancelled or failed')
-      }
-    } else {
-      handleCopyLink()
-    }
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}&title=${encodedTitle}&summary=${encodedDescription}`,
+    reddit: `https://reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
   }
 
   const handleCopyLink = async () => {
@@ -58,7 +48,7 @@ export function ShareButtons({
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 rounded-full hover:bg-blue-50 transition text-gray-700 hover:text-blue-500"
-          title="Share on X"
+          title="Share on Twitter"
         >
           <Twitter size={20} />
         </a>
@@ -71,10 +61,20 @@ export function ShareButtons({
         >
           <Facebook size={20} />
         </a>
+        <a
+          href={shareLinks.linkedin}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="p-2 rounded-full hover:bg-blue-50 transition text-gray-700 hover:text-blue-700"
+          title="Share on LinkedIn"
+        >
+          <Linkedin size={20} />
+        </a>
+
         <button
-          onClick={handleShareToOthers}
+          onClick={handleCopyLink}
           className="p-2 rounded-full hover:bg-gray-100 transition text-gray-700 hover:text-green-600"
-          title="Share via SMS, iMessage, Email, etc."
+          title="Copy link"
         >
           <Share2 size={20} />
         </button>
