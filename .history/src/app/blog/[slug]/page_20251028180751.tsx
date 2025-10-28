@@ -70,7 +70,7 @@ const components = {
   table: (props: any) => (
     <table className="min-w-full border-collapse border border-gray-300 my-6" {...props} />
   ),
-  thead: (props: any) => <thead {...props} />,
+  thead: (props: any) => <thead className="bg-gray-100" {...props} />,
   tbody: (props: any) => <tbody {...props} />,
   tr: (props: any) => <tr className="border-b border-gray-300" {...props} />,
   th: (props: any) => (
