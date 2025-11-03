@@ -1,6 +1,6 @@
 ---
 slug: 'my-auras-dont-resent'
-date: '11/02/2025'
+date: '2025-11-03'
 title: 'MY AURAs DONT RESENT'
 subtitle: 'Life is long.. there is shortage of time to make do shi... f the bchs.... rn whatchu gottqa do is make money...' that is the right decisioon... hope you are making the right decisions'
 categories:
