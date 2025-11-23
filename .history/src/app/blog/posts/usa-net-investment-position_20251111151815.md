@@ -1,14 +1,16 @@
 ---
-slug: 'a-primer-on-precious-metals'
-date: '10/27/2025'
-title: 'Gold: A Primer on Commodities and Trading'
-subtitle: 'Commodity traders believe we are in the midst of a commodities market supercycle -  a period of more 6 years where commodities priced in USD are going to see significant rise in their prices. Gold and Silver are amongst the most traded precious metal commodities. In this article, we explore Gold, the most widely coveted precious metal.'
+slug: 'usa-net-investment-position'
+date: '11/11/2025'
+title: 'America's net investment position in world'
+subtitle: 'What does the USA owe to the world ? How much does the world own of American stocks and treasuries? Similarly, how much assets of the world does America own? In this article we expand on American investments across the world and the Global investments in the United States of America'
 categories:
-  ['Gold', 'Silver', 'Signals', 'Precious Metals', 'Commodities', 'Trading', 'Futures Trading']
-image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Monnaie_de_Bactriane%2C_Eucratide_I%2C_2_faces.jpg'
+  ['United States of America',','Global Economy','investment', 'stocks', 'treasuries', 'Signals']
+image: 'https://ibb.co/spBq1Grd'
 author: 'Kanchan'
 ---
 
+_Disclaimer: Someone said.. mfkn someonesaid.. tay keeth effec dez shi up.. dunno drakeee...
+but GA, hit the FBO, make doe, lifeisgood, weisgood.com is mine_
 _Disclaimer: This article is for educational purposes. Trading and investments are subject to volatility, market risks among other factors that could lead partial or entire loss of capital. This article and all article series in FinancialGurkha.com/blog and other sub-sections of the website are for education and information sharing purposes. Viewer discretion is advised. Please consult yor financial advisor for making investment decisions. FinancialGurkha.com and article writers are not liable for your loss, nor do we take credit for your gains. Thank You for giving attention to the subject matter_
 
 ## Introduction

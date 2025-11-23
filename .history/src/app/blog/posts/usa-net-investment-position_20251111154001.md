@@ -1,11 +1,11 @@
 ---
-slug: 'a-primer-on-precious-metals'
-date: '10/27/2025'
-title: 'Gold: A Primer on Commodities and Trading'
-subtitle: 'Commodity traders believe we are in the midst of a commodities market supercycle -  a period of more 6 years where commodities priced in USD are going to see significant rise in their prices. Gold and Silver are amongst the most traded precious metal commodities. In this article, we explore Gold, the most widely coveted precious metal.'
+slug: 'usa-net-investment-position'
+date: '11/11/2025'
+title: "America's Net Investment Position with the World"
+subtitle: "How much of American assets does the world own? How much global stocks does America own? We expand the scope of Bureau of Economic Analysis to understand America's net investment position with the world. "
 categories:
-  ['Gold', 'Silver', 'Signals', 'Precious Metals', 'Commodities', 'Trading', 'Futures Trading']
-image: 'https://upload.wikimedia.org/wikipedia/commons/e/e6/Monnaie_de_Bactriane%2C_Eucratide_I%2C_2_faces.jpg'
+  ['United States of America', 'Global Economy', 'investment', 'stocks', 'treasuries', 'Signals']
+image: 'https://www.bea.gov/system/files/intinv225-chart-2.png'
 author: 'Kanchan'
 ---
 
@@ -13,11 +13,11 @@ _Disclaimer: This article is for educational purposes. Trading and investments a
 
 ## Introduction
 
-This article is a primer for trading **Gold and Silver**, covering how to get started, what to look for, and which instruments are suitable for different account sizes. We focus on **volatility** and **trading instruments** as key considerations.
+It's not just the trade deficits where America stands in position with the world. Analyzing America's assets and liabilities to the world, we get a much clearer position of America's net investment position in the world.
 
-The goal is simple: There is significant opportunity in commodities trading, but volatility can be a killer if not respected.
+The goal is simple: Explore the scope of American investment in global equities, bonds, and other assets while also taking a deeper look into how much of American stocks, bonds, direct investments has the world made in America.
 
-> Note: This is not a "bull thesis for Gold" article. Market participants may have varying views. Our perspective: given macroeconomic trends, rising U.S. debt, and elevated equity valuations, **USD-denominated commodities like Gold are likely to rise**. Traders flock to rising prices, creating further momentum.
+> Tldr: This is not a "bull thesis for Gold" article. Market participants may have varying views. Our perspective: given macroeconomic trends, rising U.S. debt, and elevated equity valuations, **USD-denominated commodities like Gold are likely to rise**. Traders flock to rising prices, creating further momentum.
 
 ## Why Trade Commodities Now?
 
