@@ -4,26 +4,25 @@ import NavBarClientWrapper from './components/NavBarClientWrapper'
 import Footer from './components/Footer'
 import Script from 'next/script'
 import { QuickPostButton } from './components/QuickPostButton'
+import { AdSenseScript } from './components/AdsenseScript'
 
 export const metadata: Metadata = {
   title: 'Financial Gurkha',
   description:
-    'Only Ws in the Chat. FINANCIAL GURKHA IS FOR THE WINNERS. Post Your Dubs, Make Money Online',
+    'Only Ws in the Chat. FINANCIAL GURKHA IS FOR THE WINNERS. Post Your Dubs, How To Make Money Online',
   keywords: [
     'financial gurkha',
     'investing',
     'make money online',
     'only ws in the chat',
-    'only won the chat',
-    'only win the chat',
     '@onlywonthechat',
-    '@onlywinthechat',
     'stock market',
+    'commodities futures',
     'crypto market',
     'feed explorer',
     'market watcher',
     'crypto analysis',
-    'platform to post Ws',
+    'platform to post your wins',
     'platform to post dubs',
   ],
   authors: [{ name: 'Kanchan Sharma', url: 'https://financialgurkha.com/about/kanchan' }],
@@ -33,8 +32,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Financial Gurkha',
-    description:
-      'Discover your favorite topics on Financial Gurkha. Generate income as a content creator.',
+    description: 'Only Ws in the Chat. ',
     url: 'https://financialgurkha.com/winners',
     siteName: 'Financial Gurkha',
     images: [
@@ -64,8 +62,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1"
         />
       </head>
-      <body className="flex flex-col min-h-screen bg-white dark:bg-gray-900 ">
-        {/* ✅ Google Analytics */}
+      <body className="flex flex-col min-h-screen">
         <Script
           id="gtag-src"
           src="https://www.googletagmanager.com/gtag/js?id=G-N9MVJV15MJ"
@@ -82,9 +79,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }
             `}
         </Script>
-
         <NavBarClientWrapper />
+
+        <AdSenseScript />
         <main className="flex-grow">{children}</main>
+
         <QuickPostButton />
         <Footer />
       </body>

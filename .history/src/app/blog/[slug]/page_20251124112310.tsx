@@ -160,5 +160,6 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
         </aside>
       </div>
     </div>
+    // <<< END MODIFIED >>>
   )
 }

@@ -4,6 +4,7 @@ import NavBarClientWrapper from './components/NavBarClientWrapper'
 import Footer from './components/Footer'
 import Script from 'next/script'
 import { QuickPostButton } from './components/QuickPostButton'
+import { AdSenseScript } from './components/AdsenseScript'
 
 export const metadata: Metadata = {
   title: 'Financial Gurkha',
@@ -80,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <NavBarClientWrapper />
 
+        <AdSenseScript />
         <main className="flex-grow">{children}</main>
 
         <QuickPostButton />

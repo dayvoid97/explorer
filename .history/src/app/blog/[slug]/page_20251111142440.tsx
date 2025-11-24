@@ -3,7 +3,6 @@ import { MDXRemote } from 'next-mdx-remote/rsc'
 import { getPostBySlug } from '../../lib/markdown'
 import { BlogPost } from './metadata'
 import { ShareButtons } from './share-buttons'
-import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
 
 import remarkGfm from 'remark-gfm'
 
@@ -115,50 +114,39 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const contentWithAds = injectAdsIntoContent(post.content)
 
   return (
-    // <<< MODIFIED: Use a flexible container for responsive two-column layout >>>
-    <div className="container mx-auto max-w-7xl p-4 sm:p-8">
-      <div className="grid grid-cols-1 lg:grid-cols-4 lg:gap-8">
-        {/* Main Content Area (takes 3/4 space on large screens) */}
-        <main className="lg:col-span-3">
-          <Link
-            href="/blog"
-            className="inline-flex items-center bg-red-700 hover:text-gray-900 mb-8 transition"
-          >
-            <span className="mr-2">←</span>
-            Back to Blog
-          </Link>
+    <main className="max-w-3xl mx-auto p-8 ">
+      <Link
+        href="/blog"
+        className="inline-flex items-center bg-red-700 hover:text-gray-900 mb-8 transition"
+      >
+        <span className="mr-2">←</span>
+        Back to Blog
+      </Link>
 
-          <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
-          <h2 className="text-lg  mb-4">{post.subtitle}</h2>
+      <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
+      <h2 className="text-lg  mb-4">{post.subtitle}</h2>
 
-          <div className="mb-6 flex flex-wrap gap-2">
-            {post.categories.map((cat) => (
-              <span key={cat} className="text-sm bg-gray-200 px-2 py-1 rounded-full text-gray-700">
-                {cat}
-              </span>
-            ))}
-          </div>
-          <ShareButtons title={post.title} subtitle={post.subtitle} />
-          {post.image && <img src={post.image} alt={post.title} className="mb-6 rounded-xl" />}
-
-          <article className="prose prose-lg dark:prose-invert max-w-none mt-8">
-            <MDXRemote
-              source={contentWithAds}
-              components={{ ...components }}
-              options={{
-                mdxOptions: {
-                  remarkPlugins: [remarkGfm],
-                },
-              }}
-            />
-          </article>
-        </main>
-
-        {/* Sidebar Ad Area (takes 1/4 space on large screens) */}
-        <aside className="hidden lg:block lg:col-span-1 mt-8 lg:mt-[100px]">
-          <AdSenseSidebarAd />
-        </aside>
+      <div className="mb-6 flex flex-wrap gap-2">
+        {post.categories.map((cat) => (
+          <span key={cat} className="text-sm bg-gray-200 px-2 py-1 rounded-full text-gray-700">
+            {cat}
+          </span>
+        ))}
       </div>
-    </div>
+      <ShareButtons title={post.title} subtitle={post.subtitle} />
+      {post.image && <img src={post.image} alt={post.title} className="mb-6 rounded-xl" />}
+
+      <article className="prose prose-lg dark:prose-invert max-w-none mt-8">
+        <MDXRemote
+          source={contentWithAds}
+          components={{ ...components }}
+          options={{
+            mdxOptions: {
+              remarkPlugins: [remarkGfm],
+            },
+          }}
+        />{' '}
+      </article>
+    </main>
   )
 }

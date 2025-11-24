@@ -4,26 +4,25 @@ import NavBarClientWrapper from './components/NavBarClientWrapper'
 import Footer from './components/Footer'
 import Script from 'next/script'
 import { QuickPostButton } from './components/QuickPostButton'
+import { AdSenseScript } from './components/AdsenseScript'
 
 export const metadata: Metadata = {
   title: 'Financial Gurkha',
   description:
-    'Only Ws in the Chat. FINANCIAL GURKHA IS FOR THE WINNERS. Post Your Dubs, Make Money Online',
+    'Only Ws in the Chat. FINANCIAL GURKHA IS FOR THE WINNERS. Post Your Dubs, How To Make Money Online',
   keywords: [
     'financial gurkha',
     'investing',
     'make money online',
     'only ws in the chat',
-    'only won the chat',
-    'only win the chat',
     '@onlywonthechat',
-    '@onlywinthechat',
     'stock market',
+    'commodities futures',
     'crypto market',
     'feed explorer',
     'market watcher',
     'crypto analysis',
-    'platform to post Ws',
+    'platform to post your wins',
     'platform to post dubs',
   ],
   authors: [{ name: 'Kanchan Sharma', url: 'https://financialgurkha.com/about/kanchan' }],
@@ -82,6 +81,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <NavBarClientWrapper />
 
+        <AdSenseScript />
         <main className="flex-grow">{children}</main>
 
         <QuickPostButton />
