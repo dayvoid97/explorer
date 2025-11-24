@@ -34,9 +34,11 @@ export const AdSenseSidebarAd = () => {
     <div className="w-[300px] mx-auto sticky top-4">
       <ins
         className="adsbygoogle"
+        // Using fixed width and height style as requested for a skyscraper ad
         style={{ display: 'inline-block', width: '300px', height: '600px' }}
         data-ad-client={adClient}
         data-ad-slot={adSlot}
+        // data-ad-format and data-full-width-responsive are removed/omitted for fixed sizing
       />
     </div>
   )
