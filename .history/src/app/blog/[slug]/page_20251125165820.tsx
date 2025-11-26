@@ -4,7 +4,6 @@ import { getPostBySlug } from '../../lib/markdown'
 import { BlogPost } from './metadata'
 import { ShareButtons } from './share-buttons'
 import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
-import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 
 import remarkGfm from 'remark-gfm'
 
@@ -54,12 +53,7 @@ const components = {
     />
   ),
   a: (props: any) => (
-    <a
-      className="color-white bg-green-800 rounded font-bold hover:underline"
-      target="_blank"
-      rel="noopener noreferrer"
-      {...props}
-    />
+    <a className="color-white bg-green-800 rounded font-bold hover:underline" {...props} />
   ),
   ul: (props: any) => <ul className="list-disc  mb-4 space-y-2" {...props} />,
   ol: (props: any) => <ol className="list-decimal  mb-4 space-y-2" {...props} />,
@@ -87,10 +81,11 @@ const components = {
 }
 
 // Helper function to inject ads at random intervals
-function injectAdsIntoContent(content: string) {
-  const paragraphs = content.split('\n\n')
+function injectAdsIntoContent(content: string): string {
   const wordCount = content.split(/\s+/).length
+  const paragraphs = content.split('\n\n')
 
+  // Determine how many ads to insert based on content length
   let adCount = 0
   if (wordCount > 3000) adCount = 3
   else if (wordCount > 2000) adCount = 2
@@ -98,6 +93,7 @@ function injectAdsIntoContent(content: string) {
 
   if (adCount === 0) return content
 
+  // Get random positions to insert ads (avoiding first 2 and last 2 paragraphs)
   const minIndex = 2
   const maxIndex = paragraphs.length - 2
   const positions = new Set<number>()
@@ -106,9 +102,7 @@ function injectAdsIntoContent(content: string) {
     positions.add(Math.floor(Math.random() * (maxIndex - minIndex)) + minIndex)
   }
 
-  positions.forEach((idx) => {
-    paragraphs[idx] = paragraphs[idx] + `\n\n<AdSenseInArticle />`
-  })
+  // Insert ads in reverse order to maintain indices
 
   return paragraphs.join('\n\n')
 }
@@ -150,7 +144,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           <article className="prose prose-lg dark:prose-invert max-w-none mt-8">
             <MDXRemote
               source={contentWithAds}
-              components={{ ...components, AdSenseInArticle }}
+              components={{ ...components }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
