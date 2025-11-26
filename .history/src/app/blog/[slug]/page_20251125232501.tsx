@@ -89,33 +89,23 @@ const components = {
 // Helper function to inject ads at random intervals
 function injectAdsIntoContent(content: string) {
   const paragraphs = content.split('\n\n')
+  const wordCount = content.split(/\s+/).length
+
+  let adCount = 0
+  if (wordCount > 3000) adCount = 3
+  else if (wordCount > 2000) adCount = 2
+  else if (wordCount > 1000) adCount = 1
+
+  if (adCount === 0) return content
+
+  const minIndex = 2
+  const maxIndex = paragraphs.length - 2
   const positions = new Set<number>()
 
-  let cumulativeWords = 0
-  let lastAdPosition = -1
-
-  for (let i = 0; i < paragraphs.length; i++) {
-    // Count words in current paragraph
-    const wordsInParagraph = paragraphs[i].split(/\s+/).length
-    cumulativeWords += wordsInParagraph
-
-    // Check both conditions:
-    // 1. At least 200 words since last ad (or start)
-    // 2. At least 3 paragraphs since last ad (or start)
-    const wordsSinceLastAd = cumulativeWords >= 200
-    const paragraphsSinceLastAd = i - lastAdPosition >= 3
-
-    if (wordsSinceLastAd && paragraphsSinceLastAd) {
-      // Don't place ad in the last paragraph
-      if (i < paragraphs.length - 1) {
-        positions.add(i)
-        cumulativeWords = 0 // Reset word counter
-        lastAdPosition = i // Update last ad position
-      }
-    }
+  while (positions.size < adCount && positions.size < maxIndex - minIndex) {
+    positions.add(Math.floor(Math.random() * (maxIndex - minIndex)) + minIndex)
   }
 
-  // Inject ads at the identified positions
   positions.forEach((idx) => {
     paragraphs[idx] = paragraphs[idx] + `\n\n<AdSenseInArticle />`
   })

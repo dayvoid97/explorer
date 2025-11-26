@@ -17,7 +17,7 @@ export const AdSenseInArticle = () => {
   return (
     <div
       ref={adRef}
-      className="my-8 flex justify-center items-center min-h-[250px] bg-gray-100 rounded-lg border-2 border-gray-200"
+      className="my-8 flex justify-center items-center min-h-[250px]  rounded-lg border-2 border-gray-100"
     >
       <ins
         className="adsbygoogle"

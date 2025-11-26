@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Script from 'next/script'
 
 export const AdSenseInArticle = () => {
   const adRef = useRef<HTMLDivElement>(null)

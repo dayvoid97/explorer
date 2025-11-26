@@ -17,7 +17,7 @@ export const AdSenseInArticle = () => {
   return (
     <div
       ref={adRef}
-      className="my-8 flex justify-center items-center min-h-[250px] bg-gray-100 rounded-lg border-2 border-gray-200"
+      className="my-8 flex justify-center items-center min-h-[250px]  rounded-lg border-2 border-gray-100"
     >
       <ins
         className="adsbygoogle"
@@ -26,7 +26,9 @@ export const AdSenseInArticle = () => {
         data-ad-format="fluid"
         data-ad-client="ca-pub-8441965953327461"
         data-ad-slot="6533303772"
-      ></ins>
+      >
+        <p>AdSpot</p>
+      </ins>
     </div>
   )
 }
