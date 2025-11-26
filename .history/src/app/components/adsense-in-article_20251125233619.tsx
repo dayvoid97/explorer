@@ -25,7 +25,7 @@ export const AdSenseInArticle = () => {
         data-ad-layout="in-article"
         data-ad-format="fluid"
         data-ad-client="ca-pub-8441965953327461"
-        data-ad-slot="2653685707"
+        data-ad-slot="6533303772"
       ></ins>
     </div>
   )

@@ -10,6 +10,8 @@ export const AdSenseScript = () => {
   const adClient = 'ca-pub-8441965953327461' // <<< UPDATED WITH USER'S CLIENT ID
 
   if (!adClient) {
+    // Return null if the placeholder ID hasn't been replaced to avoid errors
+    // in development, but you should still replace it for production!
     return null
   }
 
@@ -17,7 +19,7 @@ export const AdSenseScript = () => {
     <Script
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
-      strategy="lazyOnload"
+      strategy="lazyOnload" // Loads after hydration, good for performance
       crossOrigin="anonymous"
     />
   )

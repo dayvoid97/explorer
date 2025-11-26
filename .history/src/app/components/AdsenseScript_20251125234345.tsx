@@ -17,7 +17,7 @@ export const AdSenseScript = () => {
     <Script
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
-      strategy="lazyOnload"
+      strategy="lazyOnload" // Loads after hydration, good for performance
       crossOrigin="anonymous"
     />
   )
