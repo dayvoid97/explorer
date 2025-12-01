@@ -1,0 +1,24 @@
+---
+slug: 'novo-nordisk-dcf-valuation'
+date: '01/01/2025'
+title: 'Novo Nordisk DCF Valuation: Should you invest in the Ozempic and Wegovy Maker for exeptional returns?'
+subtitle: "Novo Nordisk was breifly Europe's largest company by market cap. Then it declined 60% less than 6 months later. A century-old pharmacheutical enterprise constantly innovating in it's specialization in blood-related illness and diabetes, Novo Nordisk is investing heavily in scaling their existing businesses. At the same time, NVO is investing exceptionally heavily in finding cure for new illnesses. NVO's online prescription delivery business and international revenue segmant is showing impressive growth. Let's analyze Novo Nordisk fundamental and conduct an intrinsic valuation of the company."
+categories: ['NVO', 'Novo Nordisk', 'Denmark', 'DCF Valuation', 'Signals', 'Intrinsic Valuation']
+image: 'https://preview.redd.it/an-intrinsic-discounted-cash-flow-valuation-of-novo-nordisk-v0-3vb55nukya4g1.png?width=1587&format=png&auto=webp&s=32fe1bd929e5fbe311dcbf87674cce898cbc366e'
+author: 'Kanchan'
+---
+
+# Introduction
+
+In this article, we conduct an intrinsic cash-flow valuation of Novo Nordisk, a leading bio and pharmacheutical company in the world. Danish Kroner is the currency throughout this valuation. This is not an investment advice. Stock investments are risky. Please consult your financial advisor before making any investment decisions.
+
+# A Primer on Novo Nordisk : The Company
+
+Novo Nordisk is the largest Danish company by market cap, second largest by revenue. The company's stock has international listing, both in home country Denmark as [Novo Nordisk B](https://www.nasdaq.com/european-market-activity/shares/novo-b?id=TX2178) and the [NYSE](https://www.nyse.com/quote/XNYS:NVO). Novo Nordisk breifly became the largest euopean company by market cap in 2024. Ever since, the company's stock has been on a freefall, having declined more than 60% since All-time-highs.
+Novo Nordisk is the world's largest producer of insulin, having produced [50% of global insuin supply](https://www.novonordisk.com/about/what-we-do.html) in 2022. Insulin sales revenue grew 15% year of year in 2024 to 55.3 Billion Kroker in 2024.
+
+Ozempic Approvals: The initial FDA approval was granted for use as an adjunct to diet and exercise to improve glycemic control in adults with type 2 diabetes.  A new indication was approved to reduce the risk of major adverse cardiovascular events in adults with type 2 diabetes and established heart disease
+
+## Novo Nordisk Growth Story
+
+Novo Nordisk received its first FDA approval for Ozempic in 2017. The approval allowed for Ozempic medication

@@ -113,7 +113,7 @@ function injectAdsIntoContent(content: string) {
 
   // Inject ads at the identified positions
   positions.forEach((idx) => {
-    paragraphs[idx] = paragraphs[idx] + `<AdSenseInArticle />`
+    paragraphs[idx] = paragraphs[idx] + `\n\n<AdSenseInArticle />`
   })
 
   return paragraphs.join('\n\n')

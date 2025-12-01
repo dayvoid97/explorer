@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 export const AdSenseInArticle = () => {
   return (
     <div className="my-4 flex justify-center items-center">

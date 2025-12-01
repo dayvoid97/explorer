@@ -99,21 +99,25 @@ function injectAdsIntoContent(content: string) {
     const wordsInParagraph = paragraphs[i].split(/\s+/).length
     cumulativeWords += wordsInParagraph
 
+    // Check both conditions:
+    // 1. At least 200 words since last ad (or start)
+    // 2. At least 3 paragraphs since last ad (or start)
     const wordsSinceLastAd = cumulativeWords >= 200
     const paragraphsSinceLastAd = i - lastAdPosition >= 3
 
     if (wordsSinceLastAd && paragraphsSinceLastAd) {
+      // Don't place ad in the last paragraph
       if (i < paragraphs.length - 1) {
         positions.add(i)
-        cumulativeWords = 0
-        lastAdPosition = i
+        cumulativeWords = 0 // Reset word counter
+        lastAdPosition = i // Update last ad position
       }
     }
   }
 
   // Inject ads at the identified positions
   positions.forEach((idx) => {
-    paragraphs[idx] = paragraphs[idx] + `<AdSenseInArticle />`
+    paragraphs[idx] = paragraphs[idx] + `\n\n<AdSenseInArticle />`
   })
 
   return paragraphs.join('\n\n')
@@ -156,7 +160,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           <article className="prose prose-lg dark:prose-invert max-w-none mt-8">
             <MDXRemote
               source={contentWithAds}
-              components={{ ...components, AdSenseInArticle }}
+              components={{ ...components }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
