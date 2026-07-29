@@ -2,7 +2,18 @@ export function cn(...inputs: (string | false | null | undefined)[]): string {
   return inputs.filter(Boolean).join(' ')
 }
 
-import { Win } from '../winners/page'
+// Moved here from the old API-driven winners/page.tsx (now a static page)
+export interface Win {
+  id: string
+  username: string
+  createdAt: string
+  title: string
+  paragraphs: string[]
+  mediaUrls?: string[]
+  upvotes?: number
+  previewImageUrl?: string
+  commentCount?: number
+}
 
 export function createSlug(title: string): string {
   return title

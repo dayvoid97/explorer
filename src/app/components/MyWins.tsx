@@ -148,7 +148,7 @@ export default function MyWins({ wins, userChronologies }: MyWinsProps) {
   return (
     <section className="mb-20">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
-        <h2 className="text-3xl font-bold tracking-tight">🥇MY POSTS🥇</h2>
+        <h2 className="text-3xl font-bold tracking-tight">🥇MY DUBS🥇</h2>
 
         {/* Sorting Toggle */}
         <div className="flex bg-gray-800 rounded-lg p-1">

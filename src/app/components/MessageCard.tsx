@@ -63,13 +63,13 @@ export default function MessagesCard() {
     <div
       onClick={() => router.push('/inbox')}
       // Consider adding dark mode classes here if not handled globally for this card's background/border
-      className="relative cursor-pointer p-4 border dark:border-gray-700 rounded-lg shadow hover:shadow-md hover:bg-gray-50 dark:hover:bg-gray-800 transition"
+      className="relative cursor-pointer p-4 border dark:border-gray-700 rounded-lg shadow hover:shadow-md  transition"
     >
       <div className="flex items-center gap-3">
         <span className="text-2xl">💬</span>
         <div>
-          <p className="text-sm font-medium text-gray-900 dark:text-white">Messages</p>
-          <p className="text-xs text-gray-500 dark:text-gray-400">See who messaged you</p>
+          <p className="text-sm font-medium ">Messages</p>
+          <p className="text-xs ">See who messaged you</p>
         </div>
         {unreadCount > 0 && (
           <span className="ml-2 text-white bg-red-500 rounded-full px-2 py-0.5 text-xs font-bold">

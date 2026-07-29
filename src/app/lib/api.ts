@@ -46,44 +46,57 @@ async function refreshAuthToken(): Promise<string | null> {
 // --- Custom Fetch Wrapper with Interception Logic ---
 // Use this function for all API calls that require authentication.
 export async function authFetch(input: RequestInfo, init?: RequestInit): Promise<Response> {
-  let accessToken = getAccessToken()
+  const accessToken = getAccessToken()
   const headers = new Headers(init?.headers)
 
-  // If we have an access token, add it to the request
   if (accessToken) {
     headers.set('Authorization', `Bearer ${accessToken}`)
+  } else {
+    console.warn('⚠️ [authFetch] No access token found in localStorage before request.')
   }
 
   const requestInit: RequestInit = { ...init, headers }
 
-  // Try the request with the current token
+  console.log(`🚀 [authFetch] Requesting: ${input}`)
   let response = await fetch(input, requestInit)
 
-  // If the response indicates an expired token (and it's a specific code from your backend)
   if (response.status === 401) {
-    const errorData = await response.clone().json() // Clone response to read body
-    if (errorData.code === 'TOKEN_EXPIRED') {
-      console.log('Access token expired. Attempting to refresh...')
+    let errorData
+    try {
+      errorData = await response.clone().json()
+      console.error('❌ [authFetch] 401 Unauthorized Body:', errorData)
+    } catch (e) {
+      console.error('❌ [authFetch] 401 Unauthorized (Could not parse JSON body)')
+    }
+
+    if (errorData?.code === 'TOKEN_EXPIRED') {
+      console.log('🔄 [authFetch] Detected TOKEN_EXPIRED. Attempting refresh...')
       const newAccessToken = await refreshAuthToken()
 
       if (newAccessToken) {
-        // Token refreshed successfully, retry the original request
+        console.log('✅ [authFetch] Refresh successful. Retrying original request.')
         headers.set('Authorization', `Bearer ${newAccessToken}`)
-        requestInit.headers = headers // Update headers in retry request
-        console.log('Token refreshed. Retrying original request...')
-        response = await fetch(input, requestInit) // Retry the original request
+        requestInit.headers = headers
+        response = await fetch(input, requestInit)
       } else {
-        // Refresh failed, throw an error to signal full re-login is needed
+        console.error('⛔ [authFetch] Refresh failed. Forcing logout.')
         throw new Error('Authentication required. Please log in again.')
       }
     } else {
-      throw new Error(errorData.message || 'Authentication required. Please log in again.')
+      // Log exactly why it's falling through to the generic error
+      console.warn(
+        `⚠️ [authFetch] 401 received but code was "${errorData?.code}", not "TOKEN_EXPIRED".`
+      )
+      throw new Error(errorData?.message || 'Authentication required. Please log in again.')
     }
   } else if (response.status === 403) {
-    const errorData = await response.clone().json()
+    const errorData = await response
+      .clone()
+      .json()
+      .catch(() => ({}))
+    console.error('🚫 [authFetch] 403 Forbidden:', errorData)
     throw new Error(errorData.message || 'Access denied. Invalid token.')
   }
 
-  // For non-error responses, or after successful refresh and retry, return the response.
   return response
 }

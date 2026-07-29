@@ -4,8 +4,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Brain, TrendingUp, Eye } from 'lucide-react'
 import ChronologyCard from '../components/ChronologyCard'
-import { authFetch } from '../lib/api'
-import { getAccessToken } from '../lib/auth'
+import { chronologyService } from '../lib/chronologyService'
 
 // ✅ import your fallback data
 import { sampleChronologyCards } from '../../app/types/sampleChronoDatar'
@@ -57,71 +56,25 @@ export default function ChronoWExplorer() {
   const { showPrompt, interactionCount, triggerPrompt, dismissPrompt } =
     useUnauthenticatedPrompt(6000)
 
+  // Inside ChronoWExplorer (page.tsx)
   useEffect(() => {
     const fetchChronologies = async () => {
       try {
         setLoading(true)
         setError(null)
 
-        const accessToken = getAccessToken()
-        const userIsAuthenticated = !!accessToken
-        setIsAuthenticated(userIsAuthenticated)
+        // Call our new service
+        const data = await chronologyService.getExplore('recent')
 
-        // Create timeout promise (3 seconds)
-        const timeout = new Promise<never>((_, reject) =>
-          setTimeout(() => reject(new Error('Request timed out')), 3000)
-        )
-
-        const fetchPromise = (async () => {
-          let res: Response
-
-          if (userIsAuthenticated) {
-            try {
-              res = await authFetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/explore?hydrate=1`
-              )
-            } catch (authError) {
-              console.log('Auth failed, falling back to unauthenticated request:', authError)
-              setIsAuthenticated(false)
-              res = await fetch(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/explore?hydrate=1`
-              )
-            }
-          } else {
-            res = await fetch(
-              `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/explore?hydrate=1`
-            )
-          }
-
-          if (!res.ok) {
-            throw new Error('Failed to load chronologies')
-          }
-
-          return res.json()
-        })()
-
-        // Race fetch vs timeout
-        const data = await Promise.race([fetchPromise, timeout])
-
-        console.log('Fetched chronologies:', data)
         setChronologies(data.chronologies || [])
-      } catch (err) {
-        console.error('Error fetching chronologies:', err)
 
-        // ✅ Timeout or error fallback
-        if (err instanceof Error && err.message === 'Request timed out') {
-          console.warn('No API response in 3s, loading sampleChronologyCards...')
-          setChronologies(
-            sampleChronologyCards.map((c) => ({
-              ...c,
-              creator: c.creator ? { ...c.creator, pfp: c.creator.pfp ?? null } : undefined,
-            }))
-          )
+        // The backend now tells us if the user is a guest or authenticated
+        setIsAuthenticated(data.meta?.access !== 'guest')
+      } catch (err: any) {
+        console.error('FG Explore Error:', err)
+        // Fallback to sample data only if the API is truly down
 
-          setError(null)
-        } else {
-          setError(err instanceof Error ? err.message : 'Unknown error occurred')
-        }
+        setError(err.message)
       } finally {
         setLoading(false)
       }

@@ -2,194 +2,190 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
-import MastheadInline from './MastHeadInline'
+import { Menu, X, Sun, Moon } from 'lucide-react'
 
+// --- Nav Data (for simplicity and consolidation) ---
+// Frontend-only mode: blog + winners only. No account/API routes.
+const navLinks = [
+  { href: '/blog', label: 'Blog' },
+  { href: '/winners', label: 'W' },
+]
+
+// --- Theme Toggle Component ---
+
+// --- Desktop Links Component (Unchanged) ---
+function DesktopNavLinks() {
+  const commonLinkClasses =
+    'text-lg sm:text-xl font-extrabold text-foreground hover:scale-105 transition-transform duration-200'
+
+  const customStyle = {
+    fontFamily: 'Overused Grotesk',
+    fontWeight: 500,
+    color: 'white',
+    letterSpacing: '-0.01rem',
+    fontOpticalSizing: 'auto',
+    fontFeatureSettings: '"kern" 1',
+  } as React.CSSProperties
+
+  return (
+    <div className="hidden md:flex items-center space-x-6">
+      <Link href="/blog" className={commonLinkClasses} style={customStyle}>
+        Blog
+      </Link>
+
+      <Link
+        href="/winners"
+        className="text-foreground text-5xl sm:text-6xl font-extrabold hover:underline tracking-wider drop-shadow-lg transition-transform duration-300 hover:scale-105"
+        style={{ ...customStyle, letterSpacing: '-0.1rem' }}
+      >
+        W
+      </Link>
+    </div>
+  )
+}
+
+// --- Mobile Links Component ---
+function MobileNavLinks({ onLinkClick }: { onLinkClick: () => void }) {
+  // text-left for left alignment
+  const baseClasses =
+    'block text-lg font-medium transition hover:text-blue-400 py-4 border-b border-gray-700 w-full text-left'
+
+  const customStyle = {
+    fontFamily: 'Overused Grotesk',
+    fontWeight: 500,
+    letterSpacing: '0.2rem',
+  }
+
+  return (
+    <div className="pt-4 pb-4 space-y-0">
+      <Link href="/blog" className={baseClasses} style={customStyle} onClick={onLinkClick}>
+        Blog
+      </Link>
+      <Link
+        href="/winners"
+        className={`${baseClasses} border-b-0`}
+        style={customStyle}
+        onClick={onLinkClick}
+      >
+        DUBS
+      </Link>
+    </div>
+  )
+}
+
+// --- Main Navbar Component ---
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
-  // Handle body scroll lock when menu is open
   useEffect(() => {
-    document.body.style.overflow = isMobileMenuOpen ? 'hidden' : 'unset'
-  }, [isMobileMenuOpen])
-
-  // Close mobile menu on scroll for desktop
-  useEffect(() => {
-    const handleScroll = () => {
+    const handleResize = () => {
+      // Close mobile menu on desktop resize
       if (window.innerWidth >= 768 && isMobileMenuOpen) {
         setIsMobileMenuOpen(false)
       }
     }
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+
+    const handleScroll = () => {
+      // Close the menu instantly upon any scroll event, but only if it's open
+      if (isMobileMenuOpen) {
+        setIsMobileMenuOpen(false)
+      }
+    }
+
+    // Attach listeners
+    window.addEventListener('scroll', handleScroll, { passive: true })
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      // Cleanup listeners
+      window.removeEventListener('scroll', handleScroll)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [isMobileMenuOpen])
 
+  const menuIcon = isMobileMenuOpen ? (
+    <X className="w-8 h-8 text-white" />
+  ) : (
+    <Menu className="w-8 h-8 text-white" />
+  )
+
   return (
-    <header className="rounded-5xl backdrop-blur-md border-b z-50 sticky top-0 shadow-sm bg-black">
-      <nav className="rounded-5xl  max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between ">
-        {/* Mobile menu button */}
-        <div className="flex md:hidden">
-          <button
-            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="focus:outline-none p-2"
-            aria-label="Toggle menu"
-          >
-            {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
-        </div>
-
-        {/* Logo and Masthead */}
-        <div className="items-center justify-center ">
-          <Link
-            href="/"
-            className="padding-1ch text-xl sm:text-2xl md:text-3xl lg:text-4xl font-medium hover:scale-105 transition-transform duration-200 tracking-wider"
-            style={{
-              fontFamily: "'Freight Big Pro', serif",
-              fontWeight: 500,
-              letterSpacing: '-0.1rem',
-            }}
-          >
-            Financial Gurkha
-            <sup
-              className=" text-[0.5rem] sm:text-xs md:text-sm font-bold dark:text-blue-300 ml-1 text-[#7b777a]"
-              style={{ letterSpacing: '0.1rem', fontFamily: 'Verdana' }}
-            >
-              BETA
-            </sup>
-          </Link>
-          {/* <MastheadInline /> */}
-        </div>
-
-        {/* Desktop links */}
-        <div className="hidden md:flex items-center space-x-6 text-[#3b3a3c]">
-          <Link
-            href="/chronoW"
-            className="text-lg sm:text-xl font-extrabold   hover:scale-105 transition-transform duration-200"
-            style={{
-              fontFamily: 'Overused Grotesk',
-              fontWeight: 500,
-              letterSpacing: '-0.01rem',
-              fontOpticalSizing: 'auto',
-              fontFeatureSettings: '"kern" 1',
-            }}
-          >
-            Chronodubs
-          </Link>
-          <NavLinks />
-        </div>
-      </nav>
-
-      {/* Mobile nav modal */}
-      {isMobileMenuOpen && (
-        <div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm flex items-start justify-center md:hidden transition-opacity duration-300"
-          onClick={() => setIsMobileMenuOpen(false)}
-        >
-          <div
-            className="animate-fadeIn relative w-full max-w-xs mx-4 mt-16 bg-black/90 p-6 rounded-xl border border-gray-700 shadow-xl transform transition-transform duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Close button */}
+    <header className="rounded-5xl bg-black  backdrop-blur-md border-b z-50 sticky top-0 shadow-sm">
+      {' '}
+      <nav className="rounded-5xl max-w-7xl mx-auto px-4 sm:px-6 py-4 md:py-3 flex flex-col md:flex-row items-start justify-between ">
+        {' '}
+        <div className="flex items-center w-full md:w-auto space-x-4">
+          {' '}
+          {/* 💡 Used space-x-4 for gap between button and logo */}
+          {/* Mobile Menu Button - Leftmost position */}
+          <div className="flex items-center md:hidden">
             <button
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="absolute top-3 right-3 text-white hover:text-red-400 transition p-1"
-              aria-label="Close menu"
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="focus:outline-none p-2 -ml-2" // 💡 Negative margin to pull button fully to the edge
+              aria-label="Toggle menu"
             >
-              <X className="w-5 h-5" />
+              {menuIcon}
             </button>
+          </div>
+          {/* Logo and Masthead - Left-aligned */}
+          <div className="flex justify-start flex-grow md:flex-grow-0">
+            <Link
+              href="/"
+              className="padding-1ch text-white font-medium hover:scale-105 transition-transform duration-200 tracking-wider flex flex-col items-start" // 💡 items-start for left alignment of logo lines
+              style={{
+                fontFamily: "'Freight Big Pro', serif",
+                fontWeight: 500,
+                letterSpacing: '-0.1rem',
+              }}
+            >
+              {/* Line 1: Main Logo with BETA */}
+              <span
+                className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-none"
+                style={{ letterSpacing: '0.1rem' }}
+              >
+                FINANCIAL GURKHA
+                <sup
+                  className="text-gray-400 font-bold ml-1 align-super"
+                  style={{
+                    fontSize: '0.4em',
+                    letterSpacing: '0.1rem',
+                    fontFamily: 'Verdana',
+                  }}
+                >
+                  BETA
+                </sup>
+              </span>
 
-            {/* Nav Links */}
-            <div className="space-y-3 text-white pt-2">
+              {/* Line 2: Tagline */}
+              <span
+                className="text-xs sm:text-sm md:text-base font-medium tracking-widest mt-1 uppercase"
+                style={{
+                  fontFamily: "'Overused Grotesk', sans-serif",
+                  fontWeight: 500,
+                  color: 'white',
+                }}
+              >
+                FINANCIAL GURKHA IS FOR THE WINNERS
+              </span>
+            </Link>
+          </div>
+        </div>
+        {/* Desktop Navigation */}
+        <DesktopNavLinks />
+      </nav>
+      {/* MOBILE MENU - Below Logo, Black Background, White Text (Left-Aligned) */}
+      {isMobileMenuOpen && (
+        <div className="bg-black text-white w-full shadow-lg transform transition-transform duration-300 md:hidden">
+          <div className="w-full" onClick={(e) => e.stopPropagation()}>
+            {/* Nav Links Container */}
+            <div className="px-4 sm:px-6">
+              {' '}
+              {/* 💡 Ensure padding matches main nav padding */}
               <MobileNavLinks onLinkClick={() => setIsMobileMenuOpen(false)} />
             </div>
           </div>
         </div>
       )}
     </header>
-  )
-}
-
-// Desktop NavLinks
-function NavLinks() {
-  const linkClasses =
-    'className="text-lg sm:text-xl font-extrabold text-[#3b3a3c]   hover:scale-105 transition-transform duration-200"'
-
-  return (
-    <>
-      <Link
-        href="/winners"
-        className=" dark:text-white-400 text-5xl sm:text-6xl font-extrabold hover:underline tracking-wider drop-shadow-lg transition-transform duration-300 hover:scale-105"
-        style={{
-          fontFamily: ' Overused Grotesk',
-          fontWeight: 500,
-          letterSpacing: '-0.1rem',
-          fontOpticalSizing: 'auto',
-          fontFeatureSettings: '"kern" 1',
-        }}
-      >
-        W
-      </Link>
-      <Link
-        href="/profile"
-        className={linkClasses}
-        style={{
-          fontFamily: 'Overused Grotesk',
-          fontWeight: 500,
-          letterSpacing: '-0.01rem',
-          fontOpticalSizing: 'auto',
-          fontFeatureSettings: '"kern" 1',
-        }}
-      >
-        Account
-      </Link>
-    </>
-  )
-}
-
-// Mobile NavLinks
-function MobileNavLinks({ onLinkClick }: { onLinkClick: () => void }) {
-  const baseClasses =
-    'block text-base text-[#3b3a3c]font-medium transition hover:text-blue-400 py-2.5'
-
-  return (
-    <>
-      <Link
-        href="/profile"
-        className={baseClasses}
-        style={{
-          fontFamily: 'Overused Grotesk',
-          fontWeight: 500,
-          letterSpacing: '-0.1rem',
-          fontOpticalSizing: 'auto',
-          fontFeatureSettings: '"kern" 1',
-        }}
-        onClick={onLinkClick}
-      >
-        SIGN UP
-      </Link>
-
-      <Link
-        href="/winners"
-        className={baseClasses}
-        style={{
-          fontFamily: 'Overused Grotesk',
-          fontWeight: 500,
-          letterSpacing: '-0.1rem',
-        }}
-      >
-        DUBS
-      </Link>
-      <Link
-        href="/chronoW"
-        className={baseClasses}
-        style={{
-          fontFamily: 'Overused Grotesk',
-          fontWeight: 500,
-          letterSpacing: '-0.1rem',
-        }}
-      >
-        Chrono Dubs
-      </Link>
-    </>
   )
 }

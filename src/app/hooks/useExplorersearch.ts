@@ -1,29 +1,23 @@
-// hooks/useExplorersearch.ts
 import { useState } from 'react'
 const API_URL = process.env.NEXT_PUBLIC_API_BASE_URL
 
-export type ExplorerItem = CardItem | WinItem
-
-export interface CardItem {
-  type: 'card'
+// 1. Chronology Pillar (The Chains)
+export interface ChronologyItem {
+  type: 'chronology'
   id: string
-  cardId: string
-  cardTicker: string
-  companyName: string
-  isPublished: boolean
-  items: any[]
-  country: string
-  createdAt: string
-  exchange: string
-  industryGroup: string
-  primarySector: string
-  broadGroup: string
-  username: string
-  searchName: string
-  searchTicker: string
-  searchCountry: string
+  name: string
+  description: string
+  categories: string[]
+  createdBy: string
+  createdAt: number | string
+  winIds: string[]
+  viewCount?: number
+  hitCount?: number
+  upvotes?: number
+  likeCount?: number
 }
 
+// 2. Win Pillar (The Dubs)
 export interface WinItem {
   type: 'win'
   id: string
@@ -33,37 +27,50 @@ export interface WinItem {
   username: string
   mediaUrls?: string[]
   upvotes?: number
-  previewImageUrl?: string
+  viewCount?: number
   commentCount?: number
 }
+
+// 3. Single Unified Type
+export type ExplorerItem = WinItem | ChronologyItem
 
 export default function useExplorerSearch() {
   const [data, setData] = useState<ExplorerItem[]>([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const search = async (query: string, country: string, username: string) => {
+  /**
+   * Single Query Search (q)
+   * Optimized for Chronos and Wins only.
+   */
+  const search = async (query: string) => {
+    const trimmedQuery = query.trim()
+
+    if (!trimmedQuery) {
+      setData([])
+      return
+    }
+
     setLoading(true)
     setError(null)
+
     try {
       const url = new URL(`${API_URL}/gurkha/search`)
 
-      // 🔻 Normalize inputs to lowercase
-      const q = query.trim().toLowerCase()
-      const c = country.trim().toLowerCase()
-      const u = username.trim().toLowerCase().replace(/^@/, '') // remove leading @ if present
-
-      if (q) url.searchParams.set('q', q)
-      if (c) url.searchParams.set('country', c)
-      if (u) url.searchParams.set('username', u)
+      // We only use 'q' now. This matches your revamped explorer.js backend.
+      url.searchParams.set('q', trimmedQuery.toLowerCase())
 
       const res = await fetch(url.toString())
       const json = await res.json()
 
-      if (!res.ok) throw new Error(json.error || 'Unknown error')
-      setData(json.results)
+      if (!res.ok) throw new Error(json.error || 'Network response failed')
+
+      // Results are already ranked by the backend
+      setData(json.results || [])
     } catch (err: any) {
+      console.error('Frontend Search Error:', err)
       setError(err.message)
+      setData([])
     } finally {
       setLoading(false)
     }

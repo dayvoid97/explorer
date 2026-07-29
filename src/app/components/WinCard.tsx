@@ -11,10 +11,11 @@ import {
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import audioIcon from '../../../public/audio.png'
+import videoIcon from '../../../public/video.png'
+import Image from 'next/image'
 import { authFetch } from '../lib/api'
 import { removeTokens } from '../lib/auth'
-
-import { celebrateWin } from '../hooks/useCelebrateWins'
+import { toggleCelebrate } from '../hooks/useCelebrateWins'
 import { createSlug } from '../lib/utils'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
@@ -29,7 +30,10 @@ export interface WinProps {
     mediaUrls?: string[]
     mimeTypes?: string[]
     upvotes?: number
+    isSaved?: boolean
+    hasCelebrated?: boolean
     previewImageUrl?: string
+    previewMimeType?: string
     commentCount?: number
     externalLink?: {
       url: string
@@ -38,14 +42,6 @@ export interface WinProps {
       previewImage?: string | null
     }
   }
-}
-
-// Utility to detect media type
-const getMediaType = (url: string): 'video' | 'audio' | 'image' => {
-  if (!url) return 'image'
-  if (url.match(/\.(mp4|webm|ogg|quicktime)$/i)) return 'video'
-  if (url.match(/\.(mp3|wav)$/i)) return 'audio'
-  return 'image'
 }
 
 // Utility to format relative time
@@ -90,22 +86,15 @@ const ActionButton = ({
   compact?: boolean
 }) => {
   const getVariantStyles = () => {
-    if (disabled) return 'text-gray-400 hover:bg-gray-100 cursor-not-allowed'
+    if (disabled) return 'text-opacity-50 cursor-not-allowed opacity-50'
 
-    switch (variant) {
-      case 'celebrate':
-        return isActive
-          ? 'text-orange-600 bg-orange-50'
-          : 'text-gray-600 hover:text-orange-600 hover:bg-orange-50'
-      case 'save':
-        return isActive
-          ? 'text-blue-600 bg-blue-50'
-          : 'text-gray-600 hover:text-blue-600 hover:bg-blue-50'
-      case 'comment':
-        return 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
-      default:
-        return 'text-gray-600 hover:bg-gray-50'
+    // PROFESSIONAL MONOCHROME LIGHT-UP LOGIC
+    // Instead of orange, we use high-contrast (White/Black) or subtle borders
+    if (isActive) {
+      return 'text-white bg-gray-700 shadow-sm' // The "Light Up" state
     }
+
+    return 'text-gray-400 hover:bg-gray-800 hover:text-gray-200' // The "Idle" state
   }
 
   if (compact) {
@@ -136,68 +125,92 @@ const ActionButton = ({
 }
 
 // Media component optimized for horizontal layout
+
 const MediaThumbnail = ({
   src,
-  mediaType,
+  mimeType,
   hasExternalLink,
   size = 'normal',
 }: {
   src: string
-  mediaType: 'video' | 'audio' | 'image'
+  mimeType: string | undefined
   hasExternalLink?: boolean
   size?: 'normal' | 'large'
 }) => {
   const sizeMap = {
-    normal: 'w-16 h-16 sm:w-20 sm:h-20',
-    large: 'w-32 h-24 sm:w-40 sm:h-28',
+    normal: { height: 160, className: 'h-40' },
+    large: { height: 288, className: 'h-64 sm:h-72' },
   }
-  const sizeClasses = sizeMap
+  const { height, className: heightClass } = sizeMap[size]
+  // 1. Determine the source to use
+  let imageSource = src
+  let mediaType: 'video' | 'audio' | 'image' = 'image'
+  let isPlaceholder = false
+  let imgAlt = 'Financial Gurkha is for the Winners'
+
+  if (mimeType && mimeType.startsWith('video/')) {
+    mediaType = 'video'
+    imageSource = videoIcon.src
+    isPlaceholder = true
+    imgAlt = 'Error loading Media. Please open the card to display media.'
+  } else if (mimeType && mimeType.startsWith('audio/')) {
+    mediaType = 'audio'
+    imageSource = audioIcon.src
+    isPlaceholder = true
+    imgAlt = 'Error loading Media. Please open the card to display media.'
+  }
+
+  const layoutClasses = `${heightClass} w-full`
 
   return (
     <div
-      className={`relative ${sizeClasses} flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-600`}
+      className={`relative ${layoutClasses} flex-shrink-0 rounded-xl overflow-hidden bg-gradient-to-br from-gray-100 to-gray-200`}
+      style={{ minHeight: height }} // Ensure height is applied
     >
-      {mediaType === 'audio' ? (
-        <div className="w-full h-full flex items-center justify-center">
-          <img
-            src={audioIcon.src}
-            alt="Audio"
-            className="w-6 h-6 sm:w-8 sm:h-8 object-contain opacity-70"
-          />
+      <Image
+        src={imageSource}
+        alt={imgAlt}
+        fill={!isPlaceholder}
+        width={isPlaceholder ? 100 : undefined}
+        height={isPlaceholder ? 100 : undefined}
+        className={`w-full h-full ${isPlaceholder ? 'object-contain p-2' : 'object-cover'}`}
+        sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+        priority={false}
+      />
+
+      {/* Play Icon Overlay: Show ONLY if it's a video (even if it's a placeholder) */}
+      {mediaType === 'video' && (
+        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
+          <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
+            <Play className="w-3 h-3 sm:w-4 sm:h-4" />
+          </div>
         </div>
-      ) : (
-        <>
-          <img src={src} alt="Preview" className=" object-cover" />
-          {mediaType === 'video' && (
-            <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-20">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
-                <Play className="w-3 h-3 sm:w-4 sm:h-4 text-gray-800 ml-0.5" />
-              </div>
-            </div>
-          )}
-          {hasExternalLink && (
-            <div className="absolute top-1 right-1 w-4 h-4 sm:w-5 sm:h-5 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
-              <ExternalLink className="w-2 h-2 sm:w-3 sm:h-3 text-gray-600" />
-            </div>
-          )}
-        </>
+      )}
+
+      {/* External Link Icon Overlay: Show if it's an external link */}
+      {hasExternalLink && (
+        <div className="absolute top-1 right-1 w-4 h-4 sm:w-5 sm:h-5 bg-white bg-opacity-90 rounded-full flex items-center justify-center">
+          <ExternalLink className="w-2 h-2 sm:w-3 sm:h-3" />
+        </div>
       )}
     </div>
   )
 }
 
-export default function WinCard({ win }: WinProps) {
+const WinCard: React.FC<WinProps> = ({ win }) => {
   const router = useRouter()
   const [state, setState] = useState({
     upvotes: win.upvotes ?? 0,
     expanded: false,
-    saved: false,
+    saved: win.isSaved ?? false,
+    isCelebrated: win.hasCelebrated ?? false,
+    isSaving: false,
     isUpvoting: false,
     error: null as string | null,
   })
 
   const isLong = useMemo(() => win.paragraphs.join('\n').length > 280, [win.paragraphs])
-  const mediaType = useMemo(() => getMediaType(win.previewImageUrl ?? ''), [win.previewImageUrl])
+  const previewMimeType = win.previewMimeType
   const relativeTime = useMemo(() => getRelativeTime(win.createdAt), [win.createdAt])
 
   const imageSrc: string | undefined = win.externalLink?.previewImage || win.previewImageUrl
@@ -245,23 +258,33 @@ export default function WinCard({ win }: WinProps) {
     router.push('/login')
   }
 
+  // WinCard Component Code (Refactored handleSave)
+
   const handleSave = async (e: React.MouseEvent) => {
     e.stopPropagation()
-    setState((s) => ({ ...s, error: null }))
+    if (state.isSaving) return // Prevent double-clicking
+
+    setState((s) => ({ ...s, isSaving: true, error: null })) // Start loading
 
     try {
-      const res = await authFetch(`${API_BASE_URL}/gurkha/wins/save/${win.id}`, {
-        method: 'POST',
+      // 1. Use the new combined toggle route
+      const res = await authFetch(`${API_BASE_URL}/gurkha/wins/toggle-save/${win.id}`, {
+        method: 'POST', // Always POST for toggles
         headers: {
           'Content-Type': 'application/json',
         },
       })
 
-      if (res.ok || res.status === 409) {
-        setState((s) => ({ ...s, saved: true }))
+      const data = await res.json()
+
+      if (res.ok) {
+        // 2. Use the 'isSaved' flag returned by the backend to update state
+        // Backend returns: { success: true, action: 'SAVED'/'UNSAVED', isSaved: true/false }
+        setState((s) => ({ ...s, saved: data.isSaved }))
       } else {
-        const data = await res.json()
-        throw new Error(data.message || data.error || `Failed to save win (Status: ${res.status}).`)
+        throw new Error(
+          data.message || data.error || `Failed to toggle save state (Status: ${res.status}).`
+        )
       }
     } catch (err: any) {
       console.error('WinCard save error:', err)
@@ -273,6 +296,8 @@ export default function WinCard({ win }: WinProps) {
       } else {
         setState((s) => ({ ...s, error: err.message || 'Save failed.' }))
       }
+    } finally {
+      setState((s) => ({ ...s, isSaving: false })) // End loading
     }
   }
 
@@ -310,11 +335,39 @@ export default function WinCard({ win }: WinProps) {
   const handleCelebrate = async (e: React.MouseEvent) => {
     e.stopPropagation()
     if (state.isUpvoting) return
-    setState((s) => ({ ...s, isUpvoting: true, error: null }))
+
+    // Determine the action based on current local state
+    const action = state.isCelebrated ? 'unvote' : 'upvote'
+
+    setState((s) => ({
+      ...s,
+      isUpvoting: true,
+      error: null,
+    }))
 
     try {
-      const count = await celebrateWin(win.id)
-      setState((s) => ({ ...s, upvotes: count }))
+      // 1. Call the new high-scale toggle hook
+      const result = await toggleCelebrate(win.id, action)
+
+      let newUpvotes = state.upvotes
+      let newIsCelebrated = state.isCelebrated
+
+      // 2. Update state based on the result action
+      if (result.action === 'VOTED') {
+        newUpvotes += 1
+        newIsCelebrated = true
+      } else if (result.action === 'UNVOTED') {
+        // Ensure count doesn't go below zero
+        newUpvotes = Math.max(0, newUpvotes - 1)
+        newIsCelebrated = false
+      }
+      // If result.action is ALREADY_VOTED/UNVOTED, the state matches the DB, so no change.
+
+      setState((s) => ({
+        ...s,
+        upvotes: newUpvotes,
+        isCelebrated: newIsCelebrated, // <-- Update the celebration status
+      }))
     } catch (err: any) {
       console.error('WinCard celebrate error:', err)
       if (
@@ -323,6 +376,7 @@ export default function WinCard({ win }: WinProps) {
       ) {
         handleAuthRedirect(err.message)
       } else {
+        // Use the error message returned from the backend (if any)
         setState((s) => ({ ...s, error: err.message || 'Celebrate failed.' }))
       }
     } finally {
@@ -336,7 +390,7 @@ export default function WinCard({ win }: WinProps) {
       role="button"
       tabIndex={0}
       onKeyDown={(e) => e.key === 'Enter' && goToDetail()}
-      className="relative bg-[#161616] rounded-2xl backdrop-blur-xl p-6 transition-all duration-500 hover:shadow-xl hover:shadow-black/10 hover:scale-[1.02] max-w-sm mx-auto flex flex-col"
+      className="relative bg-[#161616] rounded-2xl backdrop-blur-xl p-6 transition-all duration-500 hover:shadow-xl hover:scale-[1.02] flex flex-col h-full w-full"
     >
       {/* Main Content Area */}
       <div className="flex gap-3 sm:gap-1">
@@ -344,12 +398,23 @@ export default function WinCard({ win }: WinProps) {
         <div className="flex-1 min-w-0">
           {/* Header */}
           <div className="flex items-center gap-2 mb-1">
-            <span className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base">
+            {/* Removed dark mode text colors */}
+
+            <span
+              className=" text-sm "
+              style={{
+                fontFamily: "'Roboto Mono', monospace",
+                fontWeight: 400,
+                color: '#d9d8d3',
+                fontStyle: 'normal',
+                letterSpacing: '-0.05em',
+              }}
+            >
               @{win.username}
             </span>
-            <span className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm">·</span>
+            <span className="text-gray-500 text-xs sm:text-sm">·</span>
             <span
-              className="text-gray-500 dark:text-gray-400 text-xs sm:text-sm"
+              className="text-gray-500 text-xs sm:text-sm"
               style={{
                 fontFamily: "'Roboto Mono', monospace",
                 fontWeight: 400,
@@ -362,7 +427,8 @@ export default function WinCard({ win }: WinProps) {
             <div className="ml-auto">
               <button
                 onClick={(e) => e.stopPropagation()}
-                className="p-1 rounded-full hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                // Removed dark mode hover color
+                className="p-1 rounded-full hover:bg-gray-200 transition-colors"
               >
                 <MoreHorizontal className="w-4 h-4 text-gray-400" />
               </button>
@@ -370,19 +436,20 @@ export default function WinCard({ win }: WinProps) {
           </div>
 
           {/* Title */}
-          <h2
-            className=" sm:text-lg  mb-1  duration-200"
+          <h3
+            className=" text-[#eff0f2] text-xl font-bold line-clamp-2 transition-colors leading-tight"
             style={{
               fontFamily: "'Freight Big Pro', serif",
-              fontWeight: 800,
-              letterSpacing: '-0.05rem',
+              fontWeight: 500,
+              letterSpacing: '-0.05em',
             }}
           >
             {win.title}
-          </h2>
+          </h3>
 
           {/* Text Content */}
-          <div className="text-sm sm:text-base text-gray-600 dark:text-gray-300 leading-relaxed mb-3">
+          {/* Removed dark mode text color */}
+          <div className="text-sm sm:text-base leading-relaxed mb-3 text-[#d9d8d3]">
             {state.expanded ? (
               win.paragraphs.map((p, i) => (
                 <p key={i} className="whitespace-pre-line mb-2 last:mb-0">
@@ -399,15 +466,16 @@ export default function WinCard({ win }: WinProps) {
                   e.stopPropagation()
                   setState((s) => ({ ...s, expanded: true }))
                 }}
-                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium text-sm"
+                className="mt-2 px-3 py-1 rounded-md bg-gray-800/50 hover:bg-blue-900/30 text-blue-400 hover:text-blue-300 border border-gray-700 hover:border-blue-500/50 transition-all duration-200 shadow-sm flex items-center gap-1"
                 style={{
                   fontFamily: "'Roboto Mono', monospace",
-                  fontWeight: 400,
+                  fontWeight: 500, // Slightly heavier for emphasis
                   fontStyle: 'normal',
-                  letterSpacing: '-0.05rem',
+                  letterSpacing: '-0.02rem', // Adjusted slightly for readability
+                  fontSize: '15px', // Keep it small but punchy
                 }}
               >
-                Show more
+                <span className="opacity-70">...</span> Read more
               </button>
             )}
           </div>
@@ -417,9 +485,8 @@ export default function WinCard({ win }: WinProps) {
             <div className="mb-5">
               <MediaThumbnail
                 src={imageSrc}
-                mediaType={mediaType}
+                mimeType={previewMimeType} // 💡 Pass the mime type
                 hasExternalLink={!!win.externalLink}
-                size="large"
               />
             </div>
           )}
@@ -435,15 +502,16 @@ export default function WinCard({ win }: WinProps) {
             }}
           >
             <ActionButton
-              icon={<PartyPopper className="w-6 h-6" />}
-              label={state.upvotes || '0'}
+              icon={<PartyPopper />}
+              label={state.upvotes} // The number lives here
               onClick={handleCelebrate}
               disabled={state.isUpvoting}
               variant="celebrate"
-              isActive={state.isUpvoting}
-              title="Celebrate this win!"
+              isActive={state.isCelebrated} // This now triggers the light-up
+              title={state.isCelebrated ? 'Remove celebration' : 'Celebrate this win!'}
               compact
             />
+            {win.upvotes}
 
             {win.commentCount !== undefined && (
               <ActionButton
@@ -458,9 +526,10 @@ export default function WinCard({ win }: WinProps) {
             <ActionButton
               icon={<Bookmark className="w-6 h-6" />}
               onClick={handleSave}
+              disabled={state.isSaving}
               variant="save"
-              isActive={state.saved}
-              title={state.saved ? 'Saved!' : 'Save win'}
+              isActive={state.saved || state.isSaving}
+              title={state.saved ? 'Unsave win' : 'Save win'}
               compact
             />
             <ActionButton
@@ -476,9 +545,8 @@ export default function WinCard({ win }: WinProps) {
           {/* Error Message */}
           {state.error && (
             <div className="mt-2">
-              <p className="text-xs text-red-500 dark:text-red-400 bg-red-50 dark:bg-red-900/20 px-2 py-1 rounded-lg inline-block">
-                {state.error}
-              </p>
+              {/* Removed all specific color/background classes */}
+              <p className="text-xs px-2 py-1 rounded-lg inline-block">{state.error}</p>
             </div>
           )}
         </div>
@@ -486,3 +554,4 @@ export default function WinCard({ win }: WinProps) {
     </article>
   )
 }
+export default React.memo(WinCard)

@@ -3,6 +3,8 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
+import { Heart, Repeat2, Share, Eye, MessageCircle, Bookmark } from 'lucide-react'
+import { chronologyService } from '@/app/lib/chronologyService' // Reuse service
 import { getAccessToken, isLoggedIn } from '@/app/lib/auth'
 import ThreadItem, { Win } from '../../components/ThreadItem'
 import ProgressRail from '@/app/components/ProgressRail'
@@ -15,6 +17,13 @@ interface Chronology {
   description?: string
   categories?: string[]
   isPrivate?: boolean
+  likeCount?: number
+  repostCount?: number
+  hitCount?: number
+  saveCount?: number
+  likedByUser?: boolean
+  repostedByUser?: boolean
+  savedByUser?: boolean
 }
 
 interface Comment {
@@ -33,6 +42,11 @@ export default function ChronologyDetailPage() {
   const [loading, setLoading] = useState(true)
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc')
 
+  const [isLiked, setIsLiked] = useState(false)
+  const [isReposted, setIsReposted] = useState(false)
+  const [isSaved, setIsSaved] = useState(false)
+  const [likes, setLikes] = useState(0)
+
   useEffect(() => {
     const load = async () => {
       try {
@@ -43,15 +57,46 @@ export default function ChronologyDetailPage() {
         ])
         const chain = await chainRes.json()
         const comm = await commentsRes.json()
-        setChronology(chain.chronology ?? null)
+
+        const chronoData = chain.chronology ?? null
+        setChronology(chronoData)
         setWins((chain.wins ?? []).filter((w: Win) => !!w.id))
         setComments(comm.comments ?? [])
+
+        // Sync local interaction state
+        if (chronoData) {
+          setIsLiked(!!chronoData.likedByUser)
+          setIsReposted(!!chronoData.repostedByUser)
+          setIsSaved(!!chronoData.savedByUser)
+          setLikes(chronoData.likeCount || 0)
+        }
       } finally {
         setLoading(false)
       }
     }
     if (chronologyId) load()
   }, [chronologyId])
+
+  const handleInteract = async (type: 'like' | 'save' | 'repost' | 'share') => {
+    if (type === 'share') {
+      await navigator.clipboard.writeText(window.location.href)
+      return alert('Link copied to clipboard!')
+    }
+
+    if (!isLoggedIn()) return alert('Login to interact')
+
+    try {
+      const data = await chronologyService.interact(chronologyId, type)
+      if (type === 'like') {
+        setIsLiked(data.liked)
+        setLikes((prev) => (data.liked ? prev + 1 : Math.max(0, prev - 1)))
+      }
+      if (type === 'repost') setIsReposted(data.reposted)
+      if (type === 'save') setIsSaved(data.saved)
+    } catch (err) {
+      console.error(err)
+    }
+  }
 
   const sortedWins = useMemo(() => {
     return [...wins].sort((a, b) =>
@@ -95,14 +140,20 @@ export default function ChronologyDetailPage() {
         >
           ← Back to ChronoDubs
         </Link>
-        <span className="text-muted-foreground text-xs">
-          {new Date(chronology.createdAt).toLocaleDateString()}
-        </span>
+        <div className="text-muted-foreground flex items-center gap-4 text-xs font-mono">
+          <span className="flex items-center gap-1">
+            <Eye className="w-3 h-3" /> {chronology.hitCount || 0}
+          </span>
+          <span className="flex items-center gap-1">
+            <MessageCircle className="w-3 h-3" /> {comments.length}
+          </span>
+          <span>{new Date(chronology.createdAt).toLocaleDateString()}</span>
+        </div>
       </div>
 
       {/* header */}
       <h3
-        className="text-foreground mb-2 text-3xl font-extrabold leading-tight"
+        className="text-foreground mb-2 text-4xl font-extrabold leading-tight"
         style={{
           fontFamily: "'Freight Big Pro', serif",
           fontWeight: 500,
@@ -111,9 +162,78 @@ export default function ChronologyDetailPage() {
       >
         {chronology.name}
       </h3>
-      <p className="text-muted-foreground mb-2 text-sm italic">By @{chronology.createdBy}</p>
+
+      <div className="flex items-center justify-between mb-6">
+        <p className="text-muted-foreground text-sm italic">By @{chronology.createdBy}</p>
+
+        {/* LOGGED IN INTERACTION BAR */}
+        {isLoggedIn() && (
+          <div className="bg-secondary/30 border-border flex items-center gap-1 rounded-full p-1 border">
+            <button
+              onClick={() => handleInteract('like')}
+              className={`p-2 rounded-full transition-all ${
+                isLiked ? 'text-red-500 bg-red-500/10' : 'text-muted-foreground hover:text-red-500'
+              }`}
+            >
+              <Heart className={`w-4 h-4 ${isLiked ? 'fill-current' : ''}`} />
+            </button>
+            <button
+              onClick={() => handleInteract('repost')}
+              className={`p-2 rounded-full transition-all ${
+                isReposted
+                  ? 'text-green-500 bg-green-500/10'
+                  : 'text-muted-foreground hover:text-green-500'
+              }`}
+            >
+              <Repeat2 className="w-4 h-4" />
+            </button>
+            <button
+              onClick={() => handleInteract('save')}
+              className={`p-2 rounded-full transition-all ${
+                isSaved
+                  ? 'text-yellow-500 bg-yellow-500/10'
+                  : 'text-muted-foreground hover:text-yellow-500'
+              }`}
+            >
+              <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current' : ''}`} />
+            </button>
+            <button
+              onClick={() => handleInteract('share')}
+              className="text-muted-foreground p-2 rounded-full hover:text-blue-500 transition-all"
+            >
+              <Share className="w-4 h-4" />
+            </button>
+          </div>
+        )}
+      </div>
+
+      {/* Engagement Stats for everyone */}
+      {/* Engagement Stats - Only visible if counts > 0 */}
+      {(likes > 0 || (chronology.repostCount ?? 0) > 0 || (chronology.saveCount ?? 0) > 0) && (
+        <div className="border-border/50 text-muted-foreground flex gap-6 mb-6 border-y py-3 text-xs font-mono">
+          {likes > 0 && (
+            <div className="flex flex-col">
+              <span className="text-foreground font-bold">{likes}</span>
+              <span>Dubbed</span>
+            </div>
+          )}
+          {(chronology.repostCount ?? 0) > 0 && (
+            <div className="flex flex-col">
+              <span className="text-foreground font-bold">{chronology.repostCount}</span>
+              <span>Reposts</span>
+            </div>
+          )}
+          {(chronology.saveCount ?? 0) > 0 && (
+            <div className="flex flex-col">
+              <span className="text-foreground font-bold">{chronology.saveCount}</span>
+              <span>Noted</span>
+            </div>
+          )}
+        </div>
+      )}
+
       {chronology.description && (
-        <p className="text-muted-foreground mb-4 text-sm leading-relaxed">
+        <p className="text-muted-foreground mb-4 text-base leading-relaxed">
           {chronology.description}
         </p>
       )}
@@ -185,12 +305,12 @@ export default function ChronologyDetailPage() {
             letterSpacing: '-0.05rem',
           }}
         >
-          💬 Thoughts?
+          Drop A Comment
         </h2>
         <textarea
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Drop your thoughts on this chain..."
+          placeholder="Say something..."
           className="border-border bg-background text-foreground placeholder:text-muted-foreground mb-3 w-full rounded-lg border p-3"
         />
         <button

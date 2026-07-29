@@ -342,9 +342,7 @@ export default function SocialLinksProfile({
           {/* Aligned left, reduced margin-bottom */}
           <h2 className="text-xl font-semibold text-current mb-1">Social Links</h2>{' '}
           {/* Smaller heading */}
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            Manage your social media profiles and custom links
-          </p>
+          <p className="text-sm ">Manage your social media profiles and custom links</p>
         </div>
         {/* Add/Update Link Form */}
         <div className="p-0 space-y-3">
@@ -356,7 +354,7 @@ export default function SocialLinksProfile({
             <div>
               <label
                 htmlFor="platform-select"
-                className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1" // Smaller label
+                className="block text-xs font-medium  mb-1" // Smaller label
               >
                 Platform
               </label>
@@ -380,7 +378,7 @@ export default function SocialLinksProfile({
             <div className="sm:col-span-2">
               <label
                 htmlFor="url-input"
-                className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1" // Smaller label
+                className="block text-xs font-medium  mb-1" // Smaller label
               >
                 URL
               </label>

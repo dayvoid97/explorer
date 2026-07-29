@@ -1,623 +1,441 @@
 'use client'
 
-import React, { useEffect, useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
+import { useChronologyManager } from '../hooks/useChronologyManager'
+import {
+  Edit3,
+  Trash2,
+  Plus,
+  Save,
+  X,
+  Clock,
+  ChevronDown,
+  ChevronUp,
+  Calendar,
+  Search,
+} from 'lucide-react'
 import { authFetch } from '../lib/api'
-import { Edit3, Trash2, Plus, Save, X, Clock, ChevronDown, ChevronUp, Calendar } from 'lucide-react'
 
-type Win = {
+// Define local Win type for popular wins dropdown
+type WinPreview = {
   winId: string
-  addedAt?: number
-  addedToChronologyAt?: number
-  createdAt?: number
-  title?: string
-  description?: string
-  category?: string
-  viewCount?: number
+  title: string
   upvotes?: number
+  viewCount?: number
 }
 
-type Chronology = {
-  id: string
-  name: string
-  description?: string
-  categories?: string[]
-  createdAt: number
-  winIds: { winId: string; addedAt?: number }[]
-  wins?: Win[]
+const ConfirmModal = ({
+  isOpen,
+  onClose,
+  onConfirm,
+  title,
+  message,
+  confirmText = 'Delete',
+  isLoading = false,
+}: {
+  isOpen: boolean
+  onClose: () => void
+  onConfirm: () => void
+  title: string
+  message: string
+  confirmText?: string
+  isLoading?: boolean
+}) => {
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+      {/* Backdrop */}
+      <div
+        className="animate-in fade-in absolute inset-0 bg-black/80 backdrop-blur-sm duration-200"
+        onClick={onClose}
+      />
+
+      {/* Modal Content */}
+      <div className="animate-in zoom-in-95 relative w-full max-w-md bg-[#161616] border border-white/10 rounded-2xl shadow-2xl p-6 duration-200">
+        <div className="flex items-center gap-3 mb-4 text-red-500">
+          <Trash2 size={24} />
+          <h2 className="text-xl font-bold text-white">{title}</h2>
+        </div>
+
+        <p className="text-gray-400 text-sm mb-8 leading-relaxed">{message}</p>
+
+        <div className="flex gap-3 justify-end">
+          <button
+            onClick={onClose}
+            className="px-5 py-2.5 text-sm font-medium text-gray-400 hover:text-white transition-colors"
+          >
+            Cancel
+          </button>
+          <button
+            onClick={onConfirm}
+            disabled={isLoading}
+            className="bg-red-600 hover:bg-red-500 text-white px-6 py-2.5 rounded-xl text-sm font-bold transition-all flex items-center gap-2"
+          >
+            {isLoading ? (
+              <div className="animate-spin h-4 w-4 border-2 border-white/20 border-t-white rounded-full" />
+            ) : null}
+            {confirmText}
+          </button>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function MyChronologies() {
-  const [chronologies, setChronologies] = useState<Chronology[]>([])
-  const [loading, setLoading] = useState(true)
-  const [error, setError] = useState<string | null>(null)
-  const [editingId, setEditingId] = useState<string | null>(null)
-  const [formData, setFormData] = useState<Partial<Chronology>>({})
-  const [expandedChronology, setExpandedChronology] = useState<string | null>(null)
+  // 1. Consume the Logic Hook
+  const {
+    chronologies,
+    loading,
+    error,
+    editingId,
+    formData,
+    operationLoading,
+    setEditingId,
+    setFormData,
+    deleteChrono,
+    updateChrono,
+    addWin,
+    removeWin,
+  } = useChronologyManager()
+
+  // 2. Local UI State
+  const [expandedId, setExpandedId] = useState<string | null>(null)
   const [newWinId, setNewWinId] = useState('')
-  const [operationLoading, setOperationLoading] = useState<string | null>(null)
+  const [popularWins, setPopularWins] = useState<WinPreview[]>([])
+  const [fetchingPopularWins, setFetchingPopularWins] = useState(false)
+  const [showPopularWins, setShowPopularWins] = useState(false)
+
+  // Swipe Logic Refs
   const [swipingWin, setSwipingWin] = useState<string | null>(null)
   const [swipeDistance, setSwipeDistance] = useState(0)
   const swipeStartX = useRef(0)
-  const swipeThreshold = 100 // pixels
-
-  // 🪄 New state for popular wins
-  const [popularWins, setPopularWins] = useState<Win[]>([])
-  const [fetchingPopularWins, setFetchingPopularWins] = useState(false)
-  const [showPopularWins, setShowPopularWins] = useState(false)
   const dropdownRef = useRef<HTMLDivElement>(null)
 
-  // Fetch chronologies from your API
-  useEffect(() => {
-    const fetchChronologies = async () => {
-      try {
-        const res = await authFetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies`,
-          { method: 'GET' }
-        )
+  // New Modal State
+  const [deleteModal, setDeleteModal] = useState<{
+    isOpen: boolean
+    type: 'CHRONO' | 'WIN'
+    id: string // Chrono ID
+    winId?: string // Optional Win ID
+    title: string
+  }>({ isOpen: false, type: 'CHRONO', id: '', title: '' })
 
-        if (!res.ok) {
-          const errData = await res.json().catch(() => ({}))
-          throw new Error(errData.message || 'Failed to fetch chronologies')
-        }
-
-        const data = await res.json()
-        setChronologies(data.chronologies || [])
-      } catch (err: any) {
-        setError(err.message)
-      } finally {
-        setLoading(false)
-      }
+  // Handle the confirmation from the modal
+  const handleConfirmedDelete = async () => {
+    if (deleteModal.type === 'CHRONO') {
+      await deleteChrono(deleteModal.id)
+    } else if (deleteModal.winId) {
+      await removeWin(deleteModal.id, deleteModal.winId)
     }
-
-    fetchChronologies()
-  }, [])
-
-  // 🪄 New function to fetch popular wins
-  const fetchPopularWins = async () => {
-    // Only fetch if not already fetching and the list is empty
-    if (popularWins.length === 0 && !fetchingPopularWins) {
-      setFetchingPopularWins(true)
-      try {
-        const res = await authFetch(
-          `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies/popular`,
-          { method: 'GET' }
-        )
-        if (!res.ok) {
-          throw new Error('Failed to fetch popular wins')
-        }
-        const data = await res.json()
-        setPopularWins(data.wins || [])
-      } catch (err: any) {
-        console.error('Failed to fetch popular wins:', err.message)
-      } finally {
-        setFetchingPopularWins(false)
-      }
-    }
-    // Always show the dropdown when the input is focused
-    setShowPopularWins(true)
+    setDeleteModal({ ...deleteModal, isOpen: false })
   }
 
-  // 🪄 Function to handle selecting a win from the dropdown
-  const handleSelectPopularWin = (winId: string) => {
-    setNewWinId(winId)
-    setShowPopularWins(false) // Hide the dropdown after selection
-  }
-
-  // 🪄 Add a click handler to hide the dropdown when clicking outside
+  // 3. Dropdown Logic
   useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setShowPopularWins(false)
       }
     }
-
     document.addEventListener('mousedown', handleClickOutside)
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [dropdownRef])
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [])
 
-  // Delete chronology
-  const handleDelete = async (id: string) => {
-    if (!confirm('Are you sure? This will remove all win references.')) return
-
-    setOperationLoading(`delete-${id}`)
+  const handleFetchPopular = async () => {
+    setShowPopularWins(true)
+    if (popularWins.length > 0) return
+    setFetchingPopularWins(true)
     try {
       const res = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies/${id}`,
-        { method: 'DELETE' }
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/manage/wins/popular`
       )
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error(errData.message || 'Failed to delete chronology')
-      }
-
-      setChronologies((prev) => prev.filter((c) => c.id !== id))
-      if (expandedChronology === id) setExpandedChronology(null)
-    } catch (err: any) {
-      alert(err.message)
+      const data = await res.json()
+      setPopularWins(data.wins || [])
+    } catch (err) {
+      console.error('Failed to load popular wins', err)
     } finally {
-      setOperationLoading(null)
+      setFetchingPopularWins(false)
     }
   }
 
-  // Start editing
-  const startEdit = (chrono: Chronology) => {
-    setEditingId(chrono.id)
-    setFormData({
-      name: chrono.name,
-      description: chrono.description,
-      categories: chrono.categories || [],
-    })
+  // 4. Swipe Handlers
+  const onSwipeStart = (e: React.TouchEvent | React.MouseEvent, id: string) => {
+    swipeStartX.current = 'touches' in e ? e.touches[0].clientX : e.clientX
+    setSwipingWin(id)
   }
 
-  // Save edit
-  const handleEditSubmit = async (id: string) => {
-    setOperationLoading(`edit-${id}`)
-    try {
-      const res = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies/${id}`,
-        {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(formData),
-        }
-      )
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error(errData.message || 'Failed to update chronology')
-      }
-
-      setChronologies((prev) => prev.map((c) => (c.id === id ? { ...c, ...formData } : c)))
-      setEditingId(null)
-      setFormData({})
-    } catch (err: any) {
-      alert(err.message)
-    } finally {
-      setOperationLoading(null)
-    }
-  }
-
-  // Add win to chronology
-  const handleAddWin = async (chronologyId: string) => {
-    if (!newWinId.trim()) return
-
-    setOperationLoading(`add-win-${chronologyId}`)
-    try {
-      const res = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies/${chronologyId}/wins/${newWinId}`,
-        { method: 'POST' }
-      )
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error(errData.message || 'Failed to add win')
-      }
-
-      // Refresh chronologies to get updated win data
-      const refreshRes = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies`,
-        { method: 'GET' }
-      )
-      if (refreshRes.ok) {
-        const refreshData = await refreshRes.json()
-        setChronologies(refreshData.chronologies || [])
-      }
-
-      setNewWinId('')
-    } catch (err: any) {
-      alert(err.message)
-    } finally {
-      setOperationLoading(null)
-    }
-  }
-
-  // Remove win from chronology
-  const handleRemoveWin = async (chronologyId: string, winId: string) => {
-    setOperationLoading(`remove-win-${winId}`)
-    try {
-      const res = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/chronologies/${chronologyId}/wins/${winId}`,
-        { method: 'DELETE' }
-      )
-
-      if (!res.ok) {
-        const errData = await res.json().catch(() => ({}))
-        throw new Error(errData.message || 'Failed to remove win')
-      }
-
-      // Update local state
-      setChronologies((prev) =>
-        prev.map((c) =>
-          c.id === chronologyId
-            ? {
-                ...c,
-                winIds: c.winIds.filter((w) => w.winId !== winId),
-                wins: c.wins?.filter((w) => w.winId !== winId) || [],
-              }
-            : c
-        )
-      )
-    } catch (err: any) {
-      alert(err.message)
-    } finally {
-      setOperationLoading(null)
-      setSwipingWin(null)
-      setSwipeDistance(0)
-    }
-  }
-
-  // Swipe handlers
-  const handleTouchStart = (e: React.TouchEvent, winId: string) => {
-    swipeStartX.current = e.touches[0].clientX
-    setSwipingWin(winId)
-  }
-
-  const handleTouchMove = (e: React.TouchEvent) => {
+  const onSwipeMove = (e: React.TouchEvent | React.MouseEvent) => {
     if (!swipingWin) return
+    const currentX = 'touches' in e ? e.touches[0].clientX : e.clientX
+    const diff = swipeStartX.current - currentX
+    if (diff > 0) setSwipeDistance(Math.min(diff, 100))
+  }
 
-    const currentX = e.touches[0].clientX
-    const distance = swipeStartX.current - currentX
-
-    if (distance > 0) {
-      // Only swipe left
-      setSwipeDistance(Math.min(distance, 120)) // Cap at 120px
+  const onSwipeEnd = (chronoId: string, winId: string) => {
+    if (swipeDistance > 80) {
+      removeWin(chronoId, winId)
     }
+    setSwipingWin(null)
+    setSwipeDistance(0)
   }
 
-  const handleTouchEnd = () => {
-    if (swipeDistance > swipeThreshold && swipingWin) {
-      // Auto-remove if swiped far enough
-      const chronology = chronologies.find((c) => c.wins?.some((w) => w.winId === swipingWin))
-      if (chronology) {
-        handleRemoveWin(chronology.id, swipingWin)
-      }
-    } else {
-      // Reset swipe
-      setSwipingWin(null)
-      setSwipeDistance(0)
-    }
-  }
-
-  // Mouse handlers for desktop
-  const handleMouseDown = (e: React.MouseEvent, winId: string) => {
-    swipeStartX.current = e.clientX
-    setSwipingWin(winId)
-  }
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!swipingWin) return
-
-    const distance = swipeStartX.current - e.clientX
-    if (distance > 0) {
-      setSwipeDistance(Math.min(distance, 120))
-    }
-  }
-
-  const handleMouseUp = () => {
-    handleTouchEnd()
-  }
-
-  const toggleChronology = (chronologyId: string) => {
-    setExpandedChronology((prev) => (prev === chronologyId ? null : chronologyId))
-  }
-
-  if (loading) {
+  if (loading)
     return (
-      <div className="p-6">
-        <div className="text-center py-8">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading chronologies...</p>
-        </div>
+      <div className="flex flex-col items-center justify-center p-20 space-y-4">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <p className="text-gray-400 font-mono text-sm">HYDRATING CHRONOLOGIES...</p>
       </div>
     )
-  }
 
-  if (error) {
+  if (error)
     return (
-      <div className="p-6">
-        <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-          <p className="text-red-600">Error: {error}</p>
-        </div>
+      <div className="p-6 bg-red-500/10 border border-red-500/50 rounded-xl text-red-500">
+        <p className="font-bold">Fetch Error</p>
+        <p className="text-sm opacity-80">{error}</p>
       </div>
     )
-  }
 
   return (
-    <div className="p-6 max-w-4xl mx-auto">
-      <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 mb-2">Chronology Management</h1>
-        <p className="text-gray-600">Edit your Chronology Metadata and Dubs</p>
-      </div>
+    <div className="max-w-4xl mx-auto p-6 space-y-8">
+      <header className="space-y-2">
+        <h1 className="text-3xl font-bold tracking-tight text-white">Chronology Management</h1>
+        <p className="text-gray-400">Curate your winning streaks and manage your trading dubs.</p>
+      </header>
 
-      {chronologies.length === 0 ? (
-        <div className="text-center py-12 bg-gray-50 rounded-lg">
-          <Clock className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-          <h3 className="text-lg font-medium text-gray-900 mb-2">No chronologies yet</h3>
-          <p className="text-gray-500">Create your first chronology to get started.</p>
-        </div>
-      ) : (
-        <div className="space-y-4">
-          {chronologies.map((chrono) => (
-            <div key={chrono.id} className="border rounded-lg overflow-hidden">
-              {editingId === chrono.id ? (
-                // Edit mode
-                <div className="p-4 bg-gray-50">
-                  <div className="space-y-3">
-                    <input
-                      value={formData.name || ''}
-                      onChange={(e) => setFormData((prev) => ({ ...prev, name: e.target.value }))}
-                      placeholder="Chronology name"
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <textarea
-                      value={formData.description || ''}
-                      onChange={(e) =>
-                        setFormData((prev) => ({ ...prev, description: e.target.value }))
-                      }
-                      placeholder="Description"
-                      rows={2}
-                      className="w-full border border-gray-300 rounded px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                    />
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => handleEditSubmit(chrono.id)}
-                        disabled={operationLoading === `edit-${chrono.id}`}
-                        className="flex items-center gap-1 px-3 py-1.5 bg-green-600 text-white rounded text-sm hover:bg-green-700 disabled:opacity-50"
-                      >
-                        {operationLoading === `edit-${chrono.id}` ? (
-                          <div className="animate-spin h-3 w-3 border border-white border-t-transparent rounded-full"></div>
-                        ) : (
-                          <Save className="w-3 h-3" />
-                        )}
-                        Save
-                      </button>
-                      <button
-                        onClick={() => setEditingId(null)}
-                        className="flex items-center gap-1 px-3 py-1.5 bg-gray-500 text-white rounded text-sm hover:bg-gray-600"
-                      >
-                        <X className="w-3 h-3" />
-                        Cancel
-                      </button>
+      {/* Confirmation Modal Instance */}
+      <ConfirmModal
+        isOpen={deleteModal.isOpen}
+        title={deleteModal.type === 'CHRONO' ? 'Delete Chronology' : 'Remove Item'}
+        message={
+          deleteModal.type === 'CHRONO'
+            ? `Are you sure you want to delete "${deleteModal.title}"? This action is permanent and will remove all references in your profile and win documents.`
+            : `Remove this item from the sequence? It will stay in your Win list but will no longer be part of this chronology.`
+        }
+        onClose={() => setDeleteModal({ ...deleteModal, isOpen: false })}
+        onConfirm={handleConfirmedDelete}
+        isLoading={operationLoading?.includes('delete')}
+      />
+
+      <div className="space-y-4">
+        {chronologies.map((chrono) => (
+          <div
+            key={chrono.id}
+            className="bg-[#161616] border border-white/5 rounded-2xl overflow-hidden transition-all duration-300"
+          >
+            {editingId === chrono.id ? (
+              /* --- EDIT MODE --- */
+              <div className="p-6 space-y-4 bg-white/5">
+                <input
+                  className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={formData.name || ''}
+                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  placeholder="Chronology Title"
+                />
+                <textarea
+                  className="w-full bg-[#1c1c1c] border border-white/10 rounded-xl px-4 py-3 text-white focus:ring-2 focus:ring-blue-500 outline-none"
+                  value={formData.description || ''}
+                  onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                  placeholder="Describe this collection..."
+                  rows={3}
+                />
+                <div className="flex gap-3 justify-end">
+                  <button
+                    onClick={() => setEditingId(null)}
+                    className="px-4 py-2 text-gray-400 hover:text-white transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => updateChrono(chrono.id)}
+                    className="bg-blue-600 hover:bg-blue-500 px-6 py-2 rounded-xl font-medium transition-all flex items-center gap-2"
+                  >
+                    {operationLoading === `edit-${chrono.id}` ? (
+                      <span className="animate-spin">⌛</span>
+                    ) : (
+                      <Save size={18} />
+                    )}
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            ) : (
+              /* --- VIEW MODE --- */
+              <>
+                <div className="group p-5 flex items-center justify-between">
+                  <div
+                    className="flex-1 cursor-pointer"
+                    onClick={() => setExpandedId(expandedId === chrono.id ? null : chrono.id)}
+                  >
+                    <div className="flex items-center gap-3">
+                      <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
+                        {chrono.name}
+                      </h3>
+                      {expandedId === chrono.id ? (
+                        <ChevronUp size={18} className="text-gray-500" />
+                      ) : (
+                        <ChevronDown size={18} className="text-gray-500" />
+                      )}
                     </div>
+                    <p className="text-sm text-gray-500 mt-1 line-clamp-1">
+                      {chrono.description || 'No description provided.'}
+                    </p>
+                    <div className="flex gap-4 mt-3 text-[10px] font-mono uppercase tracking-widest text-gray-600">
+                      <span className="flex items-center gap-1">
+                        <Clock size={12} /> {chrono.wins?.length || 0} ITEMS
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <Calendar size={12} /> {new Date(chrono.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => {
+                        setEditingId(chrono.id)
+                        setFormData(chrono)
+                      }}
+                      className="p-2.5 text-gray-500 hover:text-blue-400 hover:bg-blue-400/10 rounded-xl transition-all"
+                    >
+                      <Edit3 size={18} />
+                    </button>
+                    <button
+                      onClick={() =>
+                        setDeleteModal({
+                          isOpen: true,
+                          type: 'CHRONO',
+                          id: chrono.id,
+                          title: chrono.name,
+                        })
+                      }
+                      className="p-2.5 text-gray-500 hover:text-red-500 hover:bg-red-500/10 rounded-xl transition-all"
+                    >
+                      {operationLoading === `delete-${chrono.id}` ? (
+                        <span className="animate-spin block w-4 h-4 border-2 border-red-500 border-t-transparent rounded-full" />
+                      ) : (
+                        <Trash2 size={18} />
+                      )}
+                    </button>
                   </div>
                 </div>
-              ) : (
-                <>
-                  {/* Chronology Header */}
-                  <div className="p-4 bg-white hover:bg-gray-50 transition-colors">
-                    <div className="flex items-center justify-between">
-                      <div
-                        className="flex items-center gap-3 cursor-pointer flex-1"
-                        onClick={() => toggleChronology(chrono.id)}
-                      >
-                        <div className="flex-1">
-                          <h3 className="font-semibold text-gray-900 text-lg">{chrono.name}</h3>
-                          {chrono.description && (
-                            <p className="text-sm text-gray-600 mt-1">{chrono.description}</p>
-                          )}
-                          <div className="flex items-center gap-4 mt-2 text-xs text-gray-500">
-                            <span className="flex items-center gap-1">
-                              <Clock className="w-3 h-3" />
-                              {chrono.wins?.length || 0} wins
-                            </span>
-                            <span className="flex items-center gap-1">
-                              <Calendar className="w-3 h-3" />
-                              {new Date(chrono.createdAt).toLocaleDateString()}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="text-gray-400">
-                          {expandedChronology === chrono.id ? (
-                            <ChevronUp className="w-5 h-5" />
-                          ) : (
-                            <ChevronDown className="w-5 h-5" />
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex gap-1 ml-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            startEdit(chrono)
-                          }}
-                          className="p-2 text-gray-400 hover:text-blue-600 rounded-lg hover:bg-blue-50 transition-colors"
-                        >
-                          <Edit3 className="w-4 h-4" />
-                        </button>
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation()
-                            handleDelete(chrono.id)
-                          }}
-                          disabled={operationLoading === `delete-${chrono.id}`}
-                          className="p-2 text-gray-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors disabled:opacity-50"
-                        >
-                          {operationLoading === `delete-${chrono.id}` ? (
-                            <div className="animate-spin h-4 w-4 border border-gray-400 border-t-transparent rounded-full"></div>
-                          ) : (
-                            <Trash2 className="w-4 h-4" />
-                          )}
-                        </button>
-                      </div>
-                    </div>
-                  </div>
 
-                  {/* Expanded Win Management */}
-                  {expandedChronology === chrono.id && (
-                    <div className="border-t bg-gray-50">
-                      {/* Add Win Section */}
-                      <div className="p-4 border-b bg-white">
-                        <div className="flex gap-2 items-end relative" ref={dropdownRef}>
-                          <div className="flex-1">
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                              Add Win to Chronology
-                            </label>
-                            <input
-                              type="text"
-                              value={newWinId}
-                              onChange={(e) => {
-                                setNewWinId(e.target.value)
-                                // Hide the list if the user starts typing
-                                if (showPopularWins) setShowPopularWins(false)
-                              }}
-                              // 🪄 On focus, trigger the fetchPopularWins function
-                              onFocus={fetchPopularWins}
-                              placeholder="Enter Win ID or select a popular one"
-                              className="w-full border border-gray-300 rounded px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-                              onKeyPress={(e) => {
-                                if (e.key === 'Enter') {
-                                  handleAddWin(chrono.id)
-                                }
-                              }}
-                            />
-                          </div>
-                          <button
-                            onClick={() => handleAddWin(chrono.id)}
-                            disabled={
-                              !newWinId.trim() || operationLoading === `add-win-${chrono.id}`
-                            }
-                            className="flex items-center gap-1 px-4 py-2 bg-blue-600 text-white rounded text-sm hover:bg-blue-700 disabled:opacity-50 h-fit"
-                          >
-                            {operationLoading === `add-win-${chrono.id}` ? (
-                              <div className="animate-spin h-3 w-3 border border-white border-t-transparent rounded-full"></div>
-                            ) : (
-                              <Plus className="w-3 h-3" />
-                            )}
-                            Add
-                          </button>
-                          {/* 🪄 Popular Wins Dropdown */}
-                          {showPopularWins && (
-                            <div className="absolute top-full left-0 right-0 z-10 mt-1 bg-white border border-gray-300 rounded-md shadow-lg max-h-60 overflow-y-auto">
-                              {fetchingPopularWins ? (
-                                <div className="p-3 text-center text-gray-500">Loading...</div>
-                              ) : popularWins.length > 0 ? (
-                                popularWins.map((win) => (
-                                  <div
-                                    key={win.winId}
-                                    onClick={() => handleSelectPopularWin(win.winId)}
-                                    className="p-3 cursor-pointer hover:bg-gray-100"
-                                  >
-                                    <div className="font-medium text-sm text-gray-800">
-                                      {win.title}
-                                    </div>
-                                    <div className="text-xs text-gray-500">
-                                      ID: {win.winId} • Upvotes: {win.upvotes || 0} • Views:{' '}
-                                      {win.viewCount || 0}
-                                    </div>
-                                  </div>
-                                ))
-                              ) : (
-                                <div className="p-3 text-center text-gray-500">
-                                  No popular wins found.
-                                </div>
-                              )}
+                {/* --- EXPANDED MANAGEMENT --- */}
+                {expandedId === chrono.id && (
+                  <div className="animate-in slide-in-from-top-2 border-t border-white/5 bg-black/20 p-5 space-y-6 duration-200">
+                    {/* Add Win Input */}
+                    <div className="relative" ref={dropdownRef}>
+                      <div className="flex gap-2">
+                        <div className="relative flex-1">
+                          <Search className="absolute left-3 top-1/2 -translate-y-1/2 " size={16} />
+                          <input
+                            className="w-full bg-[#fff] border border-white/10 rounded-xl pl-10 pr-4 py-2.5 text-sm focus:ring-1 focus:ring-blue-500 outline-none"
+                            placeholder="Search your wins or paste Win ID..."
+                            value={newWinId}
+                            onFocus={handleFetchPopular}
+                            onChange={(e) => setNewWinId(e.target.value)}
+                          />
+                        </div>
+                        <button
+                          onClick={() => {
+                            addWin(chrono.id, newWinId)
+                            setNewWinId('')
+                          }}
+                          disabled={!newWinId}
+                          className="bg-white text-black px-6 py-2.5 rounded-xl text-sm font-bold hover:bg-gray-200 disabled:opacity-50 transition-all"
+                        >
+                          ADD WIN
+                        </button>
+                      </div>
+
+                      {showPopularWins && (
+                        <div className="absolute top-full left-0 right-0 z-50 mt-2 bg-[#1c1c1c] border border-white/10 rounded-xl shadow-2xl overflow-hidden max-h-60 overflow-y-auto">
+                          {fetchingPopularWins ? (
+                            <div className="p-4 text-center text-xs text-gray-500 animate-pulse">
+                              SEARCHING WINS...
                             </div>
-                          )}
-                        </div>
-                      </div>
-
-                      {/* Wins List */}
-                      <div className="p-4">
-                        <h4 className="font-medium text-gray-900 mb-3">
-                          Wins in Chronology ({chrono.wins?.length || 0})
-                        </h4>
-                        {!chrono.wins || chrono.wins.length === 0 ? (
-                          <p className="text-gray-500 text-sm italic">
-                            No wins in this chronology yet.
-                          </p>
-                        ) : (
-                          <div className="space-y-2">
-                            {chrono.wins.map((win) => (
+                          ) : (
+                            popularWins.map((win) => (
                               <div
                                 key={win.winId}
-                                className="relative bg-white border border-gray-200 rounded-lg overflow-hidden"
-                                onTouchStart={(e) => handleTouchStart(e, win.winId)}
-                                onTouchMove={handleTouchMove}
-                                onTouchEnd={handleTouchEnd}
-                                onMouseDown={(e) => handleMouseDown(e, win.winId)}
-                                onMouseMove={handleMouseMove}
-                                onMouseUp={handleMouseUp}
-                                onMouseLeave={handleMouseUp}
-                                style={{
-                                  transform:
-                                    swipingWin === win.winId
-                                      ? `translateX(-${swipeDistance}px)`
-                                      : 'translateX(0)',
-                                  transition:
-                                    swipingWin === win.winId ? 'none' : 'transform 0.2s ease-out',
+                                className="p-3 hover:bg-white/5 cursor-pointer border-b border-white/5 last:border-0"
+                                onClick={() => {
+                                  setNewWinId(win.winId)
+                                  setShowPopularWins(false)
                                 }}
                               >
-                                <div className="p-3 flex items-center justify-between">
-                                  <div className="flex-1">
-                                    {win.title && (
-                                      <div className="text-sm text-gray-600">{win.title}</div>
-                                    )}
-                                    <div className="text-xs text-gray-500 mt-1 flex items-center gap-3">
-                                      {win.createdAt && (
-                                        <span className="flex items-center gap-1">
-                                          <Calendar className="w-3 h-3" />
-                                          Created {new Date(win.createdAt).toLocaleDateString()}
-                                        </span>
-                                      )}
-                                      {win.addedToChronologyAt && (
-                                        <span>
-                                          Added{' '}
-                                          {new Date(win.addedToChronologyAt).toLocaleDateString()}
-                                        </span>
-                                      )}
-                                    </div>
-                                  </div>
-
-                                  {swipingWin === win.winId && swipeDistance > 50 && (
-                                    <div className="text-red-600 text-sm font-medium">
-                                      {swipeDistance > swipeThreshold
-                                        ? 'Release to remove'
-                                        : 'Swipe to remove'}
-                                    </div>
-                                  )}
-                                </div>
-
-                                {/* Swipe reveal delete button */}
-                                <div
-                                  className="absolute top-0 right-0 h-full w-20 bg-red-500 flex items-center justify-center"
-                                  style={{
-                                    transform: `translateX(${
-                                      swipingWin === win.winId
-                                        ? Math.max(0, 80 - swipeDistance)
-                                        : 80
-                                    }px)`,
-                                    transition:
-                                      swipingWin === win.winId ? 'none' : 'transform 0.2s ease-out',
-                                  }}
-                                >
-                                  {operationLoading === `remove-win-${win.winId}` ? (
-                                    <div className="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
-                                  ) : (
-                                    <Trash2 className="w-5 h-5 text-white" />
-                                  )}
-                                </div>
+                                <p className="text-sm font-medium text-white">{win.title}</p>
+                                <p className="text-[10px] text-gray-500 mt-1 uppercase tracking-tighter">
+                                  ID: {win.winId} • {win.upvotes || 0} UPVOTES
+                                </p>
                               </div>
-                            ))}
-                          </div>
-                        )}
-
-                        {(chrono.wins?.length || 0) > 0 && (
-                          <p className="text-xs text-gray-500 mt-4 italic">
-                            💡 Tip: Swipe left on any win to remove it from this chronology
-                          </p>
-                        )}
-                      </div>
+                            ))
+                          )}
+                        </div>
+                      )}
                     </div>
-                  )}
-                </>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+
+                    {/* Wins List */}
+                    <div className="space-y-2">
+                      <h4 className="text-[10px] font-bold text-gray-600 uppercase tracking-widest px-1">
+                        Current Sequence
+                      </h4>
+                      {chrono.wins?.length === 0 ? (
+                        <div className="text-center py-10 border border-dashed border-white/10 rounded-2xl text-gray-600 text-sm">
+                          Empty Chronology. Add your first win above.
+                        </div>
+                      ) : (
+                        chrono.wins?.map((win: any) => (
+                          <div
+                            key={win.id}
+                            className="group relative bg-[#1c1c1c] border border-white/5 rounded-xl overflow-hidden touch-none"
+                            onMouseDown={(e) => onSwipeStart(e, win.id)}
+                            onMouseMove={onSwipeMove}
+                            onMouseUp={() => onSwipeEnd(chrono.id, win.id)}
+                            onTouchStart={(e) => onSwipeStart(e, win.id)}
+                            onTouchMove={onSwipeMove}
+                            onTouchEnd={() => onSwipeEnd(chrono.id, win.id)}
+                          >
+                            <div
+                              className="p-4 flex items-center justify-between bg-[#1c1c1c] relative z-10 transition-transform duration-200"
+                              style={{
+                                transform:
+                                  swipingWin === win.id
+                                    ? `translateX(-${swipeDistance}px)`
+                                    : 'translateX(0)',
+                              }}
+                            >
+                              <div>
+                                <p className="text-sm font-medium text-gray-200">
+                                  {win.title || 'Untitled Win'}
+                                </p>
+                                <p className="text-[10px] text-gray-600 mt-1">
+                                  Added {new Date(win.addedAt || Date.now()).toLocaleDateString()}
+                                </p>
+                              </div>
+                              <Trash2
+                                size={14}
+                                className="text-gray-700 opacity-0 group-hover:opacity-100 transition-opacity"
+                              />
+                            </div>
+                            {/* Swipe Background */}
+                            <div className="absolute inset-0 bg-red-600 flex items-center justify-end px-6">
+                              <span className="text-white text-xs font-bold uppercase tracking-tighter">
+                                Remove
+                              </span>
+                            </div>
+                          </div>
+                        ))
+                      )}
+                    </div>
+                  </div>
+                )}
+              </>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   )
 }

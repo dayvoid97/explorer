@@ -3,7 +3,7 @@
 import { sampleWins } from '../winners/sampleWins'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
-const FETCH_TIMEOUT = 2000 // 2 seconds
+const FETCH_TIMEOUT = 5000 // 2 seconds
 
 interface FetchExploreParams {
   sortBy?: 'recent' | 'celebrated' | 'hottest'

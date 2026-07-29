@@ -2,10 +2,9 @@
 
 import Link from 'next/link'
 import React, { useState } from 'react'
-import { Heart, Repeat2, Share, Eye, Bookmark, Palette } from 'lucide-react'
-import { authFetch } from '../lib/api'
+import { Heart, Repeat2, Share, Eye, Bookmark, Palette, MessageCircle } from 'lucide-react'
 import { getAccessToken } from '../lib/auth'
-import { sampleChronologyCards } from '../types/sampleChronoDatar'
+import { chronologyService } from '../lib/chronologyService'
 
 const placeholderPfp = '/audio.png'
 
@@ -105,70 +104,55 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
     setTimeout(() => setNotification(null), 3000)
   }
 
+  // Inside ChronologyCard.tsx
   const interact = async (type: 'like' | 'save' | 'repost' | 'share') => {
+    // 1. Browser Native Share
     if (type === 'share') {
       try {
         if (navigator.share) {
-          await navigator.share({
-            url: `${window.location.origin}/chronoW/${id}`,
-            title: name,
-          })
-          showNotification('🔗 Shared successfully!', 'success')
+          await navigator.share({ url: `${window.location.origin}/chronoW/${id}`, title: name })
+          await chronologyService.interact(id, 'share') // Track share on backend
+          showNotification('🔗 Shared to the world!', 'success')
         } else {
           await navigator.clipboard.writeText(`${window.location.origin}/chronoW/${id}`)
-          showNotification('🔗 Link copied to clipboard!', 'success')
+          showNotification('🔗 Link copied!', 'success')
         }
-      } catch (shareError: unknown) {
-        if (shareError instanceof Error && shareError.name === 'AbortError') {
-          console.log('Share was cancelled by user')
-        } else {
-          console.error('Share failed:', shareError)
-          showNotification('Failed to share', 'error')
-        }
+      } catch (e) {
+        /* user cancelled */
       }
       return
     }
 
-    const accessToken = getAccessToken()
-    if (!accessToken) {
+    // 2. Auth Check
+    // 2. AUTH GUARD: Nice message + trigger the prompt from page.tsx
+    if (!getAccessToken()) {
+      showNotification('🔒 Log in to interact', 'error')
       if (onUnauthenticatedInteraction) {
+        // This triggers the KnowledgeAccessPrompt on the main page
         onUnauthenticatedInteraction()
       }
       return
     }
 
+    // 3. Backend Interaction
     try {
-      const res = await authFetch(
-        `${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/chronology/${id}/${type}`,
-        { method: 'POST' }
-      )
+      const data = await chronologyService.interact(id, type)
 
-      if (!res.ok) {
-        throw new Error(`Failed to ${type}`)
-      }
-
-      const data = await res.json()
-
+      // Update local state based on the 'active' status returned by backend
       if (type === 'like') {
         setIsLiked(data.liked)
         showNotification(data.liked ? '❤️ Dubbed!' : 'Removed', 'success')
-      } else if (type === 'save') {
+      }
+      if (type === 'save') {
         setIsSaved(data.saved)
-        showNotification(data.saved ? '📚 Noted!' : 'Removed ', 'success')
-      } else if (type === 'repost') {
+        showNotification(data.saved ? '📚 Noted!' : 'Removed', 'success')
+      }
+      if (type === 'repost') {
         setIsReposted(data.reposted)
-        showNotification(data.reposted ? '🔄 Reposted!' : 'Removed repost', 'success')
+        showNotification(data.reposted ? '🔄 Reposted!' : 'Removed', 'success')
       }
     } catch (err: any) {
-      console.error(`Error performing ${type}:`, err)
-
-      if (err.message.includes('Authentication required') || err.message.includes('log in again')) {
-        if (onUnauthenticatedInteraction) {
-          onUnauthenticatedInteraction()
-        }
-      } else {
-        alert(err.message || `Error performing ${type}`)
-      }
+      showNotification(err.message || 'Action failed', 'error')
     }
   }
 
@@ -223,7 +207,7 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
           className={`absolute top-4 left-4 z-30 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 backdrop-blur-md ${
             notification.type === 'success'
               ? 'bg-green-500/90 text-white border border-green-400/50'
-              : 'bg-red-500/90 text-white border border-red-400/50'
+              : 'bg-blue-500/90 text-white border border-red-400/50'
           }`}
         >
           {notification.message}
@@ -316,8 +300,9 @@ export default function ChronologyCard(props: ChronologyCardHydrated) {
               >
                 <img
                   src={u}
-                  alt="Media Preview"
+                  alt={`Media Preview ${i + 1}`}
                   className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                  onError={(e) => (e.currentTarget.style.display = 'none')}
                 />
               </div>
             ))}

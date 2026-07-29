@@ -1,17 +1,9 @@
 'use client'
 
 import React, { useState } from 'react'
-import {
-  Heart,
-  Flag,
-  Trash2,
-  MoreHorizontal,
-  MessageSquare,
-  ChevronDown,
-  ChevronUp,
-} from 'lucide-react'
+import { ChevronDown, ChevronUp, MessageSquare } from 'lucide-react'
 import { useRouter } from 'next/navigation'
-import { useHeatmapTracker } from '../hooks/useHeatMapTracker'
+import { CommentActions } from './commentUI/CommentAction'
 
 interface CommentProps {
   comment: {
@@ -20,253 +12,156 @@ interface CommentProps {
     text: string
     createdAt: number
     upvotes: number
-    upvotedByCurrentUser?: boolean
+    voters?: Record<string, number>
     pfp?: string
     ownerId: string
     parentId?: string
-    replies?: CommentProps['comment'][]
-    replyingTo?: string // Username being replied to
+    replies?: any[]
+    replyingTo?: string
   }
   currentUser: string
-  onUpvote: (commentId: string) => void
+  onVote: (commentId: string, voteValue: 1 | -1) => void
   onFlag: (commentId: string) => void
   onDelete: (commentId: string) => void
-  onReply: (commentId: string, username: string) => void
-  depth?: number // Track nesting depth
-  isLast?: boolean // For threading lines
+  onReply: (commentId: string, username: string, parentId: string) => void
+  depth?: number
+  isLast?: boolean
 }
 
 export default function Comment({
   comment,
   currentUser,
-  onUpvote,
+  onVote,
   onFlag,
   onDelete,
   onReply,
   depth = 0,
+  isLast = false,
 }: CommentProps) {
   const router = useRouter()
-  // const { onMouseEnter, onClick } = useHeatmapTracker(comment.id)
-
-  const [isUpvoted, setIsUpvoted] = useState(comment.upvotedByCurrentUser ?? false)
   const [showActions, setShowActions] = useState(false)
   const [showReplies, setShowReplies] = useState(true)
+  const userVote = comment.voters?.[currentUser] || 0
 
-  const maxDepth = 4
-  const isNested = depth > 0
-  const shouldFlatten = depth >= maxDepth
-
-  const handleUpvote = () => {
-    if (!isUpvoted) {
-      setIsUpvoted(true)
-      onUpvote(comment.id)
-    }
-  }
-
-  const handleProfileClick = () => {
-    router.push(`/publicprofile/${comment.username}`)
-  }
+  // 🟢 Logic: If it's a root comment (no parentId), any reply to it uses this comment's ID as the parent.
+  // If it's already a reply (has parentId), any reply to it uses that same parentId to keep it at Level 1.
+  const effectiveParentId = comment.parentId || comment.id
 
   const formatTimeAgo = (timestamp: number) => {
     const diff = Date.now() - timestamp
-    if (diff < 60000) return 'just now'
-    if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`
-    if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`
-    return new Date(timestamp).toLocaleDateString()
-  }
-
-  const getIndentationStyle = () => {
-    if (depth === 0) return {}
-
-    const baseIndent = Math.min(depth, maxDepth) * 20
-    return {
-      marginLeft: `${baseIndent}px`,
-      paddingLeft: `${Math.min(depth, 3) * 8}px`,
-    }
-  }
-
-  const getThreadingClasses = () => {
-    if (depth === 0) return ''
-
-    const baseClasses = 'relative'
-    const borderClasses = depth <= 3 ? 'border-l-2 border-gray-200 dark:border-gray-700 ' : ''
-
-    return `${baseClasses} ${borderClasses}`
+    if (diff < 60000) return 'now'
+    if (diff < 3600000) return `${Math.floor(diff / 60000)}m`
+    if (diff < 86400000) return `${Math.floor(diff / 3600000)}h`
+    return new Date(timestamp).toLocaleDateString([], { month: 'short', day: 'numeric' })
   }
 
   return (
-    <div className={getThreadingClasses()} style={getIndentationStyle()}>
-      {/* Threading line connector for nested comments */}
-      {isNested && depth <= 3 && (
-        <div className="absolute left-0 top-0 w-2 h-6 border-b-2 border-gray-200 dark:border-gray-700" />
-      )}
-
-      <article
-        className={`rounded-xl p-2 transition hover:shadow-sm ${isNested ? 'mt-2' : 'mb-4'} ${
-          depth >= maxDepth ? 'bg-gray-50 dark:bg-gray-900/50' : ''
-        }`}
-      >
-        {/* Depth indicator for deeply nested comments */}
-        {depth >= maxDepth && (
-          <div className="mb-2 text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1">
-            <div className="w-1 h-1 bg-gray-400 rounded-full" />
-            <span>Deeply nested reply</span>
-          </div>
-        )}
-
-        {/* Reply indicator */}
-        {comment.replyingTo && (
-          <div className="mb-2 text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
-            <MessageSquare className="w-3 h-3" />
-            <span>Replying to @{comment.replyingTo}</span>
-          </div>
-        )}
-
-        {/* Header */}
-        <div className="flex justify-between items-start">
-          <div className="flex items-center gap-2">
-            <div onClick={handleProfileClick} className="cursor-pointer">
+    <div className="w-full">
+      <article className="py-2">
+        <div className="flex gap-3">
+          {/* Left: PFP Column */}
+          <div className="flex flex-col items-center flex-shrink-0">
+            <div
+              onClick={() => router.push(`/publicprofile/${comment.username}`)}
+              className="cursor-pointer w-8 h-8 rounded-full overflow-hidden"
+            >
               {comment.pfp ? (
                 <img
                   src={comment.pfp}
-                  alt={`@${comment.username}`}
-                  className={`rounded-full object-cover ${depth >= 2 ? 'w-7 h-7' : 'w-9 h-9'}`}
+                  alt={comment.username}
+                  className="object-cover w-full h-full"
                 />
               ) : (
-                <div
-                  className={`rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white font-semibold ${
-                    depth >= 2 ? 'w-7 h-7 text-xs' : 'w-9 h-9 text-sm'
-                  }`}
-                >
+                <div className="w-full h-full bg-blue-600 flex items-center justify-center text-white text-xs font-bold">
                   {comment.username.charAt(0).toUpperCase()}
                 </div>
               )}
             </div>
-            <div>
-              <p className={`font-bold text-[#161616]  ${depth >= 2 ? 'text-xs' : 'text-sm'}`}>
-                @{comment.username}
-              </p>
-              <p
-                className={`text-gray-500 dark:text-gray-400 ${depth >= 2 ? 'text-xs' : 'text-xs'}`}
+          </div>
+
+          {/* Right: Content */}
+          <div className="flex-1 min-w-0">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2 overflow-hidden">
+                <span className="font-bold text-gray-100 text-sm truncate">
+                  @{comment.username}
+                </span>
+                <span className="text-[10px] text-gray-500 font-mono">
+                  {formatTimeAgo(comment.createdAt)}
+                </span>
+              </div>
+
+              <CommentActions
+                commentId={comment.id}
+                commentUsername={comment.username}
+                commentParentId={effectiveParentId} // 👈 Use effectiveParentId
+                currentUser={currentUser}
+                showActions={showActions}
+                setShowActions={setShowActions}
+                onReply={onReply}
+                onFlag={onFlag}
+                onDelete={onDelete}
+              />
+            </div>
+
+            <div className="mt-0.5 text-gray-300 text-[13px] leading-relaxed">
+              {comment.replyingTo && (
+                <span className="text-blue-400 mr-1">@{comment.replyingTo}</span>
+              )}
+              {comment.text}
+            </div>
+
+            {/* Actions */}
+            <div className="mt-2 flex items-center gap-4">
+              <div className="flex items-center bg-gray-900 rounded-md border border-gray-800">
+                <button
+                  onClick={() => onVote(comment.id, 1)}
+                  className={`p-1 ${userVote === 1 ? 'text-orange-500' : 'text-gray-500'}`}
+                >
+                  <ChevronUp className="w-4 h-4" />
+                </button>
+                <span className="text-[11px] font-bold px-1 text-gray-300">{comment.upvotes}</span>
+                <button
+                  onClick={() => onVote(comment.id, -1)}
+                  className={`p-1 ${userVote === -1 ? 'text-blue-500' : 'text-gray-500'}`}
+                >
+                  <ChevronDown className="w-4 h-4" />
+                </button>
+              </div>
+
+              <button
+                onClick={() => onReply(comment.id, comment.username, effectiveParentId)} // 👈 Use effectiveParentId
+                className="text-[11px] text-gray-500 hover:text-blue-400 flex items-center gap-1 transition-colors"
               >
-                {formatTimeAgo(comment.createdAt)}
-              </p>
+                <MessageSquare className="w-3 h-3" /> Reply
+              </button>
+
+              {comment.replies && comment.replies.length > 0 && (
+                <button
+                  onClick={() => setShowReplies(!showReplies)}
+                  className="text-[11px] text-blue-400 font-bold hover:underline"
+                >
+                  {showReplies ? 'Hide' : `Show ${comment.replies.length} replies`}
+                </button>
+              )}
             </div>
           </div>
-
-          <div className="relative">
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                setShowActions(!showActions)
-              }}
-              className="p-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
-            >
-              <MoreHorizontal className="w-4 h-4 text-gray-500" />
-            </button>
-
-            {showActions && (
-              <div className="absolute right-0 mt-2 w-40 bg-white dark:bg-gray-900 rounded-md border border-gray-200 dark:border-gray-700 shadow-lg z-10">
-                {comment.username !== currentUser && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onReply(comment.id, comment.username)
-                      setShowActions(false)
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
-                  >
-                    <MessageSquare className="inline-block mr-2 w-4 h-4" /> Reply
-                  </button>
-                )}
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    onFlag(comment.id)
-                    setShowActions(false)
-                  }}
-                  className="w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
-                >
-                  <Flag className="inline-block mr-2 w-4 h-4" /> Report
-                </button>
-                {comment.username === currentUser && (
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation()
-                      onDelete(comment.id)
-                      setShowActions(false)
-                    }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-900/30"
-                  >
-                    <Trash2 className="inline-block mr-2 w-4 h-4" /> Delete
-                  </button>
-                )}
-              </div>
-            )}
-          </div>
-        </div>
-
-        {/* Body */}
-        <p
-          className={`mt-3 text-gray-800 dark:text-gray-200 leading-relaxed ${
-            depth >= 2 ? 'text-xs' : 'text-sm'
-          }`}
-        >
-          {comment.text}
-        </p>
-
-        {/* Footer */}
-        <div
-          className={`mt-4 flex items-center gap-4 text-gray-500 dark:text-gray-400 ${
-            depth >= 2 ? 'text-xs' : 'text-sm'
-          }`}
-        >
-          <button
-            onClick={handleUpvote}
-            className={`flex items-center gap-1 px-2 py-1 rounded-full transition ${
-              isUpvoted
-                ? 'text-red-600 bg-red-100 dark:bg-red-900/20'
-                : 'hover:bg-gray-100 dark:hover:bg-gray-800'
-            }`}
-          >
-            <Heart className={`w-4 h-4 ${isUpvoted ? 'fill-current' : ''}`} />
-            <span>{comment.upvotes + (isUpvoted ? 1 : 0)}</span>
-          </button>
-
-          {/* Reply count and toggle for nested comments */}
-          {comment.replies && comment.replies.length > 0 && (
-            <button
-              onClick={() => setShowReplies(!showReplies)}
-              className="flex items-center gap-1 px-2 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition"
-            >
-              {showReplies ? (
-                <ChevronUp className="w-4 h-4" />
-              ) : (
-                <ChevronDown className="w-4 h-4" />
-              )}
-              <span>
-                {comment.replies.length} {comment.replies.length === 1 ? 'reply' : 'replies'}
-              </span>
-            </button>
-          )}
-
-          <span className="ml-auto text-xs">💬 Active</span>
         </div>
       </article>
 
-      {/* Nested Replies */}
-      {comment.replies && comment.replies.length > 0 && showReplies && (
-        <div className="mt-2">
+      {/* 🧵 REPLIES CONTAINER (Depth restricted to 1 by render logic in Section) */}
+      {showReplies && comment.replies && comment.replies.length > 0 && (
+        <div className="mt-1 ml-4 pl-4 border-l-2 border-gray-100 dark:border-gray-800 transition-all">
           {comment.replies.map((reply, index) => (
             <Comment
               key={reply.id}
               comment={reply}
               currentUser={currentUser}
-              onUpvote={onUpvote}
+              onVote={onVote}
               onFlag={onFlag}
               onDelete={onDelete}
               onReply={onReply}
-              depth={shouldFlatten ? depth : depth + 1}
+              depth={depth + 1}
               isLast={index === comment.replies!.length - 1}
             />
           ))}

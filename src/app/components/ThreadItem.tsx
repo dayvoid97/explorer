@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react'
 import Link from 'next/link'
+import { Heart, MessageCircle, PartyPopper, Calendar, ExternalLink } from 'lucide-react'
 
 export interface Win {
   id: string
@@ -168,65 +169,97 @@ function MediaItem({ url, mimeType, index, title }: MediaItemProps) {
 
 export default function ThreadItem({ win }: { win: Win }) {
   return (
-    <article className=" bg-card w-full rounded-xl border p-5">
-      <header className="flex items-center justify-between gap-4">
-        <h3 className="text-foreground text-base font-semibold leading-snug">
-          <Link href={`/winners/wincard/${win.id}`} className="hover:underline">
-            {win.title || 'Untitled'}
-          </Link>
-        </h3>
-        <div className="text-muted-foreground flex items-center gap-3 text-[11px]">
-          <span>👍 {win.upvotes ?? 0}</span>
-          <span>💬 {win.commentCount ?? 0}</span>
-          <span>🎉 {win.celebrationCount ?? 0}</span>
-          <span>{new Date(win.createdAt).toLocaleDateString()}</span>
-        </div>
-      </header>
+    <article className="group relative w-full transition-all duration-300">
+      {/* Date floating for Desktop / inline for Mobile */}
+      <div className="absolute -left-[108px] top-1 hidden w-20 text-right md:block">
+        <span className="text-muted-foreground font-mono text-[10px] uppercase tracking-widest">
+          {new Date(win.createdAt).toLocaleDateString(undefined, {
+            month: 'short',
+            day: 'numeric',
+          })}
+        </span>
+      </div>
 
-      {win.preview && (
-        <p className="text-muted-foreground mt-2 text-sm leading-relaxed">{win.preview}</p>
-      )}
-
-      {/* Enhanced media handling */}
-      {win.signedMediaUrls?.length ? (
-        <div className="mt-3 space-y-3">
-          {win.signedMediaUrls.map((url, i) => (
-            <MediaItem
-              key={i}
-              url={url}
-              mimeType={win.mimeTypes?.[i]}
-              index={i}
-              title={win.title}
-            />
-          ))}
-        </div>
-      ) : null}
-
-      {/* external link preview */}
-      {win.externalLink?.url && (
-        <a
-          href={win.externalLink.url}
-          target="_blank"
-          rel="noreferrer"
-          className="border-border hover:bg-muted mt-3 flex items-center gap-3 rounded-lg border p-3 transition-colors"
-        >
-          {win.externalLink.previewImage ? (
-            <img
-              src={win.externalLink.previewImage}
-              alt="preview"
-              className="h-14 w-24 rounded object-cover"
-            />
-          ) : (
-            <div className="bg-muted h-14 w-24 rounded" />
-          )}
-          <div className="min-w-0 flex-1">
-            <div className="text-foreground truncate text-sm font-medium">
-              {win.externalLink.platform ?? 'External Link'}
+      <div className="bg-card hover:border-foreground/20 relative rounded-2xl border p-4 shadow-sm transition-all md:p-6">
+        <header className="flex flex-col gap-2">
+          <div className="flex items-center justify-between">
+            <span className="bg-foreground/5 text-foreground rounded-full px-2.5 py-0.5 font-mono text-[10px] md:hidden">
+              {new Date(win.createdAt).toLocaleDateString()}
+            </span>
+            <div className="text-muted-foreground flex items-center gap-3 text-[12px]">
+              <span className="flex items-center gap-1">
+                <Heart size={14} /> {win.upvotes}
+              </span>
+              <span className="flex items-center gap-1">
+                <MessageCircle size={14} /> {win.commentCount}
+              </span>
             </div>
-            <div className="text-muted-foreground truncate text-xs">{win.externalLink.url}</div>
           </div>
-        </a>
-      )}
+
+          <h3 className="text-foreground text-xl font-bold tracking-tight leading-tight">
+            <Link
+              href={`/winners/wincard/${win.id}`}
+              className="hover:text-blue-500 transition-colors"
+            >
+              {win.title || 'Untitled Win'}
+            </Link>
+          </h3>
+        </header>
+
+        {win.preview && (
+          <p className="text-muted-foreground/90 mt-3 text-sm leading-relaxed md:text-base">
+            {win.preview}
+          </p>
+        )}
+
+        {/* Media Grid - Using a smarter layout for multiple images */}
+        {win.signedMediaUrls?.length ? (
+          <div
+            className={`mt-4 grid gap-2 ${
+              win.signedMediaUrls.length > 1 ? 'grid-cols-2' : 'grid-cols-1'
+            }`}
+          >
+            {win.signedMediaUrls.map((url, i) => (
+              <div
+                key={i}
+                className={i === 0 && win.signedMediaUrls!.length % 2 !== 0 ? 'col-span-2' : ''}
+              >
+                <MediaItem url={url} mimeType={win.mimeTypes?.[i]} index={i} title={win.title} />
+              </div>
+            ))}
+          </div>
+        ) : null}
+
+        {/* External Link Refined */}
+        {win.externalLink?.url && (
+          <a
+            href={win.externalLink.url}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-muted/30 border-border hover:bg-muted mt-4 flex items-center gap-4 overflow-hidden rounded-xl border p-2 transition-all"
+          >
+            {win.externalLink.previewImage ? (
+              <img
+                src={win.externalLink.previewImage}
+                className="h-16 w-16 rounded-lg object-cover md:h-20 md:w-32"
+                alt="Link preview"
+              />
+            ) : (
+              <div className="bg-muted flex h-16 w-16 items-center justify-center rounded-lg md:h-20 md:w-32">
+                <ExternalLink size={20} className="text-muted-foreground" />
+              </div>
+            )}
+            <div className="min-w-0 flex-1 pr-2">
+              <p className="text-foreground truncate text-xs font-bold uppercase tracking-wider md:text-sm">
+                {win.externalLink.platform || 'Source'}
+              </p>
+              <p className="text-muted-foreground truncate text-[11px] md:text-xs">
+                {win.externalLink.url}
+              </p>
+            </div>
+          </a>
+        )}
+      </div>
     </article>
   )
 }

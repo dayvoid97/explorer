@@ -142,7 +142,7 @@ export default function SavedWins() {
       <section className="mb-12">
         <div className="flex items-center justify-center py-12">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 dark:border-white"></div>
-          <span className="ml-3 text-gray-600 dark:text-gray-400">Loading saved wins...</span>
+          <span className="ml-3 ">Loading saved wins...</span>
         </div>
       </section>
     )
@@ -161,12 +161,10 @@ export default function SavedWins() {
   if (wins.length === 0) {
     return (
       <section className="mb-12">
-        <div className="text-center py-12 bg-gray-50 dark:bg-gray-800/50 rounded-xl border border-gray-200 dark:border-gray-700">
+        <div className="text-center py-12  rounded-xl border border-gray-200 dark:border-gray-700">
           <Heart className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-            No Saved Wins Yet
-          </h3>
-          <p className="text-gray-600 dark:text-gray-400 max-w-md mx-auto">
+          <h3 className="text-lg font-semibold mb-2">No Saved Wins Yet</h3>
+          <p className=" max-w-md mx-auto">
             Start exploring and save wins that inspire you. They'll appear here for easy access
             later.
           </p>
@@ -181,14 +179,11 @@ export default function SavedWins() {
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-8 gap-4">
         <div className="flex items-center gap-3">
           <Heart className="w-6 h-6 text-red-500" />
-          <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Saved Wins</h2>
-          <span className="bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-400 text-sm px-2 py-1 rounded-full">
-            {wins.length}
-          </span>
+          <h2 className="text-3xl font-bold ">Saved Wins</h2>
         </div>
 
         {/* Sorting Controls */}
-        <div className="flex bg-gray-100 dark:bg-gray-800 rounded-lg p-1">
+        <div className="flex  rounded-lg p-1">
           <button
             onClick={() => setSortBy('savedDate')}
             className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
@@ -204,7 +199,7 @@ export default function SavedWins() {
             onClick={() => setSortBy('createdDate')}
             className={`flex items-center gap-2 px-3 py-2 rounded-md text-sm font-medium transition-colors ${
               sortBy === 'createdDate'
-                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                ? ' text-gray-900 dark:text-white shadow-sm'
                 : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white'
             }`}
           >

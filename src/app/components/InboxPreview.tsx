@@ -2,8 +2,9 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { authFetch } from '@/app/lib/api' // Make sure this path is correct
-import { removeTokens, isLoggedIn } from '@/app/lib/auth' // isLoggedIn for initial check
+import { authFetch } from '@/app/lib/api'
+import { removeTokens, isLoggedIn } from '@/app/lib/auth'
+import { MessageSquare, Circle } from 'lucide-react' // Lucide icons for extra polish
 
 interface ChatSummary {
   connectionId: string
@@ -15,16 +16,15 @@ interface ChatSummary {
 }
 
 function timeAgo(timestamp: number) {
-  const now = Date.now()
-  const diff = now - timestamp
+  const diff = Date.now() - timestamp
   const minutes = Math.floor(diff / 60000)
   const hours = Math.floor(minutes / 60)
   const days = Math.floor(hours / 24)
 
-  if (minutes < 1) return 'just now'
-  if (minutes < 60) return `${minutes}m ago`
-  if (hours < 24) return `${hours}h ago`
-  return `${days}d ago`
+  if (minutes < 1) return 'now'
+  if (minutes < 60) return `${minutes}m`
+  if (hours < 24) return `${hours}h`
+  return `${days}d`
 }
 
 export default function InboxPreview() {
@@ -32,75 +32,49 @@ export default function InboxPreview() {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
   const router = useRouter()
-  // REMOVED: const token = getToken(); - authFetch handles this internally
-  // Removed 'token' from state as it's not needed for internal component logic
 
-  // Helper for consistent auth redirection
-  const handleAuthRedirect = (errMessage: string = 'Session expired. Please log in again.') => {
-    setError(errMessage) // Display error
-    removeTokens() // Clear both access and refresh tokens
-    router.push('/login') // Redirect to login page
+  const handleAuthRedirect = (errMessage: string = 'Session expired.') => {
+    setError(errMessage)
+    removeTokens()
+    router.push('/login')
   }
 
   useEffect(() => {
     const fetchInbox = async () => {
-      // Check if user is logged in before attempting authenticated fetch
       if (!isLoggedIn()) {
-        setError('You must be logged in to view messages.')
+        setError('Login required.')
         setLoading(false)
         return
       }
-
-      setLoading(true) // Ensure loading is true before fetch
-      setError('') // Clear previous errors
-
       try {
-        // CHANGED: Use authFetch for the authenticated call
         const res = await authFetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/gurkha/users/inbox`, {
           method: 'GET',
         })
-
         const data = await res.json()
-        if (!res.ok) {
-          // This 'if' block handles non-401/403 errors (e.g., 500 server error)
-          throw new Error(
-            data.message || data.error || `Failed to load inbox (Status: ${res.status})`
-          )
-        }
+        if (!res.ok) throw new Error(data.message || 'Failed to load inbox')
         setInbox(data)
       } catch (err: any) {
-        console.error('Error loading inbox:', err)
-        // Catch errors thrown by authFetch (e.g., when refresh fails or no token initially)
-        if (
-          err.message === 'Authentication required. Please log in again.' ||
-          err.message.includes('No authentication token')
-        ) {
+        if (err.message.includes('Authentication')) {
           handleAuthRedirect(err.message)
         } else {
-          setError(err.message || 'Failed to load messages.') // Set other non-auth related errors
+          setError(err.message || 'Failed to load messages.')
         }
       } finally {
         setLoading(false)
       }
     }
-
     fetchInbox()
-  }, [router]) // Add router to dependency array if you use it in handleAuthRedirect
+  }, [router])
 
   if (loading) {
     return (
-      <div className="p-4 space-y-3 animate-pulse bg-white dark:bg-gray-800 rounded-lg shadow">
-        {' '}
-        {/* Added dark mode bg/shadow */}
-        {Array.from({ length: 4 }).map((_, i) => (
-          <div key={i} className="flex items-center gap-4">
-            <div className="w-10 h-10 bg-gray-300 dark:bg-gray-700 rounded-full" />{' '}
-            {/* Dark mode bg */}
+      <div className="p-4 space-y-4 bg-[#111] border border-white/5 rounded-2xl shadow-2xl">
+        {[1, 2, 3].map((i) => (
+          <div key={i} className="flex items-center gap-4 animate-pulse">
+            <div className="w-12 h-12 bg-white/5 rounded-full" />
             <div className="flex-1 space-y-2">
-              <div className="h-4 bg-gray-300 dark:bg-gray-700 rounded w-3/4" />{' '}
-              {/* Dark mode bg */}
-              <div className="h-3 bg-gray-200 dark:bg-gray-600 rounded w-1/2" />{' '}
-              {/* Dark mode bg */}
+              <div className="h-4 bg-white/10 rounded w-1/3" />
+              <div className="h-3 bg-white/5 rounded w-2/3" />
             </div>
           </div>
         ))}
@@ -108,59 +82,90 @@ export default function InboxPreview() {
     )
   }
 
-  if (error) return <p className="p-4 text-red-500 dark:text-red-400">Error: {error}</p>
+  if (error)
+    return (
+      <div className="p-6 text-center bg-red-500/10 border border-red-500/20 rounded-2xl">
+        <p className="text-sm text-red-400">Error: {error}</p>
+      </div>
+    )
+
   if (inbox.length === 0)
-    return <p className="p-4 text-gray-500 dark:text-gray-400">No messages yet.</p>
+    return (
+      <div className="p-10 text-center bg-[#111] border border-white/5 rounded-2xl">
+        <MessageSquare className="mx-auto text-white/10 mb-3" size={32} />
+        <p className="text-sm text-white/40">Your inbox is clear</p>
+      </div>
+    )
 
   return (
-    <div className="p-4 space-y-3 bg-white dark:bg-gray-800 rounded-lg shadow">
-      {' '}
-      {/* Added dark mode bg/shadow for container */}
-      {inbox.map((chat) => (
-        <div
-          key={chat.connectionId}
-          onClick={() => router.push(`/message?to=${chat.userName}`)}
-          className={`flex items-center justify-between p-3 rounded-xl cursor-pointer transition duration-150 
-            ${
-              chat.hasUnread
-                ? 'bg-indigo-50 hover:bg-indigo-100 dark:bg-indigo-950 dark:hover:bg-indigo-900'
-                : 'hover:bg-gray-50 dark:hover:bg-gray-700'
-            }
-          `}
-        >
-          <div className="flex items-center gap-3">
-            <img
-              src={chat.profilePictureUrl || '/audio.png'}
-              className="w-10 h-10 rounded-full object-cover border dark:border-gray-600"
-              alt={`@${chat.userName}`}
-            />
-            <div className="max-w-[70%]">
-              <p
-                className={`text-sm ${
-                  chat.hasUnread
-                    ? 'font-bold text-indigo-600 dark:text-indigo-400'
-                    : 'text-gray-800 dark:text-gray-200'
-                }`}
-              >
-                @{chat.userName}
-              </p>
-              <p className="text-sm text-gray-500 dark:text-gray-400 truncate">
-                {chat.lastMessage}
-              </p>{' '}
-              {/* Dark mode text */}
+    <div className="bg-[#111] border border-white/5 rounded-2xl shadow-2xl overflow-hidden">
+      <div className="px-5 py-4 border-b border-white/5 flex justify-between items-center">
+        <h2 className="text-sm font-bold tracking-widest uppercase text-white/50">Messages</h2>
+        <span className="text-[10px] bg-indigo-500/20 text-indigo-400 px-2 py-0.5 rounded-full font-mono">
+          {inbox.filter((c) => c.hasUnread).length} NEW
+        </span>
+      </div>
+
+      <div className="p-2 space-y-1">
+        {inbox.map((chat) => (
+          <div
+            key={chat.connectionId}
+            onClick={() => router.push(`/message?to=${chat.userName}`)}
+            className={`group relative flex items-center justify-between p-3 rounded-xl cursor-pointer transition-all duration-200 hover:scale-[1.01]
+              ${chat.hasUnread ? 'bg-white/[0.03] hover:bg-white/[0.06]' : 'hover:bg-white/[0.02]'}
+            `}
+          >
+            {/* Unread Accent Bar */}
+            {chat.hasUnread && (
+              <div className="absolute left-0 top-3 bottom-3 w-1 bg-indigo-500 rounded-r-full shadow-[0_0_10px_rgba(99,102,241,0.5)]" />
+            )}
+
+            <div className="flex items-center gap-4">
+              <div className="relative">
+                <img
+                  src={chat.profilePictureUrl || '/audio.png'}
+                  className="w-12 h-12 rounded-full object-cover grayscale-[0.3] group-hover:grayscale-0 transition-all border border-white/10"
+                  alt={chat.userName}
+                />
+                {chat.hasUnread && (
+                  <span className="absolute -top-1 -right-1 flex h-3 w-3">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-3 w-3 bg-indigo-500"></span>
+                  </span>
+                )}
+              </div>
+
+              <div className="flex flex-col">
+                <span
+                  className={`text-sm tracking-tight ${
+                    chat.hasUnread ? 'text-white font-semibold' : 'text-white/70'
+                  }`}
+                >
+                  @{chat.userName}
+                </span>
+                <p
+                  className={`text-xs truncate max-w-[180px] mt-0.5 ${
+                    chat.hasUnread ? 'text-white/90' : 'text-white/40'
+                  }`}
+                >
+                  {chat.lastMessage}
+                </p>
+              </div>
+            </div>
+
+            <div className="text-right flex flex-col items-end gap-2">
+              <span className="text-[10px] font-mono uppercase text-white/30 tracking-tighter">
+                {timeAgo(chat.lastTimestamp)}
+              </span>
+              {chat.hasUnread && (
+                <div className="px-1.5 py-0.5 bg-indigo-500 rounded text-[9px] font-black text-white uppercase">
+                  New
+                </div>
+              )}
             </div>
           </div>
-          <div className="flex flex-col items-end gap-1">
-            <span className="text-xs text-gray-400 dark:text-gray-500">
-              {timeAgo(chat.lastTimestamp)}
-            </span>{' '}
-            {/* Dark mode text */}
-            {chat.hasUnread && (
-              <span className="w-3 h-3 bg-red-500 rounded-full animate-ping" title="New message" />
-            )}
-          </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   )
 }

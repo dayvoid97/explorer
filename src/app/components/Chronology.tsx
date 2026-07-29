@@ -30,7 +30,7 @@ const Chronology: React.FC<ChronologyProps> = ({ winId, onChronologyAdded }) => 
   const fetchUserChronologies = async () => {
     setLoadingChronologies(true)
     try {
-      const res = await authFetch(`${API_URL}/gurkha/chronology`)
+      const res = await authFetch(`${API_URL}/gurkha/chronology/manage`)
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Failed to fetch chronologies')
       setChronologies(data.chronologies || [])
@@ -47,16 +47,23 @@ const Chronology: React.FC<ChronologyProps> = ({ winId, onChronologyAdded }) => 
     setError('')
     setSuccess('')
     try {
-      const res = await authFetch(`${API_URL}/gurkha/chronology/${chronologyId}/add`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ winId }),
-      })
+      // 1. Path updated to match the /:chronologyId/wins/:winId pattern
+      // 2. winId is pulled from the component's state/props
+      const res = await authFetch(
+        `${API_URL}/gurkha/chronology/manage/${chronologyId}/wins/${winId}`,
+        {
+          method: 'POST',
+        }
+      )
+
       const data = await res.json()
       if (!res.ok) throw new Error(data.message || 'Failed to add win to Chronology')
+
       setSuccess('Added to Chronology!')
+
       const name = chronologies.find((c) => c.id === chronologyId)?.name || ''
       if (onChronologyAdded) onChronologyAdded(chronologyId, name)
+
       setTimeout(() => {
         setShowModal(false)
         setSuccess('')
@@ -83,14 +90,15 @@ const Chronology: React.FC<ChronologyProps> = ({ winId, onChronologyAdded }) => 
     setError('')
     setSuccess('')
     try {
-      const res = await authFetch(`${API_URL}/gurkha/chronology`, {
+      // UPDATED URL: Now points to the /manage mount point
+      const res = await authFetch(`${API_URL}/gurkha/chronology/manage`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           name: newChronologyName,
           description,
           categories,
-          winIds: [winId],
+          winIds: [winId], // Initializing with the current winId
         }),
       })
 
@@ -98,6 +106,8 @@ const Chronology: React.FC<ChronologyProps> = ({ winId, onChronologyAdded }) => 
       if (!res.ok) throw new Error(data.message || 'Failed to create chronology')
 
       setSuccess('Chronology created and win added!')
+
+      // Pass the actual ID returned from the database
       if (onChronologyAdded) onChronologyAdded(data.id, newChronologyName)
 
       setTimeout(() => {

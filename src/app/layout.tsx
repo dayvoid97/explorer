@@ -1,9 +1,12 @@
+import dynamic from 'next/dynamic'
 import './globals.css'
+
 import type { Metadata } from 'next'
 import NavBarClientWrapper from './components/NavBarClientWrapper'
 import Footer from './components/Footer'
 import Script from 'next/script'
-import { QuickPostButton } from './components/QuickPostButton'
+import GlobalScrollToTop from './components/GlobalScrollToTop'
+
 import { AdSenseScript } from './components/AdsenseScript'
 
 export const metadata: Metadata = {
@@ -79,12 +82,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               }
             `}
         </Script>
+
         <NavBarClientWrapper />
 
         <AdSenseScript />
         <main className="flex-grow">{children}</main>
-
-        <QuickPostButton />
+        <GlobalScrollToTop />
         <Footer />
       </body>
     </html>

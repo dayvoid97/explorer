@@ -4,7 +4,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useRouter } from 'next/navigation'
 import { ArrowLeft, Calendar } from 'lucide-react'
-import WinnersNavbar from '@/app/components/WinnersNavBar'
+
 import WinsByDateGrid from '@/app/components/WinByDateGrid'
 import WinsCalendar from '@/app/components/CalendarComponent'
 
@@ -65,10 +65,7 @@ export default function WinnersDatePage() {
   }
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
-      {/* Only WinnersNavbar - no duplicate headers */}
-      <WinnersNavbar />
-
+    <div className="min-h-screen ">
       {/* Date Header Section */}
       <div className="bg-white dark:bg-gray-900 border-b dark:border-gray-800">
         <div className="max-w-6xl mx-auto px-6 py-6">
