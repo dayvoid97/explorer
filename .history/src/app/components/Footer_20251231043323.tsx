@@ -4,14 +4,14 @@ import Link from 'next/link'
 // src/app/components/Footer.tsx
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 py-8 mt-auto border-t ">
+    <footer className="bg-gray-100 dark:bg-gray-800 py-8 mt-auto border-t border-gray-200 dark:border-gray-700">
       <div className="max-w-7xl mx-auto px-6">
         {/* Main Footer Content */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div className="md:col-span-2">
             <h1
-              className="text-xl  mb-3"
+              className="text-xl  text-white  mb-3"
               style={{
                 fontFamily: "'Freight Big Pro', serif",
                 fontWeight: 500,
@@ -84,7 +84,7 @@ export default function Footer() {
           {/* Support Links */}
           <div>
             <h4
-              className="text-sm font-semibold   mb-3 uppercase tracking-wider"
+              className="text-sm font-semibold text-white  mb-3 uppercase tracking-wider"
               style={{
                 fontFamily: "'Freight Big Pro', serif",
                 fontWeight: 500,

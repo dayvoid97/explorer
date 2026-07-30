@@ -84,7 +84,7 @@ export default function Footer() {
           {/* Support Links */}
           <div>
             <h4
-              className="text-sm font-semibold   mb-3 uppercase tracking-wider"
+              className="text-sm font-semibold text-white  mb-3 uppercase tracking-wider"
               style={{
                 fontFamily: "'Freight Big Pro', serif",
                 fontWeight: 500,
