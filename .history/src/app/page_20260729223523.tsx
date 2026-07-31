@@ -212,16 +212,7 @@ export default async function Home() {
           >
             “Markets reward the prepared. We do the preparation in public.”
           </p>
-          <div className="mt-10">
-            <Link
-              href="/consult"
-              className="inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-[#C9A24B] hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
-            >
-              Work With Kanchan →
-            </Link>
-          </div>
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.35em] text-white/40">
+          <p className="mt-8 font-mono text-[11px] uppercase tracking-[0.35em] text-white/40">
             Financial Gurkha · New York City · Est. 2022
           </p>
         </div>
