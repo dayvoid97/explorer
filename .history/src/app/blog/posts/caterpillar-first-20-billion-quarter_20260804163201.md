@@ -321,8 +321,7 @@ Arguably more useful than the competitors, because they sit on the demand side o
 _Next earnings: **October 21, 2026**_
 
 **Vulcan Materials (NYSE: VMC)** and **Martin Marietta (NYSE: MLM)** — Aggregates producers, the customers behind Caterpillar's Quarry & Aggregates line and a clean signal on US infrastructure activity.
-_Next earnings for VMC: **October 29, 2026**_
-_Most recent earnings for MLM: **July 30, 2026**_
+_Next earnings: **October 29, 2026**_
 
 ### Three tests that will confirm or break this thesis
 
