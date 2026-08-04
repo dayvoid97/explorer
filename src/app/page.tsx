@@ -10,9 +10,14 @@ const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700', '
 const GOLD = '#C9A24B'
 
 export const metadata = {
-  title: 'Financial Gurkha — Markets Research from Wall Street, New York',
+  // Absolute title (no brand suffix) — the root layout template is bypassed
+  // deliberately here so the homepage title reads cleanly in search results.
+  title: {
+    absolute: 'Financial Gurkha — Markets Research from Wall Street, New York',
+  },
   description:
-    'Independent equity valuations, macro analysis, and market coverage. Written from Wall Street and Lower Manhattan, New York City. Est. 2022.',
+    'Independent equity valuations, earnings analysis and macro research read straight from SEC filings. Written from Wall Street and Lower Manhattan, New York City. Est. 2022.',
+  alternates: { canonical: 'https://financialgurkha.com' },
 }
 
 export default async function Home() {

@@ -7,9 +7,63 @@ const GOLD = '#C9A24B'
 const EMAIL = 'contact@kanchanksharma.com'
 
 export const metadata = {
-  title: 'Work With Kanchan Sharma — Consultations & Commissioned Valuations | Financial Gurkha',
+  title: 'Work With Kanchan Sharma — Consultations & Commissioned Valuations',
   description:
-    'Book a one-on-one conversation with Kanchan Sharma of Financial Gurkha on markets, investing, and anything finance — or commission a full intrinsic valuation of any company. Independent research desk, New York City.',
+    'Book a one-on-one conversation with Kanchan Sharma on markets, investing and anything finance — or commission a full intrinsic valuation of any company. Independent research desk, New York City.',
+  alternates: { canonical: 'https://financialgurkha.com/consult' },
+  openGraph: {
+    title: 'Work With Kanchan Sharma | Financial Gurkha',
+    description:
+      'Consultations and commissioned intrinsic valuations from an independent markets research desk in New York City.',
+    url: 'https://financialgurkha.com/consult',
+    type: 'website',
+  },
+}
+
+// ProfessionalService schema so the consulting offer is machine-readable —
+// this is what surfaces the desk when someone asks an answer engine for an
+// independent equity valuation provider.
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'ProfessionalService',
+  '@id': 'https://financialgurkha.com/consult#service',
+  name: 'Financial Gurkha Research Desk',
+  url: 'https://financialgurkha.com/consult',
+  description:
+    'Independent equity valuations, financial analysis and one-on-one markets consultations by Kanchan Sharma.',
+  provider: { '@id': 'https://financialgurkha.com/#kanchan' },
+  areaServed: 'Worldwide',
+  serviceType: ['Equity Valuation', 'Financial Analysis', 'Investment Education'],
+  address: {
+    '@type': 'PostalAddress',
+    addressLocality: 'New York',
+    addressRegion: 'NY',
+    addressCountry: 'US',
+  },
+  hasOfferCatalog: {
+    '@type': 'OfferCatalog',
+    name: 'Research Services',
+    itemListElement: [
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Markets consultation',
+          description:
+            'One-on-one discussion covering equities, macro, commodities, crypto and financial statement analysis.',
+        },
+      },
+      {
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: 'Commissioned intrinsic valuation',
+          description:
+            'Full intrinsic valuation of a public company, private target or operating business, built from primary filings. Priced per page, scoped in advance.',
+        },
+      },
+    ],
+  },
 }
 
 const MEETING_MAILTO = `mailto:${EMAIL}?subject=${encodeURIComponent(
@@ -45,6 +99,10 @@ Thanks!`
 export default function ConsultPage() {
   return (
     <div className="bg-[#0A0A0A] text-white">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(serviceSchema) }}
+      />
       {/* ============ HEADER ============ */}
       <section className="mx-auto max-w-5xl px-6 pt-16 pb-14 sm:pt-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>

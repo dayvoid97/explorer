@@ -1,5 +1,5 @@
 ---
-slug: 'dollar-gold-crude-relations'
+slug: 'usd-dxy-gold-oil-since-2022'
 date: '11/11/2025'
 title: 'Dollar Gold Crude Relations'
 subtitle: 'Making sense of the relationship between the US Dollar, Gold, and Crude Petroleum.  '

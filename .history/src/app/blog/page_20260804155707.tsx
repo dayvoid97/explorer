@@ -2,20 +2,6 @@ import Link from 'next/link'
 import { getAllPosts } from '../lib/markdown'
 import { BlogPost } from './[slug]/metadata'
 
-export const metadata = {
-  title: 'Markets Research & Equity Valuations',
-  description:
-    'Every Financial Gurkha analysis: intrinsic valuations, earnings breakdowns read from SEC filings, Federal Reserve coverage, commodities and crypto research. Written from New York City.',
-  alternates: { canonical: 'https://financialgurkha.com/blog' },
-  openGraph: {
-    title: 'Markets Research & Equity Valuations | Financial Gurkha',
-    description:
-      'Intrinsic valuations, earnings breakdowns from primary SEC filings, and macro analysis. New York City.',
-    url: 'https://financialgurkha.com/blog',
-    type: 'website',
-  },
-}
-
 export default async function BlogListPage() {
   const posts: Omit<BlogPost, 'content'>[] = await getAllPosts()
 

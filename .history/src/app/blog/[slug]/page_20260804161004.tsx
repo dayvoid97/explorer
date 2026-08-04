@@ -90,13 +90,15 @@ const components = {
   a: ({ href = '', ...props }: any) => {
     const isAnchor = href.startsWith('#')
     const isInternal =
-      href.startsWith('/') || href.startsWith('./') || href.includes('financialgurkha.com')
+      href.startsWith('/') ||
+      href.startsWith('./') ||
+      href.includes('financialgurkha.com')
     const isExternal = !isAnchor && !isInternal
 
     return (
       <a
         href={href}
-        className="text-[#000] font-semibold underline decoration-1 underline-offset-4 hover:text-green-600 transition"
+        className="text-[#C9A24B] font-semibold underline decoration-1 underline-offset-4 hover:text-white transition"
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         {...props}
       />
@@ -195,29 +197,14 @@ function injectAdsIntoContent(content: string) {
   // snap each target to the *nearest* one. Scanning forward only would push ads
   // toward the end of posts where safe gaps are sparse (long table or list runs),
   // which is how you end up with an ad stranded at 86% of the article.
-  const collectCandidates = (lead: number, tail: number) => {
-    const found: { index: number; words: number }[] = []
-    let cumulative = 0
-    for (let i = 0; i < blocks.length - 1; i++) {
-      cumulative += wordsPerBlock[i]
-      if (cumulative < lead || cumulative > totalWords - tail) continue
-      if (isUnsafeBoundary(blocks[i]) || isUnsafeBoundary(blocks[i + 1])) continue
-      found.push({ index: i, words: cumulative })
-    }
-    return found
+  const candidates: { index: number; words: number }[] = []
+  let cumulative = 0
+  for (let i = 0; i < blocks.length - 1; i++) {
+    cumulative += wordsPerBlock[i]
+    if (cumulative < LEAD_IN_WORDS || cumulative > totalWords - TAIL_WORDS) continue
+    if (isUnsafeBoundary(blocks[i]) || isUnsafeBoundary(blocks[i + 1])) continue
+    candidates.push({ index: i, words: cumulative })
   }
-
-  // Posts built mostly from tables and lists can have no legal boundary inside
-  // the preferred window. Relax the lead-in/tail guards rather than silently
-  // shipping an article with no in-content unit at all.
-  let candidates = collectCandidates(LEAD_IN_WORDS, TAIL_WORDS)
-  if (candidates.length === 0) {
-    candidates = collectCandidates(LEAD_IN_WORDS / 2, TAIL_WORDS / 2)
-  }
-  if (candidates.length === 0) {
-    candidates = collectCandidates(150, 100)
-  }
-  if (candidates.length === 0) return content
 
   // Keep units from bunching up when several targets snap to the same region.
   const MIN_GAP_WORDS = Math.max(300, usableWords / (adCount + 2))

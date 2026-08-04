@@ -1,5 +1,5 @@
 ---
-slug: 'federal-reserve-keeps-rate-steady-amid-three-dissenters'
+slug: 'fed-decision-preview-jul29-2026'
 date: '07/29/2026'
 title: 'Federal Reserve Keeps Interest Rates Steady'
 subtitle: ' The Federal Open Market Committee left the target range for the federal funds rate at 3.5 percent to 3.75 percent. The headline says "Fed holds." The headline is the least interesting sentence in the document.'

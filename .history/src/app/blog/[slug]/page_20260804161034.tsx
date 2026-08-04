@@ -96,7 +96,7 @@ const components = {
     return (
       <a
         href={href}
-        className="text-[#000] font-semibold underline decoration-1 underline-offset-4 hover:text-green-600 transition"
+        className="text-[#000] font-semibold underline decoration-1 underline-offset-4 hover:text-white transition"
         {...(isExternal ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
         {...props}
       />
