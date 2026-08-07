@@ -8,6 +8,7 @@ import Script from 'next/script'
 import GlobalScrollToTop from './components/GlobalScrollToTop'
 
 import { AdSenseScript } from './components/AdsenseScript'
+import { PostHogProvider } from './providers/PostHogProvider'
 
 export const metadata: Metadata = {
   // metadataBase lets Next resolve relative image paths in OG/Twitter tags to
@@ -187,20 +188,30 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {`
               if (!window.gtagInitialized) {
                 window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', 'G-N9MVJV15MJ');
+                // Assign to window explicitly. Declaring gtag with 'function'
+                // inside this block leaves it out of scope for other modules,
+                // which is why custom events were never reaching GA4.
+                window.gtag = function(){ window.dataLayer.push(arguments); };
+                window.gtag('js', new Date());
                 window.gtagInitialized = true;
               }
+              // NOTE: gtag('config', ...) is deliberately NOT called here.
+              // Configuration happens in PostHogProvider once the visit has
+              // qualified (2s dwell or an interaction) and the client passes the
+              // bot / non-production checks. Until config runs, gtag calls only
+              // queue into dataLayer and nothing is sent to Google — so
+              // localhost, preview builds and crawlers never appear in GA4.
             `}
         </Script>
 
-        <NavBarClientWrapper />
+        <PostHogProvider>
+          <NavBarClientWrapper />
 
-        <AdSenseScript />
-        <main className="flex-grow">{children}</main>
-        <GlobalScrollToTop />
-        <Footer />
+          <AdSenseScript />
+          <main className="flex-grow">{children}</main>
+          <GlobalScrollToTop />
+          <Footer />
+        </PostHogProvider>
       </body>
     </html>
   )

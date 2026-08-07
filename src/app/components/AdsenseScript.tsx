@@ -17,7 +17,15 @@ export const AdSenseScript = () => {
     <Script
       async
       src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adClient}`}
-      strategy="lazyOnload"
+      // afterInteractive rather than lazyOnload. lazyOnload waits for every
+      // other resource on the page to finish, which on an article with a large
+      // hero image can be seconds — and slots that come into view before the
+      // library arrives just sit queued and empty.
+      //
+      // The individual slots are now viewport-gated, so the library loading a
+      // little earlier does not cause a burst of unviewed requests; it just
+      // means a slot fills promptly once the reader reaches it.
+      strategy="afterInteractive"
       crossOrigin="anonymous"
     />
   )

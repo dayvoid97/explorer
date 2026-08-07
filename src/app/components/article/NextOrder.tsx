@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Link from 'next/link'
+import { track } from '@/app/lib/analytics'
 
 /**
  * "Your Next Position" — interactive read-next widget at the end of every article.
@@ -112,6 +113,13 @@ export default function NextOrder({
       chosen = pool[Math.floor(Math.random() * pool.length)]
     }
 
+    track('next_order_filled', {
+      desk: desk.id,
+      vintage,
+      picked_slug: chosen.slug,
+      off_desk: off,
+    })
+
     setPick(chosen)
     setOffDesk(off)
     setStep('filling')
@@ -158,13 +166,16 @@ export default function NextOrder({
                   key={d.id}
                   onClick={() => {
                     if (d.id === 'street') {
+                      track('next_order_route', { destination: 'street_gallery' })
                       window.location.href = '/#from-the-street'
                       return
                     }
                     if (d.id === 'consult') {
+                      track('next_order_route', { destination: 'consult' })
                       window.location.href = '/consult'
                       return
                     }
+                    track('next_order_desk_selected', { desk: d.id, desk_label: d.label })
                     setDesk(d)
                     setStep('vintage')
                   }}
@@ -235,6 +246,13 @@ export default function NextOrder({
             </p>
             <Link
               href={`/blog/${pick.slug}`}
+              onClick={() =>
+                track('next_order_executed', {
+                  desk: desk?.id,
+                  from_slug: currentSlug,
+                  to_slug: pick.slug,
+                })
+              }
               className="group mt-5 grid gap-6 sm:grid-cols-[200px_1fr]"
             >
               {pick.image && (

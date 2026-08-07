@@ -98,7 +98,7 @@ One can tell I am biased in this valuation, and that's okay.
 
 Figma builds exceptional software and is led by a strong, product-focused team. I use Figma often, and at today’s prices, I’m seriously considering investing.
 
-My valuation estimates Figma’s intrinsic value at $82.03 per share, while the stock trades near $34—implying meaningful upside if the company continues executing with strong growth, profitability, and billion-dollar ARR.
+My valuation estimates Figma’s intrinsic value <Info label="Intrinsic value">What a business is actually worth based on the cash it can generate, as opposed to what its shares happen to trade at today. The gap between the two is the entire premise of value investing. An intrinsic value estimate is an opinion supported by arithmetic, not a fact — its quality depends entirely on the assumptions behind it.</Info> at $82.03 per share, while the stock trades near $34—implying meaningful upside if the company continues executing with strong growth, profitability, and billion-dollar ARR.
 
 This is not investment advice. Please consult a financial advisor before making any investment decisions.
 

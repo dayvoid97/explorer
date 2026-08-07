@@ -1,53 +1,46 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useAdSlot } from '@/app/hooks/useAdSlot'
 
 /**
  * In-article AdSense unit — mobile and tablet only.
  *
- * On large screens the article layout already carries a sidebar skyscraper
- * (see AdSenseSidebarAd), so in-content units there would double up and hurt
- * the reading experience. `lg:hidden` keeps this to narrow viewports where the
- * sidebar isn't rendered.
+ * Loading is handled by the shared `useAdSlot` hook: queue-safe push, requested
+ * only when the slot comes within about one screen of the viewport, and skipped
+ * entirely when the container is hidden. See that file for why each matters.
  *
- * Two implementation notes:
- * 1. This renders a <div>, so it must be injected as a standalone block in the
- *    markdown — never appended inside a paragraph, which produces invalid
- *    <p><div/></p> markup and a React hydration error.
- * 2. The push() call runs in useEffect rather than an inline <script> tag.
- *    React does not execute inline scripts inserted via dangerouslySetInnerHTML
- *    during hydration, so the old approach silently failed to fill some slots.
+ * Two structural constraints specific to this unit:
+ *
+ * - It renders a <div>, so it must be injected into the markdown as a
+ *   standalone block. Appending it to a paragraph makes MDX treat it as inline
+ *   content, producing invalid <p><div/></p> markup and a hydration error.
+ * - `lg:hidden` because the sidebar skyscraper covers desktop. Running both
+ *   would double the ad load on the same screen.
  */
-export const AdSenseInArticle = () => {
-  const pushed = useRef(false)
-
-  useEffect(() => {
-    // Guard against double-push under React strict mode, which would throw
-    // "adsbygoogle.push() error: All ins elements already have ads".
-    if (pushed.current) return
-    pushed.current = true
-
-    try {
-      const w = window as unknown as { adsbygoogle?: unknown[] }
-      ;(w.adsbygoogle = w.adsbygoogle || []).push({})
-    } catch {
-      // AdSense unavailable (ad blocker, dev environment) — fail silently.
-    }
-  }, [])
+export const AdSenseInArticle = ({ position }: { position?: string }) => {
+  const { ref, shouldRender } = useAdSlot(position ?? 'in_article')
 
   return (
-    <div className="my-8 lg:hidden">
-      <p className="mb-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
-        Advertisement
-      </p>
-      <ins
-        className="adsbygoogle"
-        style={{ display: 'block', textAlign: 'center' }}
-        data-ad-layout="in-article"
-        data-ad-format="fluid"
-        data-ad-client="ca-pub-8441965953327461"
-        data-ad-slot="9398911626"
-      />
+    <div ref={ref} className="my-8 lg:hidden">
+      {/* Reserve a minimum height so the article does not jump when the ad
+          fills — layout shift is both a ranking signal and an annoyance. */}
+      <div className="min-h-[100px]">
+        {shouldRender && (
+          <>
+            <p className="mb-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/30">
+              Advertisement
+            </p>
+            <ins
+              className="adsbygoogle"
+              style={{ display: 'block', textAlign: 'center' }}
+              data-ad-layout="in-article"
+              data-ad-format="fluid"
+              data-ad-client="ca-pub-8441965953327461"
+              data-ad-slot="9398911626"
+            />
+          </>
+        )}
+      </div>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ConsultCTA from '@/app/components/consult/ConsultCTA'
 import { Playfair_Display } from 'next/font/google'
 
 const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700', '900'] })
@@ -143,13 +144,9 @@ export default function ConsultPage() {
               <li>— Scoped and scheduled over email</li>
               <li>— Education and discussion, not personalized investment advice</li>
             </ul>
-            <a
-              href={MEETING_MAILTO}
-              className="mt-8 inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-[#fff] hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
-            >
+            <ConsultCTA href={MEETING_MAILTO} intent="meeting">
               Request a Meeting
-            </a>
+            </ConsultCTA>
           </div>
 
           {/* Valuation */}
@@ -193,13 +190,9 @@ export default function ConsultPage() {
               </Link>
               .
             </p>
-            <a
-              href={VALUATION_MAILTO}
-              className="mt-8 inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-[#fff] hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
-            >
+            <ConsultCTA href={VALUATION_MAILTO} intent="valuation">
               Commission a Valuation
-            </a>
+            </ConsultCTA>
           </div>
         </div>
       </section>

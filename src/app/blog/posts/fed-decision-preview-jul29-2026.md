@@ -24,7 +24,7 @@ _We published our call before 2:00 PM. The statement is out. We were right, and 
 
 ## July 29 FOMC Minutes
 
-**The vote was 9–3.** Beth Hammack, Neel Kashkari, and Lorie Logan each dissented — and all three dissented in the same direction. They wanted a **quarter-point hike today**.
+**The vote was 9–3.** Beth Hammack, Neel Kashkari, and Lorie Logan each dissented <Info label="What a dissent means">The Federal Open Market Committee votes on interest rate decisions, and members who disagree are recorded as dissenting. Dissents are deliberately rare — the Fed prizes consensus because a united message moves markets more predictably. Three dissents in one meeting is unusual, and when all three lean the same way it signals the committee is closer to changing course than the headline decision suggests.</Info> — and all three dissented in the same direction. They wanted a **quarter-point hike today**.
 
 These are the first dissents of Kevin Warsh's chairmanship. Every one of them was a vote to tighten. There was no dove in the room.
 
