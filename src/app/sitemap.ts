@@ -61,7 +61,44 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${SITE}/about`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      // The author page carries the credentials and methodology that Google's
+      // E-E-A-T evaluation and AI assistants both look for on finance content.
+      url: `${SITE}/about/kanchan`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      // Track record: every published valuation with outcomes, including the
+      // misses. The strongest transparency signal available to an independent
+      // analyst, and the direct answer to "accuracy is unproven".
+      url: `${SITE}/track-record`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    },
+    {
+      // Editorial standards: sourcing, disclosure and corrections policy. This
+      // is the page that answers "is this publication trustworthy" directly.
+      url: `${SITE}/legal/editorial`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
       priority: 0.6,
+    },
+    {
+      url: `${SITE}/legal/terms`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
+    },
+    {
+      url: `${SITE}/legal/privacy`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.3,
     },
     {
       url: `${SITE}/winners`,

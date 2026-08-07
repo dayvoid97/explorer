@@ -205,6 +205,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 window.gtag('js', new Date());
                 window.gtagInitialized = true;
               }
+              
             `}
         </Script>
 

@@ -98,7 +98,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-sm   hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="text-sm  dark:text-white hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >
                   Contact Us
                 </Link>

@@ -205,6 +205,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 window.gtag('js', new Date());
                 window.gtagInitialized = true;
               }
+              // NOTE: gtag('config', ...) is deliberately NOT called here.
+              // Configuration happens in PostHogProvider once the visit has
+              // qualified (2s dwell or an interaction) and the client passes the
+              // bot / non-production checks. Until config runs, gtag calls only
+              // queue into dataLayer and nothing is sent to Google — so
+              // localhost, preview builds and crawlers never appear in GA4.
             `}
         </Script>
 

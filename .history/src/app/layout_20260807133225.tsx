@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   // absolute URLs. Without it, social previews silently fail to load images.
   metadataBase: new URL('https://financialgurkha.com'),
   title: {
-    default: 'Financial Gurkha — Independent Financial Market Research from Wall Street, New York',
+    default: 'Financial Gurkha — Independent Market Research from Wall Street, New York',
     // Child pages supply only their own title; this appends the brand.
     template: '%s | Financial Gurkha',
   },
@@ -37,9 +37,7 @@ export const metadata: Metadata = {
     'crypto analysis',
     'independent markets research',
     'Kanchan Sharma',
-    'Kanchan Sharma Forbes 30 under 30',
     'New York financial analyst',
-    'Financial Analysts based in New York City',
   ],
   authors: [{ name: 'Kanchan Sharma', url: 'https://financialgurkha.com/about/kanchan' }],
   creator: 'Kanchan Sharma',
@@ -178,7 +176,7 @@ const siteSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className=" dark scroll-smooth antialiased">
+    <html lang="en" className="dark scroll-smooth antialiased">
       <head>
         <meta
           name="google-site-verification"
@@ -200,11 +198,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {`
               if (!window.gtagInitialized) {
                 window.dataLayer = window.dataLayer || [];
-                
+                // Assign to window explicitly. Declaring gtag with 'function'
+                // inside this block leaves it out of scope for other modules,
+                // which is why custom events were never reaching GA4.
                 window.gtag = function(){ window.dataLayer.push(arguments); };
                 window.gtag('js', new Date());
                 window.gtagInitialized = true;
               }
+              // NOTE: gtag('config', ...) is deliberately NOT called here.
+              // Configuration happens in PostHogProvider once the visit has
+              // qualified (2s dwell or an interaction) and the client passes the
+              // bot / non-production checks. Until config runs, gtag calls only
+              // queue into dataLayer and nothing is sent to Google — so
+              // localhost, preview builds and crawlers never appear in GA4.
             `}
         </Script>
 

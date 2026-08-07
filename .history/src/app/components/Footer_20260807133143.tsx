@@ -22,7 +22,7 @@ export default function Footer() {
               Financial Gurkha
             </h1>
             <p
-              className="text-sm text-gray-600  mb-4 max-w-md"
+              className="text-sm text-gray-600 dark:text-gray-300 mb-4 max-w-md"
               style={{
                 fontFamily: 'Helvetica',
                 fontWeight: 500,
@@ -35,7 +35,7 @@ export default function Footer() {
           {/* Legal Links */}
           <div>
             <h4
-              className="text-sm font-semibold text-gray-900  mb-3 uppercase tracking-wider"
+              className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wider"
               style={{
                 fontFamily: "'Freight Big Pro', serif",
                 fontWeight: 500,
@@ -98,7 +98,7 @@ export default function Footer() {
               <li>
                 <Link
                   href="/about"
-                  className="text-sm   hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                  className="text-sm  dark:text-white hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >
                   Contact Us
                 </Link>

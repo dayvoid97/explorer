@@ -138,21 +138,26 @@ export default function Navbar() {
                 letterSpacing: '-0.1rem',
               }}
             >
-              {/* Line 1: Main Logo with BETA */}
+              {/* Line 1: Masthead. The former "BETA" superscript was removed —
+                  AI assistants were reading it off the homepage and describing
+                  the publication as "small, early-stage" in their answers. A
+                  beta badge tells every reader and every model that the work is
+                  provisional, which is the opposite of what a research desk
+                  needs to signal. */}
               <span
                 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl leading-none"
                 style={{ letterSpacing: '0.1rem' }}
               >
                 FINANCIAL GURKHA
                 <sup
-                  className="text-gray-400 font-bold ml-1 align-super"
+                  className="ml-1 align-super font-bold text-gray-400"
                   style={{
-                    fontSize: '0.4em',
+                    fontSize: '0.32em',
                     letterSpacing: '0.1rem',
                     fontFamily: 'Verdana',
                   }}
                 >
-                  BETA
+                  EST. 2022
                 </sup>
               </span>
 

@@ -178,7 +178,7 @@ const siteSchema = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className=" dark scroll-smooth antialiased">
+    <html lang="en" className="dark scroll-smooth antialiased">
       <head>
         <meta
           name="google-site-verification"
@@ -200,11 +200,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           {`
               if (!window.gtagInitialized) {
                 window.dataLayer = window.dataLayer || [];
-                
+                // Assign to window explicitly. Declaring gtag with 'function'
+                // inside this block leaves it out of scope for other modules,
+                // which is why custom events were never reaching GA4.
                 window.gtag = function(){ window.dataLayer.push(arguments); };
                 window.gtag('js', new Date());
                 window.gtagInitialized = true;
               }
+              // NOTE: gtag('config', ...) is deliberately NOT called here.
+              // Configuration happens in PostHogProvider once the visit has
+              // qualified (2s dwell or an interaction) and the client passes the
+              // bot / non-production checks. Until config runs, gtag calls only
+              // queue into dataLayer and nothing is sent to Google — so
+              // localhost, preview builds and crawlers never appear in GA4.
             `}
         </Script>
 
