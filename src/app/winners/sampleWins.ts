@@ -244,4 +244,18 @@ export const sampleWins: WinProps['win'][] = [
     upvotes: 545,
     commentCount: 112,
   },
+  {
+    id: '22',
+    username: 'shiesty',
+    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3).toISOString(),
+    title: 'All Eyes on Shiest — game from a cell',
+    paragraphs: [
+      'Pooh Shiesty dropped All Eyes on Shiest on August 7, 2026, through Gucci Mane\'s 1017 Global — sixteen tracks, two of them bonuses, with Big30, GloRilla, Sexyy Red and Tay Keith on the boards. He put it out from a jail cell in Memphis, awaiting trial.',
+      'The record is written from inside. "I\'m Back" opens it, "Last Man Breathin" carries it. The whole thing is thoughts and anecdotes from the stint behind bars — the man is locked up and still teaching.',
+      'Same lesson Prithvi Narayan Shah left at Nuwakot: when an old man dies, his word dies with him. So you say it before it goes. Shiest said his from a cell, on a record, so it outlives the sentence. That is the win.',
+    ],
+    upvotes: 1017,
+    previewImageUrl: '',
+    commentCount: 243,
+  },
 ]
