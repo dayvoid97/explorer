@@ -84,10 +84,10 @@ export default function AboutKanchanPage() {
             </p>
             <div className="mt-5 space-y-4 font-light leading-relaxed text-white/75">
               <p>
-                I hold a bachelor&apos;s degree in financial economics from St. John&apos;s
-                University and have spent well over a thousand hours building valuation models —
-                discounted cash flow work on public companies, private targets and operating
-                businesses.
+                I hold a bachelor&apos;s degree in financial economics from Caldwell University. I
+                am a MS Finance candidate at Saint John's University. My research and writing focus
+                on Discount Cash Flow Valuation, and the impact of interest rate in valuing public
+                companies.
               </p>
               <p>
                 The work covers US equities and earnings, macro and the Federal Reserve,
@@ -205,14 +205,14 @@ export default function AboutKanchanPage() {
           </p>
           <ul className="mt-6 space-y-3 text-sm font-light text-white/65">
             <li>
-              — <span className="text-white/85">Not a registered investment adviser.</span> Financial
-              Gurkha is not registered with the SEC, FINRA or any state regulator. We do not give
-              personalised investment advice and do not manage money.
+              — <span className="text-white/85">Not a registered investment adviser.</span>{' '}
+              Financial Gurkha is not registered with the SEC, FINRA or any state regulator. We do
+              not give personalised investment advice and do not manage money.
             </li>
             <li>
               — <span className="text-white/85">Not a real-time data service.</span> We do not carry
-              live quotes, options-implied moves, consensus estimates or transcript coverage of every
-              company.
+              live quotes, options-implied moves, consensus estimates or transcript coverage of
+              every company.
             </li>
             <li>
               — <span className="text-white/85">Not comprehensive.</span> We write in depth about a
