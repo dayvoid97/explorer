@@ -7,7 +7,10 @@ const INDEXNOW_KEY = 'a3f89e2c1d4b7f05e6a98b2c4d1e3f7a'
 const KEY_LOCATION = `${SITE_BASE}/${INDEXNOW_KEY}.txt`
 
 // Endpoints for IndexNow
-const ENDPOINTS = ['https://api.indexnow.org/indexnow', 'https://www.bing.com/indexnow']
+const ENDPOINTS = [
+  'https://api.indexnow.org/indexnow',
+  'https://www.bing.com/indexnow',
+]
 
 async function getSiteUrls() {
   const staticUrls = [
