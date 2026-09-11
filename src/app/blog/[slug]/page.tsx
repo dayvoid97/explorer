@@ -6,6 +6,8 @@ import NextOrder, { NextOrderPost } from '@/app/components/article/NextOrder'
 import InfoNote from '@/app/components/article/InfoNote'
 import ArticleAnalytics from '@/app/components/article/ArticleAnalytics'
 import SectionHeading from '@/app/components/article/SectionHeading'
+import PaperCard from '@/app/components/article/PaperCard'
+import { getAuthor } from '@/app/lib/authors'
 
 import { BlogPost } from './metadata'
 import { ShareButtons } from './share-buttons'
@@ -283,6 +285,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
 
   // ---- Structured data (SEO / AEO / GEO) ----
   const url = `https://financialgurkha.com/blog/${slug}`
+  const author = getAuthor(post.author)
   const faqs = extractFaqs(post.content)
   const wordCount = post.content.split(/\s+/).length
   // Only show the "back to contents" arrow on articles that actually have one.
@@ -303,10 +306,11 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     author: {
       '@type': 'Person',
-      name: post.author || 'Kanchan Sharma',
-      url: 'https://financialgurkha.com/about/kanchan',
-      jobTitle: 'Independent Markets Analyst',
-      knowsAbout: ['Equity Valuation', 'Discounted Cash Flow Analysis', 'Macroeconomics'],
+      name: author.name,
+      url: author.url,
+      jobTitle: author.jobTitle,
+      knowsAbout: author.knowsAbout,
+      sameAs: author.sameAs,
     },
     publisher: {
       '@type': 'Organization',
@@ -387,6 +391,26 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           <h1 className="text-4xl font-bold mb-2">{post.title}</h1>
           <h2 className="text-lg  mb-4">{post.subtitle}</h2>
 
+          {/* Visible byline. The Person schema above is invisible to readers,
+              and a finance article with no attributable human on the page is
+              exactly what an E-E-A-T review flags. The link is the same URL the
+              structured data points at, so machine and reader agree. */}
+          <div className="mb-5 flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm text-gray-600">
+            <span>
+              By{' '}
+              <Link
+                href={new URL(author.url).pathname}
+                className="font-semibold text-black underline decoration-1 underline-offset-4 hover:text-green-600 transition"
+              >
+                {author.name}
+              </Link>
+            </span>
+            <span className="text-gray-400">·</span>
+            <span>{author.role}</span>
+            <span className="text-gray-400">·</span>
+            <time dateTime={toIsoDate(post.date)}>{post.date}</time>
+          </div>
+
           <div className="mb-6 flex flex-wrap gap-2">
             {post.categories.map((cat) => (
               <span key={cat} className="text-sm bg-gray-200 px-2 py-1 rounded-full text-gray-700">
@@ -399,7 +423,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           <article className="prose prose-lg  mt-8 max-w-3xl">
             <MDXRemote
               source={contentWithAds}
-              components={{ ...makeComponents(hasToc), AdSenseInArticle, Info: InfoNote }}
+              components={{ ...makeComponents(hasToc), AdSenseInArticle, Info: InfoNote, Paper: PaperCard }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],

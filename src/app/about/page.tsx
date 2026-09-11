@@ -68,7 +68,7 @@ export default function AboutPage() {
             The People
           </p>
 
-          <div className="mt-8 grid gap-10 sm:grid-cols-2">
+          <div className="mt-8 grid gap-10 sm:grid-cols-2 lg:grid-cols-3">
             <Link href="/about/kanchan" className="group">
               <Image
                 src="/kanchan.jpg"
@@ -84,6 +84,26 @@ export default function AboutPage() {
               <p className="mt-3 max-w-xs text-sm font-light leading-relaxed text-white/65">
                 Financial economics graduate, St. John&apos;s University. Writes the valuations and
                 earnings analysis.
+              </p>
+            </Link>
+
+            {/* Contributing author. No licensed portrait, so a monogram rather
+                than a broken image or a stock headshot. */}
+            <Link href="/about/niraj" className="group">
+              <div
+                className="flex h-[160px] w-[160px] items-center justify-center rounded-full border-2 text-4xl font-black transition duration-500"
+                style={{ borderColor: GOLD, color: GOLD }}
+                aria-hidden="true"
+              >
+                NN
+              </div>
+              <p className="mt-4 text-xl font-bold">Niraj Neupane</p>
+              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
+                Contributing Author · Quantitative Research
+              </p>
+              <p className="mt-3 max-w-xs text-sm font-light leading-relaxed text-white/65">
+                CA (ICAI). Quantitative researcher on Value-at-Risk, financial econometrics and
+                model validation. Author of ML-LiqVaR.
               </p>
             </Link>
 

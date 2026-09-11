@@ -72,6 +72,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
     },
     {
+      // Contributing author profile. Same E-E-A-T job as /about/kanchan, and
+      // it carries the sameAs links (SSRN, LinkedIn) that tie the byline to a
+      // researcher who exists independently of this site.
+      url: `${SITE}/about/niraj`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.6,
+    },
+    {
       // Track record: every published valuation with outcomes, including the
       // misses. The strongest transparency signal available to an independent
       // analyst, and the direct answer to "accuracy is unproven".

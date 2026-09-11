@@ -19,6 +19,7 @@ function getSiteUrls() {
     `${SITE_BASE}/consult`,
     `${SITE_BASE}/about`,
     `${SITE_BASE}/about/kanchan`,
+    `${SITE_BASE}/about/niraj`,
     `${SITE_BASE}/track-record`,
     `${SITE_BASE}/legal/editorial`,
     `${SITE_BASE}/legal/terms`,
