@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     canonical: '/',
   },
   icons: {
-    icon: '/logo.png',
+    icon: '/favicon.ico',
   },
   openGraph: {
     title: 'Financial Gurkha — Markets Research from Wall Street, New York',

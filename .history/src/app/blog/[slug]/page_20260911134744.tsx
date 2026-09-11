@@ -423,12 +423,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           <article className="prose prose-lg  mt-8 max-w-3xl">
             <MDXRemote
               source={contentWithAds}
-              components={{
-                ...makeComponents(hasToc),
-                AdSenseInArticle,
-                Info: InfoNote,
-                Paper: PaperCard,
-              }}
+              components={{ ...makeComponents(hasToc), AdSenseInArticle, Info: InfoNote, Paper: PaperCard }}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
