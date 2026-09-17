@@ -41,7 +41,7 @@ export default async function BlogListPage() {
             className="block hover:opacity-90 transition"
           >
             {post.image && (
-              <img src={post.image} alt={post.title} className="h-80 w-full object-cover" />
+              <img src={post.image} alt={post.title} className="h-56 w-full object-cover" />
             )}
             <div className="py-4">
               <h2

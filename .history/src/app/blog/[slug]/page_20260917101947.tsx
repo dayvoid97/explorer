@@ -102,8 +102,12 @@ function makeComponents(hasToc: boolean) {
       <blockquote className="border-l-4 border-gray-800 pl-4 italic  my-4" {...props} />
     ),
     img: (props: any) => <img className="rounded-lg my-6 w-full" {...props} />,
-    code: (props: any) => <code className=" px-2 py-1 rounded text-sm font-mono" {...props} />,
-    pre: (props: any) => <pre className=" p-4 rounded-lg overflow-x-auto mb-4" {...props} />,
+    code: (props: any) => (
+      <code className="bg-gray-100 px-2 py-1 rounded text-sm font-mono" {...props} />
+    ),
+    pre: (props: any) => (
+      <pre className="bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-4" {...props} />
+    ),
     table: (props: any) => (
       <table className="min-w-full border-collapse border border-gray-300 my-6" {...props} />
     ),
