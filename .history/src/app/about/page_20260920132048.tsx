@@ -93,7 +93,7 @@ export default function AboutPage() {
                 than a broken image or a stock headshot. */}
             <Link href="/about/niraj" className="group">
               <Image
-                src="/CANiraj/CaNirajcover.png"
+                src="/kanchan.jpg"
                 alt="Kanchan Sharma, founder and analyst"
                 width={160}
                 height={160}

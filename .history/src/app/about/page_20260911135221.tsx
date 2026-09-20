@@ -24,9 +24,7 @@ export default function AboutPage() {
         <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>
           Independent Markets Research · Est. 2022 · New York City
         </p>
-        <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
-          About Financial Gurkha
-        </h1>
+        <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">About Financial Gurkha</h1>
 
         <div className="mt-8 max-w-2xl space-y-5 text-lg font-light leading-relaxed text-white/75">
           <p>
@@ -92,13 +90,13 @@ export default function AboutPage() {
             {/* Contributing author. No licensed portrait, so a monogram rather
                 than a broken image or a stock headshot. */}
             <Link href="/about/niraj" className="group">
-              <Image
-                src="/CANiraj/CaNirajcover.png"
-                alt="Kanchan Sharma, founder and analyst"
-                width={160}
-                height={160}
-                className="h-[160px] w-[160px] rounded-full object-cover grayscale-[30%] transition duration-500 group-hover:grayscale-0"
-              />
+              <div
+                className="flex h-[160px] w-[160px] items-center justify-center rounded-full border-2 text-4xl font-black transition duration-500"
+                style={{ borderColor: GOLD, color: GOLD }}
+                aria-hidden="true"
+              >
+                NN
+              </div>
               <p className="mt-4 text-xl font-bold">Niraj Neupane</p>
               <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
                 Contributing Author · Quantitative Research
