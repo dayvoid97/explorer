@@ -54,6 +54,8 @@ export const AUTHORS: Record<string, Author> = {
     sameAs: [
       'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7222958',
       'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7170418',
+      'https://papers.ssrn.com/sol3/papers.cfm?abstract_id=7502499',
+      'https://orcid.org/0009-0003-7026-7026',
       'https://www.linkedin.com/in/nirajneupane17/',
     ],
   },
