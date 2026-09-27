@@ -89,6 +89,8 @@ export default function AboutPage() {
               </p>
             </Link>
 
+            {/* Contributing author. No licensed portrait, so a monogram rather
+                than a broken image or a stock headshot. */}
             <Link href="/about/niraj" className="group">
               <Image
                 src="/CANiraj/CaNirajcover.png"

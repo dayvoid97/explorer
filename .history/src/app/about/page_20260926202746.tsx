@@ -89,10 +89,12 @@ export default function AboutPage() {
               </p>
             </Link>
 
+            {/* Contributing author. No licensed portrait, so a monogram rather
+                than a broken image or a stock headshot. */}
             <Link href="/about/niraj" className="group">
               <Image
-                src="/CANiraj/CaNirajcover.png"
-                alt="CA Niraj"
+                src="/CANiraj/CANirajCover.png"
+                alt="Kanchan Sharma, founder and analyst"
                 width={160}
                 height={160}
                 className="h-[160px] w-[160px] rounded-full object-cover grayscale-[30%] transition duration-500 group-hover:grayscale-0"
