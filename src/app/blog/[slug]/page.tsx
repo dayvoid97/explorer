@@ -10,6 +10,10 @@ import PaperCard from '@/app/components/article/PaperCard'
 import { getAuthor } from '@/app/lib/authors'
 
 import { BlogPost } from './metadata'
+// metadata.ts is not a Next.js special file, so its generateMetadata only runs
+// if the page re-exports it. Without this, every article inherits the root
+// layout's title, description and logo share image.
+export { generateMetadata } from './metadata'
 import { ShareButtons } from './share-buttons'
 import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
 import { AdSenseInArticle } from '@/app/components/adsense-in-article'

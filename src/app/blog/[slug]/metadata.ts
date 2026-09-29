@@ -38,6 +38,13 @@ export async function generateMetadata({
       ? `${post.subtitle.slice(0, 155).replace(/\s+\S*$/, '')}…`
       : post.subtitle
 
+  // Social cards (Reddit, X, LinkedIn, iMessage) use the article's cover image.
+  // Articles without one fall back to the logo. The fallback has to be explicit:
+  // Next replaces the layout's openGraph object wholesale rather than merging it,
+  // so leaving `images` undefined here would share with no image at all.
+  const shareImage = post.image || '/logo.png'
+  const shareImageAlt = post.image ? post.title : 'Financial Gurkha'
+
   return {
     title: post.title,
     description,
@@ -49,7 +56,7 @@ export async function generateMetadata({
     openGraph: {
       title: post.title,
       description,
-      images: post.image ? [{ url: post.image, alt: post.title }] : undefined,
+      images: [{ url: shareImage, alt: shareImageAlt }],
       type: 'article',
       url,
       siteName: 'Financial Gurkha',
@@ -62,7 +69,7 @@ export async function generateMetadata({
       card: 'summary_large_image',
       title: post.title,
       description,
-      images: post.image ? [post.image] : undefined,
+      images: [{ url: shareImage, alt: shareImageAlt }],
     },
     other: {
       // Consumed by Google News and several aggregators.
