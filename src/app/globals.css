@@ -1,2 +1,8 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/typography';
+
+/* In-article ad panel: collapse it entirely when AdSense has no ad to show,
+   so readers never see an empty "Advertisement" box. */
+.ad-slot:has(ins[data-ad-status='unfilled']) {
+  display: none;
+}

@@ -20,6 +20,9 @@ const DISALLOWED = [
   '/chronology',
   '/companycard',
   '/spinthewheel',
+  // Private until launch (see src/app/lib/spotlight-books.ts). Drops out of
+  // this list automatically when SPOTLIGHT_BOOKS_PUBLIC=true.
+  ...(process.env.SPOTLIGHT_BOOKS_PUBLIC === 'true' ? [] : ['/spotlight-books']),
 ]
 
 /**

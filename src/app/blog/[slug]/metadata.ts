@@ -10,6 +10,25 @@ export interface BlogPost {
   image?: string
   content: string
   author: string
+  /** Spotlight Books: present when the post is a review of a book. */
+  month?: string
+  book?: {
+    title: string
+    author: string
+    authorAffiliation?: string
+    publisher: string
+    year: number
+    pages?: number
+  }
+  /** Set when the post responds to a published review rather than the book alone. */
+  reviewSource?: {
+    title: string
+    author: string
+    publication: string
+    issue?: string
+    date?: string
+    url?: string
+  }
 }
 
 export async function generateMetadata({

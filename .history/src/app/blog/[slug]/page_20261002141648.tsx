@@ -25,6 +25,7 @@ import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 
 import remarkGfm from 'remark-gfm'
 
+
 // --- In-article ad placement -------------------------------------------------
 //
 // One fixed unit sits directly above "The 60-Second Version" (see
@@ -235,11 +236,7 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
         url,
         datePublished: toIsoDate(post.date),
         author: { '@type': 'Person', name: author.name, url: author.url },
-        publisher: {
-          '@type': 'Organization',
-          name: 'Financial Gurkha',
-          url: 'https://financialgurkha.com',
-        },
+        publisher: { '@type': 'Organization', name: 'Financial Gurkha', url: 'https://financialgurkha.com' },
         itemReviewed: {
           '@type': 'Book',
           name: post.book.title,
