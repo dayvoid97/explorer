@@ -72,6 +72,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/how-does-financial-gurkha-make-money"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                >
+                  How We Make Money
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/legal/copyright"
                   className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >

@@ -1,6 +1,7 @@
 'use client'
 
 import { useAdSlot } from '@/app/hooks/useAdSlot'
+import { AdLabel } from '@/app/components/AdLabel'
 
 /**
  * In-article AdSense unit — mobile and tablet only.
@@ -26,11 +27,9 @@ export const AdSenseInArticle = ({ position }: { position?: string }) => {
     // returns no ad, so an empty labelled box is never left in the text.
     <div
       ref={ref}
-      className="ad-slot my-8 lg:hidden rounded-xl border border-[#e8e1d1] bg-[#f7f4ec] px-3 pt-2 pb-3"
+      className="ad-slot my-8 lg:hidden rounded-xl border border-[#e8e1d1] bg-[#fff] px-3 pt-2 pb-3"
     >
-      <p className="mb-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-[#8a8170]">
-        Advertisement
-      </p>
+      <AdLabel align="right" />
       {/* Reserve a minimum height so the article does not jump when the ad
           fills — layout shift is both a ranking signal and an annoyance. */}
       <div className="min-h-[100px]">

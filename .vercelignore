@@ -1,0 +1,21 @@
+# Files that never need to reach the deployment. Readers are only ever served
+# the app routes and /public; everything below is internal.
+
+# editor local history
+.history
+
+# internal notes and drafts
+social
+ADS.md
+ANALYTICS.md
+CREDIBILITY-FIXES.md
+INFO-NOTES.md
+LIVESTREAM_README.md
+SEO-AUDIT.md
+WEBSOCKET_SETUP.md
+
+# build caches
+*.tsbuildinfo
+
+# source photo for the Spotlight review (reproduces The Indypendent's full page; unused)
+public/spotlight-books/spotlight-books-october-600-years-of-capitalism-economic-history.png

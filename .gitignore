@@ -40,3 +40,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# editor local history (VS Code "Local History" extension) — never deploy
+.history/

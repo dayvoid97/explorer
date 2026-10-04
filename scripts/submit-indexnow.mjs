@@ -18,6 +18,7 @@ async function getSiteUrls() {
     `${SITE_BASE}/about/kanchan`,
     `${SITE_BASE}/track-record`,
     `${SITE_BASE}/legal/editorial`,
+    `${SITE_BASE}/how-does-financial-gurkha-make-money`,
     `${SITE_BASE}/legal/terms`,
     `${SITE_BASE}/legal/privacy`,
     `${SITE_BASE}/winners`,

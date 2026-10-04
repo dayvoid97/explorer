@@ -52,7 +52,7 @@ badge is inside a markdown table. A pipe breaks the table. Use "or" or a dash.
 **Keep it to 1–3 sentences.** The panel is ~320px wide. Longer than about 60
 words and it becomes a wall.
 
-**Explain the concept, not the company.** Good: what a contract liability *is*
+**Explain the concept, not the company.** Good: what a contract liability _is_
 and why a rise matters. Less good: restating the number that is already in the
 table.
 
@@ -101,19 +101,19 @@ previews. Always confirm the badge landed **below** the closing `---`.
 
 ## Currently deployed — 30 explainers across 11 articles
 
-| Article | Count | Terms explained |
-| :-- | --: | :-- |
-| Sandisk FY26 | 6 | marketable equity securities, retained earnings, contract liabilities, goodwill impairment, Flash Ventures, Gb/mm² |
-| Caterpillar Q2 | 6 | adjusted vs reported, incremental margin, customer advances, past dues, tariff recovery, MP&E free cash flow |
-| Microsoft FY26 | 5 | unearned revenue, useful life & depreciation, statutory vs effective tax rate, constant currency, free cash flow |
-| Novo Nordisk DCF | 3 | DCF valuation, value trap, cost of capital |
-| MP Materials | 3 | DCF valuation, terminal year, NdPr |
-| Monad | 2 | Layer 1, EVM |
-| Fed decision | 1 | federal funds rate |
-| Figma valuation | 1 | intrinsic value |
-| Precious metals | 1 | micro futures |
-| USD/DXY/gold/oil | 1 | basis point |
-| US net investment position | 1 | net international investment position |
+| Article                    | Count | Terms explained                                                                                                    |
+| :------------------------- | ----: | :----------------------------------------------------------------------------------------------------------------- |
+| Sandisk FY26               |     6 | marketable equity securities, retained earnings, contract liabilities, goodwill impairment, Flash Ventures, Gb/mm² |
+| Caterpillar Q2             |     6 | adjusted vs reported, incremental margin, customer advances, past dues, tariff recovery, MP&E free cash flow       |
+| Microsoft FY26             |     5 | unearned revenue, useful life & depreciation, statutory vs effective tax rate, constant currency, free cash flow   |
+| Novo Nordisk DCF           |     3 | DCF valuation, value trap, cost of capital                                                                         |
+| MP Materials               |     3 | DCF valuation, terminal year, NdPr                                                                                 |
+| Monad                      |     2 | Layer 1, EVM                                                                                                       |
+| Fed decision               |     1 | federal funds rate                                                                                                 |
+| Figma valuation            |     1 | intrinsic value                                                                                                    |
+| Precious metals            |     1 | micro futures                                                                                                      |
+| USD/DXY/gold/oil           |     1 | basis point                                                                                                        |
+| US net investment position |     1 | net international investment position                                                                              |
 
 Density was kept deliberately low — roughly one per 400–800 words on the dense
 filings pieces, and one or two on the shorter posts. The badge should feel like

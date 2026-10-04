@@ -98,6 +98,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.6,
     },
     {
+      // Ads and affiliate disclosure. Linked from every ad label's ⓘ.
+      url: `${SITE}/how-does-financial-gurkha-make-money`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.5,
+    },
+    {
       url: `${SITE}/legal/terms`,
       lastModified: new Date(),
       changeFrequency: 'yearly',

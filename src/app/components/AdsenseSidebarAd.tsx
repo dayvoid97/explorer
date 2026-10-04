@@ -1,6 +1,7 @@
 'use client'
 
 import { useAdSlot } from '@/app/hooks/useAdSlot'
+import { AdLabel } from '@/app/components/AdLabel'
 
 /**
  * Desktop sidebar skyscraper (300x600).
@@ -28,15 +29,16 @@ export const AdSenseSidebarAd = () => {
   const { ref, shouldRender } = useAdSlot('sidebar_skyscraper')
 
   return (
-    <div ref={ref} className="sticky top-4 mx-auto w-[300px]">
+    // `ad-slot` collapses the unit (label included) if AdSense returns no ad.
+    <div ref={ref} className="ad-slot sticky top-4 mx-auto w-[300px]">
+      {/* Labelled from the start, so the reserved space reads as an ad slot
+          rather than a blank gap while the ad loads. */}
+      <AdLabel align="right" />
       {/* Reserve the full slot height up front so filling the ad does not push
           article content around and register as layout shift (CLS). */}
       <div className="min-h-[600px]">
         {shouldRender && (
           <>
-            <p className="mb-2 text-center font-mono text-[10px] uppercase tracking-[0.25em] text-white/25">
-              Advertisement
-            </p>
             <ins
               className="adsbygoogle"
               style={{ display: 'inline-block', width: '300px', height: '600px' }}
