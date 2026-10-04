@@ -22,13 +22,11 @@ export const AdSenseInArticle = ({ position }: { position?: string }) => {
   const { ref, shouldRender } = useAdSlot(position ?? 'in_article')
 
   return (
-    // A soft, labelled panel so readers can tell the unit apart from the
-    // article. `ad-slot` lets globals.css collapse the panel when AdSense
-    // returns no ad, so an empty labelled box is never left in the text.
-    <div
-      ref={ref}
-      className="ad-slot my-8 lg:hidden rounded-xl border border-[#e8e1d1] bg-[#fff] px-3 pt-2 pb-3"
-    >
+    // No box around the unit: on phones AdSense expands responsive ads to the
+    // full screen width, so any border or padding here ends up cut through by
+    // the ad. The "Advertisement ⓘ" label alone marks it. `ad-slot` lets
+    // globals.css collapse the unit, label included, when AdSense returns no ad.
+    <div ref={ref} className="ad-slot my-8 lg:hidden">
       <AdLabel align="right" />
       {/* Reserve a minimum height so the article does not jump when the ad
           fills — layout shift is both a ranking signal and an annoyance. */}
