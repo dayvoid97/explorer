@@ -4,10 +4,10 @@ headline: "Wednesday's inflation report is the week's main event"
 dek: "The US releases September inflation data Wednesday at 8:30am ET. It's the first read since the Fed's rate hike — and it will shape whether borrowing costs go up again this year."
 tags: ['US', 'Inflation', 'Federal Reserve']
 sources:
-  - name: "ZeroHedge — Key events this week: CPI consensus +0.6% m/m, +3.6% y/y; core +0.2% m/m (Oct 12)"
-    url: "https://www.zerohedge.com/economics/key-events-week-cpi-ppi-earnings-start-and-warsh-speaks"
-  - name: "Reuters — UK stocks advance ahead of US inflation data (Oct 12)"
-    url: "https://www.reuters.com/business/finance/uk-stocks-advance-banking-sector-strength-2026-10-12/"
+  - name: "Morningstar — September CPI forecast: +0.5% m/m headline after +0.4% (3.6% y/y after 3.4%); core +0.2% m/m after +0.3%, 2.4% y/y unchanged (Oct 12)"
+    url: "https://www.morningstar.com/economy/cpi-forecasts-show-moderated-inflation-september-keeping-fed-hold"
+  - name: "Dow Jones Newswires via Morningstar — focus this week is US inflation data Wednesday; Q3 bank earnings start Tuesday (Oct 12)"
+    url: "https://www.morningstar.com/news/dow-jones/202610123286/us-futures-mixed-oil-rises-after-russia-hits-ukraine-energy-sites-update"
 ---
 
 ## What happened
