@@ -31,7 +31,7 @@ export function slugify(text: string): string {
 // switched on only when the article actually has a table of contents. Older
 // posts have no TOC, and an arrow linking to a section that does not exist is
 // worse than no arrow.
-export function makeComponents(hasToc: boolean) {
+export function makeComponents(hasToc: boolean, contentsHref = '#whats-in-this-report') {
   return {
     h1: ({ children, ...props }: any) => (
       <SectionHeading as="h1" id={slugify(nodeToText(children))} {...props}>
@@ -43,6 +43,7 @@ export function makeComponents(hasToc: boolean) {
         as="h2"
         id={slugify(nodeToText(children))}
         showContentsLink={hasToc}
+        contentsHref={contentsHref}
         {...props}
       >
         {children}

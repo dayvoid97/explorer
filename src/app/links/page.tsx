@@ -3,6 +3,7 @@
 import { useMemo, useState } from 'react'
 
 const ARTICLES: { title: string; href: string }[] = [
+  { title: "Britain's Welfare Bill Is Breaking the Budget — and the Bond Market Has Noticed", href: 'https://financialgurkha.com/blog/uk-welfare-bill-budget-gilt-yields-g7-comparison' },
   { title: 'Record Stocks, 24-Year-High Yields: Which Market Is Wrong?', href: 'https://financialgurkha.com/blog/record-stocks-24-year-high-treasury-yields-which-market-is-wrong' },
   { title: 'Physical AI: The Brain and the Body Have Become Their Own Markets', href: 'https://financialgurkha.com/blog/physical-ai-brain-body-robotics-thesis' },
   { title: "The 30-Year Hit a 2002 High. Why Didn't Wall Street Panic?", href: 'https://financialgurkha.com/blog/systemic-tail-episode-risk-ster-30-year-treasury-2002-high' },

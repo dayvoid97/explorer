@@ -27,12 +27,14 @@ export default function SectionHeading({
   id,
   children,
   showContentsLink = false,
+  contentsHref = '#whats-in-this-report',
   ...props
 }: {
   as: 'h1' | 'h2' | 'h3'
   id: string
   children: React.ReactNode
   showContentsLink?: boolean
+  contentsHref?: string
 } & React.HTMLAttributes<HTMLHeadingElement>) {
   const Tag = as
 
@@ -65,7 +67,7 @@ export default function SectionHeading({
 
       {showContentsLink && (
         <a
-          href="#whats-in-this-report"
+          href={contentsHref}
           aria-label="Back to table of contents"
           title="Back to contents"
           className="ml-2 inline-flex items-center gap-1 align-middle text-[0.42em] font-normal uppercase tracking-[0.2em] opacity-0 transition-opacity focus:opacity-100 group-hover:opacity-100"

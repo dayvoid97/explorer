@@ -9,6 +9,7 @@ import {
   extractFaqs,
   makeComponents,
   sanitizeMarkdownForMdx,
+  slugify,
   toIsoDate,
 } from '@/app/components/article/mdx'
 import PaperCard from '@/app/components/article/PaperCard'
@@ -24,6 +25,42 @@ import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
 import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 
 import remarkGfm from 'remark-gfm'
+
+// --- Table of contents -------------------------------------------------------
+//
+// Every article gets a table of contents. Articles with a hand-written one
+// ("What's in this report" / "Table of Contents") keep it; everything else
+// gets an auto-generated TOC built from the H2 headings, using the same
+// slugify() the MDX renderer uses for heading anchors — so every link lands
+// exactly. The nav carries id="whats-in-this-report", which is also what the
+// "↑ Contents" arrows on each section link back to.
+
+function stripMarkdownHeading(text: string): string {
+  return text
+    .replace(/<[^>]*>/g, '')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/(\*\*|__)(.*?)\1/g, '$2')
+    .replace(/(\*|_)(.*?)\1/g, '$2')
+    .replace(/`([^`]+)`/g, '$1')
+    .trim()
+}
+
+// Boilerplate sections that don't belong in a contents list.
+const TOC_EXCLUDE = /^(about this analysis|table of contents)$/i
+
+function extractToc(content: string): { text: string; id: string }[] {
+  // Ignore fenced code blocks — a "##" inside one is not a heading.
+  const prose = content.replace(/```[\s\S]*?```/g, '')
+  const entries: { text: string; id: string }[] = []
+  for (const m of prose.matchAll(/^##\s+(.+)$/gm)) {
+    const text = stripMarkdownHeading(m[1])
+    if (!text || TOC_EXCLUDE.test(text)) continue
+    entries.push({ text, id: slugify(text) })
+  }
+  return entries
+}
+
+const MANUAL_TOC_RE = /^#{2,3}\s+(what's in this report|table of contents)/im
 
 // --- In-article ad placement -------------------------------------------------
 //
@@ -167,8 +204,18 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   const author = getAuthor(post.author)
   const faqs = extractFaqs(post.content)
   const wordCount = post.content.split(/\s+/).length
-  // Only show the "back to contents" arrow on articles that actually have one.
-  const hasToc = /^###\s+What's in this report/m.test(post.content)
+  // Articles with a hand-written TOC keep it; the rest get an auto-generated
+  // one from their H2s. Either way the "↑ Contents" arrows have somewhere to go.
+  const hasManualToc = MANUAL_TOC_RE.test(post.content)
+  const tocEntries = hasManualToc ? [] : extractToc(post.content)
+  const hasToc = hasManualToc || tocEntries.length >= 2
+  // The "↑ Contents" arrows must land on the real TOC: the auto-generated nav
+  // or the "### What's in this report" H3 both slugify to
+  // #whats-in-this-report; a hand-written "## Table of Contents" H2 lands on
+  // #table-of-contents.
+  const contentsHref = hasManualToc && /^##\s+table of contents/im.test(post.content)
+    ? '#table-of-contents'
+    : '#whats-in-this-report'
 
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -349,11 +396,39 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
           </div>
           <ShareButtons title={post.title} subtitle={post.subtitle} />
 
+          {tocEntries.length >= 2 && (
+            <nav
+              aria-label="Table of contents"
+              id="whats-in-this-report"
+              className="max-w-3xl mb-8 mt-8 scroll-mt-24 rounded-lg border border-gray-200 bg-stone-50 p-5 sm:p-6"
+            >
+              <p
+                className="mb-4 text-sm font-bold uppercase"
+                style={{ letterSpacing: '0.18em', color: '#C9A24B' }}
+              >
+                What&apos;s in this report
+              </p>
+              <ol className="space-y-2.5">
+                {tocEntries.map((e) => (
+                  <li key={e.id}>
+                    <a
+                      href={`#${e.id}`}
+                      className="text-[17px] font-semibold text-black underline decoration-1 underline-offset-4 hover:text-green-700 transition"
+                      style={{ fontFamily: "'Freight Big Pro', Georgia, serif" }}
+                    >
+                      {e.text}
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )}
+
           <article className="prose prose-lg  mt-8 max-w-3xl">
             <MDXRemote
               source={contentWithAds}
               components={{
-                ...makeComponents(hasToc),
+                ...makeComponents(hasToc, contentsHref),
                 AdSenseInArticle,
                 Info: InfoNote,
                 Paper: PaperCard,

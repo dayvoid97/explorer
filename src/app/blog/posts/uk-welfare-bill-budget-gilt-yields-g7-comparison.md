@@ -21,6 +21,7 @@ categories:
     'wall street',
   ]
 author: 'Market Review'
+image: '/uk-welfare-bill-budget-gilt-yields-g7-comparison/hero.png'
 ---
 
 *MACRO · FISCAL · UK RATES*
@@ -35,7 +36,7 @@ author: 'Market Review'
 >
 > **The crunch.** The IFS, via Reuters, says Chancellor John Healey needs **£36 billion of tax rises or welfare cuts** in his October 28 budget to offset the Iran-war inflation hit and a defence pledge. Public debt stands at **93.8% of GDP** (ONS).
 >
-> **The market's verdict.** The 10-year gilt yields **5.53%** (highest since 2007); the 30-year gilt touched **6.05%** (highest since 1998). Investors are adding an explicit fiscal-risk premium to UK government bonds, and rate-sensitive equities are feeling it.
+> **The market's verdict.** The 10-year gilt hit **5.53%** last week — a 19-year high — and trades around **5.42%** today. The 30-year gilt touched **6.05%** (highest since 1998). Investors are adding an explicit fiscal-risk premium to UK government bonds, and rate-sensitive equities are feeling it.
 >
 > **The comparison.** France spends **~32% of GDP** on social protection — the highest in the OECD, well above Britain's ~20.5%. Yet France's 10-year yield sits near 4.8-4.9% against Britain's 5.5%. The difference: credibility, politics, and who the market believes will actually fix it.
 
@@ -47,6 +48,8 @@ Start with what the OBR itself has published. In its supplementary welfare relea
 
 That trajectory is the Treasury's problem. A welfare bill growing faster than the economy means every future budget starts in a deeper hole: more of each year's revenue is pre-committed before the Chancellor decides anything.
 
+![UK welfare spending — the OBR's own trajectory](/uk-welfare-bill-budget-gilt-yields-g7-comparison/fig3_obr_welfare_trajectory.png)
+
 ## 2. The £36 billion budget problem
 
 The arithmetic facing Chancellor John Healey ahead of his first budget on **October 28, 2026** is brutal. Borrowing has been running above the OBR's forecast — the IFS notes the miss is small relative to the totals and "does not change the overall fiscal narrative from March," but the direction is what markets watch. Public sector net debt stands at **93.8% of GDP** as of end-August 2026 (ONS, provisional). The backdrop: CPI inflation at **3.1%** in August and Q2 GDP growth of just **0.5%** (Reuters).
@@ -55,17 +58,21 @@ The Institute for Fiscal Studies, via Reuters on October 11, put the number on i
 
 ## 3. The gilt market's verdict
 
-Bond investors have stopped giving Britain the benefit of the doubt. On October 8, the **10-year gilt yield hit 5.527%** — its highest since 2007. The **30-year gilt touched 6.047%**, its highest since January 1998, before easing to around 5.9% (LSEG via Morningstar/Dow Jones).
+Bond investors have stopped giving Britain the benefit of the doubt. Last week, the **10-year gilt yield hit 5.527%** — a 19-year high — and the **30-year gilt touched 6.047%**, its highest since January 1998 (LSEG via Dow Jones). On Monday, October 12, the 10-year eased about 3-4 basis points to **~5.42%** as oil prices edged lower — but as Dow Jones noted, yields "remain close to the multidecade highs reached last week as inflation concerns and fiscal jitters continue" (Dow Jones Newswires, October 12).
 
 The Bank of England is holding the line but tilting hawkish: Bank Rate stays at **3.75%** after a 6-3 vote in October — three dissenters wanted 4% — with the next decision on November 5. As Dow Jones put it on October 8: "Weak economic growth and rising borrowing costs are constraining public finances, causing investors to add a **fiscal-risk premium** on government bonds."
 
-The transmission is textbook and it is already running: a rising welfare bill widens the deficit → more gilt issuance → higher yields → higher debt-service costs → less fiscal headroom → more pressure on sterling and on rate-sensitive assets. The FTSE 100, at **10,552 (+6.25% YTD)**, was headed for its worst month since March as "rising bond yields dampened sentiment" (Reuters, October 5). And every extra tenth of a point on gilt yields feeds, with a lag, into the mortgage rates paid by British households.
+The transmission is textbook and it is already running: a rising welfare bill widens the deficit → more gilt issuance → higher yields → higher debt-service costs → less fiscal headroom → more pressure on sterling and on rate-sensitive assets.
+
+![10-year government bond yields — Britain pays the most in Europe](/uk-welfare-bill-budget-gilt-yields-g7-comparison/fig1_10y_yields.png) The FTSE 100, at **10,614 on October 12 (+0.58% on the day, Reuters)**, has been whipsawed for weeks as "rising bond yields dampened sentiment" (Reuters, October 5). And every extra tenth of a point on gilt yields feeds, with a lag, into the mortgage rates paid by British households.
 
 ## 4. France: the welfare state that outspends everyone
 
 Here is the twist — and the data backs it. France spends roughly **32% of GDP on social protection** — the highest in the OECD (OECD, corroborated by Eurostat at 31.9% for 2024). Britain, at about **20.5%**, is not even close. France is the welfare state; Britain merely has a welfare bill problem.
 
-And yet France's 10-year OAT yields **4.76-4.95%** — roughly 60-70 basis points *below* the UK's 10-year gilt. The spread of French bonds over German Bunds has blown out to **131-159 basis points**, the widest since the 2011-12 euro crisis (Barron's), so markets are not relaxed about France either. But the outright yield is lower.
+And yet France's 10-year OAT yields **~4.85%** (October 12, Tradeweb via Dow Jones) — roughly 55-60 basis points *below* the UK's 10-year gilt.
+
+![Social protection spending — France outspends everyone in the OECD](/uk-welfare-bill-budget-gilt-yields-g7-comparison/fig2_social_spending_g7.png) The spread of French bonds over German Bunds has blown out to **131-159 basis points**, the widest since the 2011-12 euro crisis (Barron's), so markets are not relaxed about France either. But the outright yield is lower. Asked whether the ECB might step in to contain the French selloff, Macquarie told the WSJ on October 12 that current spreads are nowhere near intervention levels — and that the ECB "may want to see fiscal consolidation in France first."
 
 Why does the heavier welfare state borrow more cheaply? Three reasons:
 
@@ -79,12 +86,12 @@ The lesson: a big welfare state is sustainable if the market believes the politi
 
 Early-October 2026 snapshot. Every figure below traces to a Tier-1 source (ONS, OBR, OECD, Eurostat) or a Tier-2 newswire (Reuters, Morningstar/Dow Jones, Barron's, AP, Le Monde, C.D. Howe Institute). Dashes mark figures available only from single secondary sources — omitted under our double-verification rule.
 
-| G7 | 10Y yield | Policy rate | Equities YTD 2026 | Social spending % GDP | Debt/GDP |
+| G7 | 10Y yield (Oct 12) | Policy rate | Equities | Social spending % GDP | Debt/GDP |
 |---|---|---|---|---|---|
-| **US** | ~5.3% (24-yr high) | Fed 3.75-4.00% (hiked Oct 7) | — | 18.2% | — |
-| **UK** | **5.53%** (highest since 2007) | BoE **3.75%** | FTSE 100 **+6.25%** | 20.5% | **93.8%** |
-| **France** | 4.76-4.95% (highest since 2002) | ECB 2.50% | CAC 40 **-4.25%** | **32.0%** (highest in OECD) | 119.3% |
-| **Germany** | 3.41-3.51% (highest since 2009) | ECB 2.50% | DAX +2.44% | 25.4% | 63.5% (lowest in G7) |
+| **US** | 5.24% (Fri close; cash shut for Columbus Day) | Fed 3.75-4.00% (hiked Oct 7) | — | 18.2% | — |
+| **UK** | **~5.42%** (5.53% high last week) | BoE **3.75%** | FTSE 100 **10,614** | 20.5% | **93.8%** |
+| **France** | ~4.85% | ECB 2.50% | CAC 40 **-4.25% YTD** | **32.0%** (highest in OECD) | 119.3% |
+| **Germany** | ~3.46% | ECB 2.50% | DAX +2.44% YTD | 25.4% | 63.5% (lowest in G7) |
 | **Italy** | — | ECB 2.50% | — | 27.6% | — |
 | **Japan** | — | BoJ 1.25% (31-yr high) | — | 22.3% | — |
 | **Canada** | ~3.9-4.0% | — | TSX +12.5% | 18.0% | ~74% net |
@@ -94,7 +101,7 @@ Social spending figures are OECD (latest fully verified vintage); France's ~32% 
 Three patterns stand out:
 
 1. **Everyone's yields are at multi-decade highs.** The US 10-year is at a 24-year high, Germany's at its highest since 2009. This is a global bond selloff — driven by the Iran/Middle East oil shock (Brent around $100-105) and renewed central-bank tightening (the Fed hiked on October 7, the ECB hiked in September, the BoJ hiked to a 31-year high in September). Britain is not suffering alone.
-2. **But Britain pays the most among major European sovereigns.** At 5.53%, the 10-year gilt yields more than France's OAT (4.8-4.9%) and Germany's Bund (3.4-3.5%) — despite Britain having lower debt-to-GDP than France. That gap is the fiscal-risk premium, and the welfare bill is a large part of the story the market is telling.
+2. **But Britain pays the most among major European sovereigns.** At ~5.4%, the 10-year gilt yields more than France's OAT (~4.85%) and Germany's Bund (~3.46%) — despite Britain having lower debt-to-GDP than France. That gap is the fiscal-risk premium, and the welfare bill is a large part of the story the market is telling.
 3. **Equities are diverging from bonds.** Canada's TSX is up 12.5% even as its yields rise; France's CAC is down 4.25%. Britain's FTSE 100 (+6.25%) is middling — supported by energy and multinationals, dragged by domestic rate sensitivity.
 
 ## 6. What to watch next
@@ -111,11 +118,11 @@ Three patterns stand out:
 
 ## The bottom line
 
-Britain's welfare bill — £245 billion in 2021-22, forecast at £328 billion by 2027-28, and taking a rising share of GDP — has collided with a bond market that no longer finances deficits on trust. The 10-year gilt at 5.53% is the market's invoice for that collision.
+Britain's welfare bill — £245 billion in 2021-22, forecast at £328 billion by 2027-28, and taking a rising share of GDP — has collided with a bond market that no longer finances deficits on trust. The 10-year gilt touching 5.53% last week is the market's invoice for that collision.
 
 France shows the paradox clearly: the OECD's biggest welfare state (32% of GDP) borrows more cheaply than Britain, because its burden is old news and its politics — chaotic as they are — sit inside the eurozone's institutional frame. Britain's burden is *growing*, its fiscal headroom is evaporating, and its next budget is sixteen days away.
 
-The question for the October 28 budget is not whether the welfare bill gets addressed. It is whether the address is credible enough to make 5.53% look like a peak rather than a waypoint.
+The question for the October 28 budget is not whether the welfare bill gets addressed. It is whether the address is credible enough to make ~5.4% look like a peak rather than a waypoint.
 
 ---
 
@@ -128,7 +135,7 @@ The OBR put welfare spending at £245.2 billion in 2021-22 (10.5% of GDP), forec
 A mix of global forces (oil shock, renewed central-bank tightening) and UK-specific fiscal risk: borrowing running above forecast, and a welfare bill taking a growing share of GDP. Investors now charge an explicit fiscal-risk premium on gilts (Dow Jones, October 8).
 
 **Is the UK worse off than France?**
-On welfare spending, no — France spends ~32% of GDP vs. Britain's ~20.5%, the highest in the OECD. On market trust, Britain is currently paying more: the 10-year gilt yields ~5.53% against France's ~4.8-4.9%. France's risk shows up instead in its equities (CAC 40 down 4.25% YTD, worst in the G7) and its record 119.3% debt-to-GDP.
+On welfare spending, no — France spends ~32% of GDP vs. Britain's ~20.5%, the highest in the OECD. On market trust, Britain is currently paying more: the 10-year gilt touched 5.53% last week and trades around 5.4% today, against France's ~4.85%. France's risk shows up instead in its equities (CAC 40 down 4.25% YTD, worst in the G7) and its record 119.3% debt-to-GDP.
 
 **What happens on October 28?**
 Chancellor John Healey delivers his first budget. The IFS says he needs £36 billion of tax rises or welfare cuts. Watch gilt yields in the days after — they are the market's grade.
