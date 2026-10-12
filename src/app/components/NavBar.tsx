@@ -33,6 +33,10 @@ function DesktopNavLinks() {
         Blog
       </Link>
 
+      <Link href="/news" className={commonLinkClasses} style={customStyle}>
+        News
+      </Link>
+
       <Link
         href="/winners"
         className="text-foreground text-5xl sm:text-6xl font-extrabold hover:underline tracking-wider drop-shadow-lg transition-transform duration-300 hover:scale-105"
@@ -60,6 +64,9 @@ function MobileNavLinks({ onLinkClick }: { onLinkClick: () => void }) {
     <div className="pt-4 pb-4 space-y-0">
       <Link href="/blog" className={baseClasses} style={customStyle} onClick={onLinkClick}>
         Blog
+      </Link>
+      <Link href="/news" className={baseClasses} style={customStyle} onClick={onLinkClick}>
+        News
       </Link>
       <Link
         href="/winners"
