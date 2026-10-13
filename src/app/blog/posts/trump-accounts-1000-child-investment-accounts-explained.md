@@ -5,7 +5,7 @@ title: 'Trump Accounts Explained: The $1,000 Child Investment Accounts — SWOT 
 subtitle: 'Washington created 70 million investment accounts for American children this month. Here is a neutral, numbers-first breakdown: how they work, what they cost, what they can earn, and where the scheme is strong — and where it is not.'
 categories:
   ['Trump Accounts', 'Personal Finance', 'Tax Policy', 'Investing', 'Primer']
-image: ''
+image: '/blog/trump-accounts/hero.jpg'
 author: 'Financial Gurkha'
 ---
 
@@ -39,6 +39,8 @@ The mechanics: contributions go in, are invested in U.S. equity index funds, and
 
 ## 3. Cost-Benefit Analysis: What the Numbers Say
 
+![How $1,000 compounds over 18 years](/blog/trump-accounts/compounding.jpg)
+
 The program's value depends almost entirely on two variables: how much goes in, and what equities return. The fee drag is negligible by design (0.10%), so the analysis is clean.
 
 **Scenario A — the seed only.** $1,000 invested at birth:
@@ -64,6 +66,8 @@ The widely cited $200,000-by-age-55 projection assumes decades of uninterrupted 
 **Bottom line of the math:** as a compounding vehicle the structure is sound — low fees, long horizon, equity exposure. As a wealth-building program, its payoff is dominated by private contributions, which is where the distributional questions begin.
 
 ## 4. SWOT Analysis
+
+![Weighing the strengths against the weaknesses](/blog/trump-accounts/balance.jpg)
 
 **Strengths**
 - Universal seed within the birth window — $1,000 of free equity exposure at birth, no income test.
