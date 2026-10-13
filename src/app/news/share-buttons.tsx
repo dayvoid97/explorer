@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Twitter, Mail, MessageCircle, Link2, Share2, Instagram, Check } from 'lucide-react'
+import { Twitter, MessageCircle, Instagram } from 'lucide-react'
 
 /** Minimal Threads glyph (lucide has no brand icon for it). */
 function ThreadsIcon({ size = 18 }: { size?: number }) {
@@ -32,30 +32,6 @@ function ThreadsIcon({ size = 18 }: { size?: number }) {
     </svg>
   )
 }
-function RedditIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <circle cx="12" cy="14" r="7" />
-      <circle cx="9.4" cy="13" r="0.6" fill="currentColor" stroke="none" />
-      <circle cx="14.6" cy="13" r="0.6" fill="currentColor" stroke="none" />
-      <path d="M9.2 16.4c.9.9 4.7.9 5.6 0" />
-      <path d="M12 7V4" />
-      <circle cx="12" cy="3.2" r="0.9" fill="currentColor" stroke="none" />
-      <path d="M5.6 11.2 3.5 10" />
-      <path d="M18.4 11.2l2.1-1.2" />
-    </svg>
-  )
-}
 
 export function NewsShareButtons({
   title,
@@ -70,7 +46,6 @@ export function NewsShareButtons({
   excerpt?: string
   compact?: boolean
 }) {
-  const [copied, setCopied] = useState(false)
   const [hint, setHint] = useState<string | null>(null)
 
   const showHint = (msg: string, ms = 4500) => {
@@ -94,24 +69,7 @@ export function NewsShareButtons({
 
   const links = {
     x: `https://twitter.com/intent/tweet?text=${encodedTitle}&url=${encodedUrl}`,
-    reddit: `https://www.reddit.com/submit?url=${encodedUrl}&title=${encodedTitle}`,
-    email: `mailto:?subject=${encodedTitle}&body=${encodedShareText}`,
     sms: `sms:?&body=${encodedShareText}`,
-  }
-
-  const handleCopyLink = async () => {
-    try {
-      await navigator.clipboard.writeText(url)
-    } catch {
-      const ta = document.createElement('textarea')
-      ta.value = url
-      document.body.appendChild(ta)
-      ta.select()
-      document.execCommand('copy')
-      document.body.removeChild(ta)
-    }
-    setCopied(true)
-    setTimeout(() => setCopied(false), 2000)
   }
 
   const handleNativeShare = async () => {
@@ -122,7 +80,7 @@ export function NewsShareButtons({
         /* user cancelled */
       }
     } else {
-      handleCopyLink()
+      await copyLinkQuietly()
     }
   }
 
@@ -207,75 +165,49 @@ export function NewsShareButtons({
   }
 
   const btn =
-    'p-2 rounded-full transition text-stone-500 hover:text-amber-800 hover:bg-amber-100/60'
-  const size = compact ? 16 : 18
+    'rounded-full transition bg-stone-900 text-amber-50 hover:bg-stone-700 active:scale-95 shadow-md flex items-center justify-center'
+  const pad = compact ? 'p-2.5' : 'p-3.5'
+  const size = compact ? 18 : 22
 
   return (
-    <div className={compact ? 'flex items-center gap-1' : 'flex items-center gap-2'}>
+    <div className={compact ? 'flex items-center gap-2' : 'flex items-center gap-3'}>
       {!compact && (
         <span className="text-sm font-semibold text-stone-500 mr-1">Share</span>
       )}
-      <a
-        href={links.x}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={btn}
-        title="Share on X"
-        aria-label="Share on X"
-      >
-        <Twitter size={size} />
-      </a>
-      <a
-        href={links.reddit}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={btn}
-        title="Share on Reddit"
-        aria-label="Share on Reddit"
-      >
-        <RedditIcon size={size} />
-      </a>
-      <button
-        onClick={handleThreadsShare}
-        className={btn}
-        title="Post on Threads"
-        aria-label="Post on Threads"
-      >
-        <ThreadsIcon size={size} />
-      </button>
-      <a href={links.email} className={btn} title="Email to a friend" aria-label="Email to a friend">
-        <Mail size={size} />
-      </a>
-      <a href={links.sms} className={btn} title="Text this article" aria-label="Text this article">
-        <MessageCircle size={size} />
-      </a>
       <button
         onClick={handleStoryShare}
-        className={btn}
+        className={`${btn} ${pad}`}
         title="Share as Instagram story"
         aria-label="Share as Instagram story"
       >
         <Instagram size={size} />
       </button>
       <button
-        onClick={handleNativeShare}
-        className={btn}
-        title="More sharing options"
-        aria-label="More sharing options"
+        onClick={handleThreadsShare}
+        className={`${btn} ${pad}`}
+        title="Post on Threads"
+        aria-label="Post on Threads"
       >
-        <Share2 size={size} />
+        <ThreadsIcon size={size} />
       </button>
-      <button
-        onClick={handleCopyLink}
-        className={btn}
-        title="Copy link"
-        aria-label="Copy link"
+      <a
+        href={links.x}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={`${btn} ${pad}`}
+        title="Share on X"
+        aria-label="Share on X"
       >
-        {copied ? <Check size={size} className="text-green-600" /> : <Link2 size={size} />}
-      </button>
-      {copied && !compact && (
-        <span className="text-xs text-green-700 font-medium">Copied!</span>
-      )}
+        <Twitter size={size} />
+      </a>
+      <a
+        href={links.sms}
+        className={`${btn} ${pad}`}
+        title="Message a friend"
+        aria-label="Message a friend"
+      >
+        <MessageCircle size={size} />
+      </a>
       {hint && (
         <span className="text-xs text-stone-500 font-medium transition-opacity">
           {hint}
