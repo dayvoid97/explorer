@@ -41,7 +41,21 @@ export function NewsShareButtons({
   compact?: boolean
 }) {
   const [copied, setCopied] = useState(false)
-  const [storyHint, setStoryHint] = useState(false)
+  const [hint, setHint] = useState<string | null>(null)
+
+  const showHint = (msg: string, ms = 4500) => {
+    setHint(msg)
+    setTimeout(() => setHint(null), ms)
+  }
+
+  const copyLinkQuietly = async (): Promise<boolean> => {
+    try {
+      await navigator.clipboard.writeText(url)
+      return true
+    } catch {
+      return false
+    }
+  }
 
   const encodedUrl = encodeURIComponent(url)
   const encodedTitle = encodeURIComponent(title)
@@ -91,6 +105,13 @@ export function NewsShareButtons({
    * image + copying the link so the reader can post it manually.
    */
   const handleStoryShare = async () => {
+    // Always copy the link first: on phones the reader pastes it straight
+    // into Instagram's link sticker; on desktop the fallback below re-copies.
+    const linkCopied = await copyLinkQuietly()
+    if (linkCopied) {
+      showHint('Link copied — paste it as a sticker in your story')
+    }
+
     if (image) {
       try {
         const res = await fetch(image)
@@ -105,7 +126,7 @@ export function NewsShareButtons({
       } catch {
         /* fall through to manual fallback */
       }
-      // Desktop fallback: download the cover + copy the link.
+      // Desktop fallback: download the cover + (re)copy the link.
       try {
         const a = document.createElement('a')
         a.href = image
@@ -113,9 +134,8 @@ export function NewsShareButtons({
         document.body.appendChild(a)
         a.click()
         document.body.removeChild(a)
-        await navigator.clipboard.writeText(url).catch(() => {})
-        setStoryHint(true)
-        setTimeout(() => setStoryHint(false), 4000)
+        await copyLinkQuietly()
+        showHint('Image saved + link copied — paste it as a sticker in your story')
         return
       } catch {
         /* fall through */
@@ -186,9 +206,9 @@ export function NewsShareButtons({
       {copied && !compact && (
         <span className="text-xs text-green-700 font-medium">Copied!</span>
       )}
-      {storyHint && (
-        <span className="text-xs text-stone-500 font-medium">
-          Image saved + link copied — add it to your story
+      {hint && (
+        <span className="text-xs text-stone-500 font-medium transition-opacity">
+          {hint}
         </span>
       )}
     </div>
