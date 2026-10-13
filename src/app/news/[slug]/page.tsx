@@ -7,7 +7,7 @@ import {
   sanitizeMarkdownForMdx,
   toIsoDate,
 } from '@/app/components/article/mdx'
-import { ShareButtons } from '@/app/blog/[slug]/share-buttons'
+import { NewsShareButtons } from '@/app/news/share-buttons'
 import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
 import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 
@@ -200,7 +200,11 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             )}
 
             <div className="mt-8">
-              <ShareButtons title={item.headline} subtitle={item.dek} />
+              <NewsShareButtons
+                title={item.headline}
+                url={url}
+                image={item.image}
+              />
             </div>
 
             <p className="mt-8 text-sm text-stone-400 italic">

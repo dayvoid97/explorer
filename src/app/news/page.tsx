@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { getAllNews } from '@/app/lib/news'
+import { NewsShareButtons } from '@/app/news/share-buttons'
 
 export const metadata = {
   title: 'The Daily Brief | Financial Gurkha News',
@@ -56,33 +57,42 @@ export default async function NewsIndexPage() {
       ) : (
         <div className="space-y-6">
           {sorted.map((item) => (
-            <Link
+            <article
               key={item.slug}
-              href={`/news/${item.slug}`}
-              className="block rounded-2xl border border-amber-100 bg-[#FDF9F0] p-6 sm:p-8 shadow-[0_2px_16px_rgba(201,162,75,0.06)] hover:shadow-[0_4px_28px_rgba(201,162,75,0.14)] hover:-translate-y-0.5 transition"
+              className="rounded-2xl border border-amber-100 bg-[#FDF9F0] p-6 sm:p-8 shadow-[0_2px_16px_rgba(201,162,75,0.06)] hover:shadow-[0_4px_28px_rgba(201,162,75,0.14)] hover:-translate-y-0.5 transition"
             >
-              <div className="flex items-center gap-3 mb-3 text-sm text-stone-400">
-                <time>{item.date}</time>
-                {item.tags?.[0] && (
-                  <>
-                    <span>·</span>
-                    <span className="text-amber-700 font-semibold">{item.tags[0]}</span>
-                  </>
-                )}
+              <Link href={`/news/${item.slug}`} className="block">
+                <div className="flex items-center gap-3 mb-3 text-sm text-stone-400">
+                  <time>{item.date}</time>
+                  {item.tags?.[0] && (
+                    <>
+                      <span>·</span>
+                      <span className="text-amber-700 font-semibold">{item.tags[0]}</span>
+                    </>
+                  )}
+                </div>
+                <h2
+                  className="text-2xl font-bold text-stone-900 mb-3 leading-snug"
+                  style={{ fontFamily: "'Freight Big Pro', Georgia, serif" }}
+                >
+                  {item.headline}
+                </h2>
+                <p className="text-stone-600 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
+                  {item.dek}
+                </p>
+                <span className="inline-block mt-4 text-sm font-bold text-amber-700">
+                  Read the brief →
+                </span>
+              </Link>
+              <div className="mt-4 pt-4 border-t border-amber-100/70">
+                <NewsShareButtons
+                  compact
+                  title={item.headline}
+                  url={`https://financialgurkha.com/news/${item.slug}`}
+                  image={item.image}
+                />
               </div>
-              <h2
-                className="text-2xl font-bold text-stone-900 mb-3 leading-snug"
-                style={{ fontFamily: "'Freight Big Pro', Georgia, serif" }}
-              >
-                {item.headline}
-              </h2>
-              <p className="text-stone-600 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
-                {item.dek}
-              </p>
-              <span className="inline-block mt-4 text-sm font-bold text-amber-700">
-                Read the brief →
-              </span>
-            </Link>
+            </article>
           ))}
         </div>
       )}
