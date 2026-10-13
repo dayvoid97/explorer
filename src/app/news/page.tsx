@@ -6,7 +6,10 @@ export const metadata = {
   title: 'The Daily Brief | Financial Gurkha News',
   description:
     "The day's money news, explained like a friend would. Short, plain-English briefs on markets, rates, and the economy — verified and sourced.",
-  alternates: { canonical: 'https://financialgurkha.com/news' },
+  alternates: {
+    canonical: 'https://financialgurkha.com/news',
+    types: { 'application/rss+xml': 'https://financialgurkha.com/rss.xml' },
+  },
   openGraph: {
     title: 'The Daily Brief | Financial Gurkha News',
     description:

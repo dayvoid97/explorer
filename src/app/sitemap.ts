@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from './lib/markdown'
+import { getAllNews } from './lib/news'
 
 export const dynamic = 'force-static'
 
@@ -38,8 +39,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })
     .sort((a, b) => b.lastModified!.valueOf() - a.lastModified!.valueOf())
 
-  const staticEntries: MetadataRoute.Sitemap = [
-    {
+  // News briefs — each gets its own sitemap entry so Google discovers
+  // them fast. Dates come from frontmatter (MM/DD/YYYY).
+  const newsItems = await getAllNews()
+  const newsEntries: MetadataRoute.Sitemap = newsItems
+    .map((item) => {
+      const parsed = new Date(item.date)
+      const lastModified = isNaN(parsed.getTime()) ? new Date() : parsed
+      return {
+        url: `${SITE}/news/${item.slug}`,
+        lastModified,
+        changeFrequency: 'daily' as const,
+        priority: 0.8,
+      }
+    })
+    .sort((a, b) => b.lastModified!.valueOf() - a.lastModified!.valueOf())
+
+  const staticEntries: MetadataRoute.Sitemap = [    {
       url: SITE,
       lastModified: postEntries[0]?.lastModified ?? new Date(),
       changeFrequency: 'daily',
@@ -122,7 +138,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.5,
     },
+    {
+      // The Daily Brief — news briefs. Crawled aggressively; freshness is the
+      // whole product here.
+      url: `${SITE}/news`,
+      lastModified: newsEntries[0]?.lastModified ?? new Date(),
+      changeFrequency: 'daily',
+      priority: 0.9,
+    },
   ]
 
-  return [...staticEntries, ...postEntries]
+  return [...staticEntries, ...postEntries, ...newsEntries]
 }
