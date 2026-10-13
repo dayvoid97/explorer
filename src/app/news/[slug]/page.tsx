@@ -117,6 +117,19 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
               {item.dek}
             </p>
 
+            {/* Cover image — shown when the brief sets an `image` in frontmatter. */}
+            {item.image && (
+              <figure className="mb-8 overflow-hidden rounded-xl border border-amber-100">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={item.image}
+                  alt={item.headline}
+                  className="w-full h-auto"
+                  loading="eager"
+                />
+              </figure>
+            )}
+
             <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500">
               <span>Financial Gurkha News Desk</span>
               <span className="text-stone-300">·</span>
