@@ -3,7 +3,35 @@
 import { useState } from 'react'
 import { Twitter, Mail, MessageCircle, Link2, Share2, Instagram, Check } from 'lucide-react'
 
-/** Minimal Reddit glyph (lucide has no brand icon for it). */
+/** Minimal Threads glyph (lucide has no brand icon for it). */
+function ThreadsIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      aria-hidden="true"
+    >
+      <circle cx="12" cy="12" r="9" />
+      <text
+        x="12"
+        y="16.5"
+        textAnchor="middle"
+        fontSize="11"
+        fontWeight="bold"
+        fill="currentColor"
+        stroke="none"
+        fontFamily="system-ui, sans-serif"
+      >
+        @
+      </text>
+    </svg>
+  )
+}
 function RedditIcon({ size = 18 }: { size?: number }) {
   return (
     <svg
@@ -33,11 +61,13 @@ export function NewsShareButtons({
   title,
   url,
   image,
+  excerpt,
   compact = false,
 }: {
   title: string
   url: string
   image?: string
+  excerpt?: string
   compact?: boolean
 }) {
   const [copied, setCopied] = useState(false)
@@ -94,6 +124,38 @@ export function NewsShareButtons({
     } else {
       handleCopyLink()
     }
+  }
+
+  /**
+   * "Post on Threads" — pre-formats headline + first line + link, copies it,
+   * and opens the native share sheet with the cover image where Threads is
+   * one tap away. Note: this posts from the *visitor's* Threads account;
+   * only the newsroom (server-side) can publish as @financialgurkha.
+   */
+  const handleThreadsShare = async () => {
+    const threadsText = excerpt ? `${title}\n\n${excerpt}\n\n${url}` : `${title}\n\n${url}`
+    try {
+      await navigator.clipboard.writeText(threadsText)
+      showHint('Copied — paste it into Threads')
+    } catch {
+      /* clipboard unavailable; still try the share sheet */
+    }
+    if (image) {
+      try {
+        const res = await fetch(image)
+        const blob = await res.blob()
+        const file = new File([blob], 'financial-gurkha-cover.jpg', {
+          type: blob.type || 'image/jpeg',
+        })
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+          await navigator.share({ files: [file], title, text: threadsText })
+          return
+        }
+      } catch {
+        /* fall through */
+      }
+    }
+    handleNativeShare()
   }
 
   /**
@@ -173,6 +235,14 @@ export function NewsShareButtons({
       >
         <RedditIcon size={size} />
       </a>
+      <button
+        onClick={handleThreadsShare}
+        className={btn}
+        title="Post on Threads"
+        aria-label="Post on Threads"
+      >
+        <ThreadsIcon size={size} />
+      </button>
       <a href={links.email} className={btn} title="Email to a friend" aria-label="Email to a friend">
         <Mail size={size} />
       </a>

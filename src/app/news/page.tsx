@@ -93,6 +93,7 @@ export default async function NewsIndexPage() {
                   title={item.headline}
                   url={`https://financialgurkha.com/news/${item.slug}`}
                   image={item.image}
+                  excerpt={item.dek}
                 />
               </div>
             </article>

@@ -204,6 +204,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
                 title={item.headline}
                 url={url}
                 image={item.image}
+                excerpt={item.dek}
               />
             </div>
 
