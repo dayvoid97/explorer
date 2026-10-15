@@ -31,11 +31,17 @@ The last hard inflation data before the Fed's October 27–28 meeting landed thi
 | Final demand goods (MoM) | +1.1% | **+2.6%** |
 | Final demand services (MoM) | +0.2% | **+0.8%** |
 
+![September PPI: +1.3% month-over-month, biggest jump since March 2022](https://financialgurkha.com/news/ppi-highlight-1.jpg)
+
 **September retail sales (Census):** Headline sales hit **$745.0 billion, +0.8% MoM** (vs +0.3% expected) — a real beat, with August revised up from +1.1% to +1.3%. But the composition tells the story: excluding autos, +0.9%; excluding autos **and** gasoline, just **+0.2%**. Gasoline stations' receipts jumped +6.4% MoM and +28.1% YoY as record pump prices turned into spending, not volumes. Remember: retail sales are not adjusted for price changes — the headline is part spending, part inflation.
+
+![Retail sales: +0.8% headline, only +0.2% excluding autos and gasoline](https://financialgurkha.com/news/ppi-highlight-3.jpg)
 
 ## The number behind the number
 
 This was an energy shock wearing a wholesale-inflation costume. Final demand energy **jumped 10.8% in a single month**, accounting for over 80% of the broad-based goods rise. **Gasoline alone spiked 20.3%** — tracing to about half of the total goods gain on its own. Diesel, jet fuel, and crude petroleum all surged alongside it.
+
+![Gasoline +20.3% in a single month — energy drove over 80% of the goods rise](https://financialgurkha.com/news/ppi-highlight-2.jpg)
 
 That confirms the core of our CPI-brief take: this inflation is energy-led — global conflict and supply disruption, not a broad demand spiral. The hoped-for "hot headline, calm core" combo failed twice running, though: CPI core ran warm at 2.6% yesterday, and now PPI core is +0.5% MoM / 5.0% YoY. Underlying pipeline pressure is real, not just pump prices.
 
