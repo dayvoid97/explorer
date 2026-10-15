@@ -9,7 +9,7 @@ image: 'https://financialgurkha.com/blog/rent-runway-hero.jpg'
 author: 'Kanchan'
 ---
 
-_Disclaimer: This is an independent valuation exercise for educational purposes. It is not investment advice, not a recommendation to buy, sell, or hold anything. Rent the Runway is a distressed, highly leveraged micro-cap with negative book equity — the analysis below explains why that matters. Please consult a financial advisor before making any investment decisions._
+_Disclaimer: This is an independent valuation exercise for educational purposes — not investment advice, and not a recommendation to anyone else. The author's personal view is stated as the author's own, in the spirit of our Figma piece. Rent the Runway is a distressed, highly leveraged micro-cap with negative book equity. Please consult a financial advisor before making any investment decisions._
 
 ## The setup
 
@@ -62,34 +62,34 @@ Two more balance-sheet facts for the file: stockholders' equity is **negative $6
 
 As of September 30, 2026: **1.64M shares short, 6.79% of float, 13.26 days to cover.** That's moderately elevated — and the days-to-cover figure is striking, but it reflects thin trading volume rather than a massive absolute short. Context: short interest spiked to ~32% of float in November 2025 during the recap chaos, then collapsed as the float expanded ~9x. The current 6.8% is a far cry from a crowded short — the price action is about the recap overhang and the 28.5M shares registered for resale by the selling stockholders, not a short squeeze setup.
 
-## The valuation
+## The cultural asset: New York runs on RTR
 
-Same discipline as our Figma piece: state the inputs, show the arithmetic, let the reader judge.
+Here's the part the spreadsheet misses. Rent the Runway has roughly **562,000 Instagram followers** and a brand that punches absurdly above its $62M market cap. This is a company the internet knows by name — "the Netflix for fashion," as the old tagline went — with a City Ambassador program that has members hosting RTR events in their own cities, reviewing looks, and recruiting their communities. Their influencer operation isn't a side project; the company's own hiring describes influencer and ambassador marketing as a key customer-acquisition and storytelling channel.
 
-**Anchors (all from filings):** FY2025 revenue $329.8M. FY2026E ~$369M (double-digit guidance; H1 already at $187.6M). Net debt $128.5M ($157.5M debt − $29.0M cash; the $10M September loan adds ~$10M on top). ~33.4M shares outstanding, ~35M fully diluted with the rights offering.
+And the geography matters. Culture inspires fashion, and cities inspire the country on what to wear — and no city does that more than New York. RTR is a New York company with New York clout. Brooklyn loves Rent the Runway. The closet-in-the-cloud concept was born here, the density of young professional women here is the exact demographic, and the word-of-mouth here travels nationally. If the ambassador and creator programs take off the way the playbook suggests they can, that's not linear growth — it's the kind of cultural flywheel that brings tons of customers at near-zero acquisition cost. You cannot DCF a flywheel, but you'd be a fool to value the company as if it doesn't exist.
 
-**Discount rate:** the 10-year Treasury sits at ~5.06% today. Cost of equity ≈ 5.06% + 4.5% equity risk premium × 1.6 beta ≈ 12.3%. Cost of debt ≈ 9.4% (SOFR + 500 bps, no tax shield — the company has NOLs). Blended discount rate: **11%**.
+## The grocery store problem
 
-**Base case** — revenue growth 10%→6% over four years, adjusted EBITDA margins rising from the guided 5.5% to 12.5%, rental-product capex normalizing from 13% to 10.5% of revenue, 2.5% terminal growth:
+Now the cold water. Strip out the $96.3M one-time gain on the debt restructuring and FY2025 wasn't a $22.6M profit — it was roughly a **$74M net loss**. Q2 FY2026 still posted a $7.8M operating loss. Underlying losses are running at on the order of $70–80M a year.
 
-- Implied enterprise value: **−$33M**
-- Implied equity value: **−$161M → ~$0/share**
+This is the entire debate in one paragraph: **if the model can't make money, scaling revenue is pointless.** It's a grocery store that loses money on every sale — great for the customer, fatal for the business. Growing 20% a quarter means nothing if each incremental subscriber doesn't eventually contribute margin. The add-on monetization (+81% YoY) and the gross margin expansion (30.0% → 36.1%) are the first real signs the unit economics might be turning. Might. The company has never produced a dollar of free cash flow, and until it does, every growth headline deserves a skeptical eyebrow.
 
-Read that again. Under assumptions that are arguably generous (margins more than doubling, capex discipline the company has never shown), the enterprise is worth less than its net debt. The base case says the equity is an out-of-the-money option — which, at $1.72, is roughly what the market is treating it as.
+## What you're actually buying: a lottery ticket
 
-**Reverse check** — what does $1.72 actually imply? At $61.8M market cap, enterprise value is ~$190M. Backing that out of the same model, the price implies roughly **$34M of steady-state free cash flow** — about 13x what the base case generates. The market is not pricing the base case. It's pricing a bull case.
+Forget price targets for a minute. Here's the objective view of what a share of RENT actually is.
 
-**Bull case** — revenue compounding 15%→10%, EBITDA margins reaching 18%, capex held to 9% of revenue, debt refinanced on better terms:
+**The debtors are in charge.** The October 2025 recap didn't clear the debt — it converted it into ~86% of the equity. The lenders own the company; public shareholders hold a stub. The lenders backstop every offering, buy every unsubscribed share, and sit on 28.5M shares registered for resale. When people say "the stock is at all-time lows," what they mean is: the stub the lenders left behind is priced like a stub.
 
-- Implied enterprise value: **~$303M**
-- Implied equity: ~$174M → **~$5.00/share** on ~35M shares
+**So the equity is a call option.** Book equity is negative $65.5M. The enterprise, on a straight DCF at an 11% discount rate (10-year at ~5.06%), is worth roughly its net debt under base-case assumptions — implying ~$0 of residual equity value. The $1.72 price, in that same arithmetic, implies a steady-state cash machine ~13x better than the base case. You are not buying a claim on current cash flows. There are no current cash flows. You are buying a ticket that pays **if** interest rates come down and equity valuations expand — because both of those lift enterprise value, and every dollar of enterprise value above the debt line accrues to the stub. Lower rates also directly cut the SOFR + 500 bps interest burden that's currently eating the P&L.
 
-**Cross-check:** $190M EV on ~$369M FY2026E revenue is 0.51x sales — optically cheap against apparel retail at 0.8–1.5x. But the business has never produced a dollar of free cash flow (FY2025: −$46M), so sales multiples flatter it. Cash flow is the binding constraint, not revenue.
+**That's why the risk-reward looks better than the DCF suggests.** A call option on a culturally relevant, revenue-growing business with 562K followers and a real New York flywheel, priced at $1.72 with the downside already this close to zero — the math of the option is more interesting than the math of the equity. If rates fall and the multiple environment normalizes, the stub reprices violently upward; a bull-case run of the same model lands around $5 on ~35M shares. If the grocery-store problem never gets solved, the ticket expires worthless — which, at these prices, is a small distance to fall.
+
+Lottery ticket is not an insult. It's the accurate description. Price it like one, size it like one.
 
 ## Final thoughts
 
-The original thesis survives contact with the filings — but inverted. Yes: revenue is growing, debt was halved, losses are shrinking, and the stock is at all-time lows. But the debt wasn't cleared; it was converted into 86% of the company, and the lenders are still the marginal buyer of every new share issued. The base-case arithmetic says the equity is worth ~$0. The current $1.72 price implies a steady-state cash machine ~13x better than the base case. The bull case gets you to ~$5 — if everything goes right, including a refinancing the company hasn't earned yet.
+My take, stated as the author's and nothing more: at $1.72, with the cultural asset this company has in New York — we're in New York, we see the love for RTR here — I think the ticket is worth holding. The debt holders own the company, the business still loses money, and the dilution history is brutal. All true. But the optionality — falling rates, a multiple re-rating, an ambassador flywheel catching fire — is real, and it's priced like it isn't.
 
-That's not a call to action. It's what the numbers say under stated assumptions — and the assumptions, as always, are where the money is made or lost.
+This is a personal view, not investment advice. Size any position like the lottery ticket it is, and please consult a financial advisor before making any investment decisions.
 
 _This analysis was researched and drafted with AI assistance (Muse, Meta). All figures are traced to Rent the Runway's SEC filings, earnings releases, or the sources linked above; aggregator-sourced market data is flagged as such. This is educational content, not investment advice._
