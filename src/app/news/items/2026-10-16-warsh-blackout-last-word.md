@@ -39,6 +39,8 @@ Industrial production has now risen six straight months, up 2.2% year-on-year �
 
 This is the whole October debate in one morning: a Chair who refuses to signal (dovish read) against trade prices running at multi-year highs and factories humming (hawkish read). The blackout starts Saturday, so there will be no more official guidance before the **October 27–28 FOMC meeting** — where policymakers will vote on September CPI (3.7%) and PPI (6.3% y/y) alone, since September PCE doesn't land until the 29th.
 
+![Silence vs hot data: the whole October debate in one image](https://financialgurkha.com/news/warsh-highlight-3.jpg)
+
 ![October-hike odds: ~13-15%, cut in half](https://financialgurkha.com/news/warsh-highlight-2.jpg)
 
 ## Our take
