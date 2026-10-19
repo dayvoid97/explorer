@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { useAdSlot } from '@/app/hooks/useAdSlot'
 import { AdLabel } from '@/app/components/AdLabel'
 
@@ -17,25 +17,7 @@ type SortMode = 'newest' | 'oldest' | 'surprise'
 
 const SERIF = "'Playfair Display', Georgia, 'Times New Roman', serif"
 
-/** 2 cols on phones, 3 on tablets, 4 on desktop — matches the grid below. */
-function useColumns(): number {
-  const [cols, setCols] = useState(4)
-  useEffect(() => {
-    const phone = window.matchMedia('(max-width: 639px)')
-    const tablet = window.matchMedia(
-      '(min-width: 640px) and (max-width: 1023px)'
-    )
-    const update = () => setCols(phone.matches ? 2 : tablet.matches ? 3 : 4)
-    update()
-    phone.addEventListener('change', update)
-    tablet.addEventListener('change', update)
-    return () => {
-      phone.removeEventListener('change', update)
-      tablet.removeEventListener('change', update)
-    }
-  }, [])
-  return cols
-}
+/** Two big 9:16 portrait cards per row, every screen size. */
 
 function shuffle<T>(arr: T[]): T[] {
   const a = [...arr]
@@ -74,7 +56,7 @@ function ArticleCard({ a }: { a: LinkArticle }) {
       href={a.href}
       className="group relative block overflow-hidden rounded-xl bg-[#161616] ring-1 ring-[rgba(198,161,91,0.18)]"
     >
-      <div className="aspect-square overflow-hidden">
+      <div className="aspect-[9/16] overflow-hidden">
         {a.image ? (
           <img
             src={a.image}
@@ -93,8 +75,8 @@ function ArticleCard({ a }: { a: LinkArticle }) {
           </div>
         )}
       </div>
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent p-3 pt-10">
-        <p className="line-clamp-2 text-[13px] font-semibold leading-snug text-white">
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent p-4 pt-16">
+        <p className="text-[15px] font-semibold leading-snug text-white">
           {a.title}
         </p>
         <p className="mt-1 text-[10px] uppercase tracking-[0.14em] text-[#c6a15b]">
@@ -109,7 +91,6 @@ function ArticleCard({ a }: { a: LinkArticle }) {
 export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
   const [mode, setMode] = useState<SortMode>('newest')
   const [seed, setSeed] = useState(0)
-  const cols = useColumns()
 
   const ordered = useMemo(() => {
     if (mode === 'oldest') return [...articles].sort((x, y) => x.ts - y.ts)
@@ -118,7 +99,7 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articles, mode, seed])
 
-  const perBlock = cols * 3
+  const perBlock = 2 * 4 // 2 cols, one ad after every 4 rows
   const blocks: LinkArticle[][] = []
   for (let i = 0; i < ordered.length; i += perBlock) {
     blocks.push(ordered.slice(i, i + perBlock))
@@ -233,7 +214,7 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
           </button>
         </div>
 
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-4 sm:gap-5">
           {blocks.map((block, bi) => (
             <div key={bi} className="contents">
               {block.map((a) => (
