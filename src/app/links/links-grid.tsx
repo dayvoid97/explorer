@@ -50,30 +50,51 @@ function LinksAdRow({ position }: { position: string }) {
   )
 }
 
-function ArticleCard({ a }: { a: LinkArticle }) {
+function CardImage({ a, eager }: { a: LinkArticle; eager: boolean }) {
+  const [loaded, setLoaded] = useState(false)
+  const [failed, setFailed] = useState(false)
+
+  if (!a.image || failed) {
+    return (
+      <div className="flex h-full w-full items-center justify-center bg-[#0e1a33] p-6 text-center">
+        <span
+          style={{ fontFamily: SERIF }}
+          className="text-base font-semibold leading-snug text-[#f3ead2]"
+        >
+          {a.title}
+        </span>
+      </div>
+    )
+  }
+
+  return (
+    <div className="relative h-full w-full bg-[#161616]">
+      {!loaded && (
+        <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#1c1c1c] via-[#232323] to-[#1c1c1c]" />
+      )}
+      <img
+        src={a.image}
+        alt={a.title}
+        loading={eager ? 'eager' : 'lazy'}
+        decoding="async"
+        onLoad={() => setLoaded(true)}
+        onError={() => setFailed(true)}
+        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-105 ${
+          loaded ? 'opacity-100' : 'opacity-0'
+        }`}
+      />
+    </div>
+  )
+}
+
+function ArticleCard({ a, eager }: { a: LinkArticle; eager: boolean }) {
   return (
     <a
       href={a.href}
       className="group relative block overflow-hidden rounded-xl bg-[#161616] ring-1 ring-[rgba(198,161,91,0.18)]"
     >
       <div className="aspect-[9/16] overflow-hidden">
-        {a.image ? (
-          <img
-            src={a.image}
-            alt={a.title}
-            loading="lazy"
-            className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
-          />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center bg-[#0e1a33] p-4 text-center">
-            <span
-              style={{ fontFamily: SERIF }}
-              className="text-sm font-semibold text-[#f3ead2]"
-            >
-              {a.title}
-            </span>
-          </div>
-        )}
+        <CardImage a={a} eager={eager} />
       </div>
       <div className="pointer-events-none absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent p-4 pt-16">
         <p className="text-[15px] font-semibold leading-snug text-white">
@@ -105,9 +126,11 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
     blocks.push(ordered.slice(i, i + perBlock))
   }
 
-  const surprise = () => {
-    setMode('surprise')
-    setSeed((s) => s + 1)
+  const pick = (m: SortMode) => {
+    if (m === 'surprise') {
+      setSeed((s) => s + 1)
+    }
+    setMode(m)
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -192,21 +215,21 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
         >
           <button
             style={btn(mode === 'newest')}
-            onClick={() => setMode('newest')}
+            onClick={() => pick('newest')}
             aria-pressed={mode === 'newest'}
           >
             Newest first
           </button>
           <button
             style={btn(mode === 'oldest')}
-            onClick={() => setMode('oldest')}
+            onClick={() => pick('oldest')}
             aria-pressed={mode === 'oldest'}
           >
             Oldest first
           </button>
           <button
             style={btn(mode === 'surprise')}
-            onClick={surprise}
+            onClick={() => pick('surprise')}
             aria-pressed={mode === 'surprise'}
             title="Shuffle the grid"
           >
@@ -218,7 +241,7 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
           {blocks.map((block, bi) => (
             <div key={bi} className="contents">
               {block.map((a) => (
-                <ArticleCard key={a.href} a={a} />
+                <ArticleCard key={a.href} a={a} eager={bi === 0} />
               ))}
               {bi < blocks.length - 1 && (
                 <LinksAdRow position={`links-grid-block-${bi}`} />
