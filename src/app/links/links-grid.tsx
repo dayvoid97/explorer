@@ -32,9 +32,9 @@ function shuffle<T>(arr: T[]): T[] {
 function LinksAdRow({ position }: { position: string }) {
   const { ref, shouldRender } = useAdSlot(position)
   return (
-    <div ref={ref} className="ad-slot col-span-full">
+    <div ref={ref} className="ad-slot col-span-full -my-1">
       <AdLabel align="right" />
-      <div className="min-h-[100px]">
+      <div className="min-h-[60px]">
         {shouldRender && (
           <ins
             className="adsbygoogle"
