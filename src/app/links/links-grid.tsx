@@ -68,21 +68,34 @@ function CardImage({ a, eager }: { a: LinkArticle; eager: boolean }) {
   }
 
   return (
-    <div className="relative h-full w-full bg-[#161616]">
-      {!loaded && (
+    <div className="relative h-full w-full bg-[#101010]">
+      {!loaded && !failed && (
         <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-[#1c1c1c] via-[#232323] to-[#1c1c1c]" />
       )}
-      <img
-        src={a.image}
-        alt={a.title}
-        loading={eager ? 'eager' : 'lazy'}
-        decoding="async"
-        onLoad={() => setLoaded(true)}
-        onError={() => setFailed(true)}
-        className={`h-full w-full object-cover transition-all duration-500 group-hover:scale-105 ${
-          loaded ? 'opacity-100' : 'opacity-0'
-        }`}
-      />
+      <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-105">
+        {/* Blurred ambient fill so the 9:16 tile stays full-bleed */}
+        <img
+          src={a.image}
+          alt=""
+          aria-hidden="true"
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          onError={() => setFailed(true)}
+          className="absolute inset-0 h-full w-full scale-110 object-cover opacity-50 blur-2xl"
+        />
+        {/* The full picture, uncropped */}
+        <img
+          src={a.image}
+          alt={a.title}
+          loading={eager ? 'eager' : 'lazy'}
+          decoding="async"
+          onLoad={() => setLoaded(true)}
+          onError={() => setFailed(true)}
+          className={`absolute inset-0 m-auto max-h-full max-w-full object-contain transition-opacity duration-500 ${
+            loaded ? 'opacity-100' : 'opacity-0'
+          }`}
+        />
+      </div>
     </div>
   )
 }
