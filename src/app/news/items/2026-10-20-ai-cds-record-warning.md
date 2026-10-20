@@ -30,7 +30,7 @@ The latest prints, per Morgan Stanley research reported Tuesday:
 | **Broadcom** | 136bp | Record high |
 | **Meta** | 108bp | Record high |
 | **Nvidia** | 101bp | Record high |
-| Alphabet, Amazon, Microsoft | All-time peaks | Basket avg ~100bp, vs <40bp a year ago |
+| Alphabet, Amazon, Microsoft | All-time peaks | Basket avg ~100bp, vs under 40bp a year ago |
 
 For scale: the benchmark investment-grade CDS index trades near **62bp**. Insuring $10 million of CoreWeave debt now costs **$1.82 million upfront plus $125,000 a quarter**.
 

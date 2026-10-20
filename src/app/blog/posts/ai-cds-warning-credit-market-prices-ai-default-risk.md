@@ -57,7 +57,7 @@ This month, it widened everywhere at once:
 | **Broadcom** | 136bp | Record high | Custom-silicon debt load |
 | **Meta** | 108bp | Record high | $108K/yr insures $10M |
 | **Nvidia** | 101bp | ~90bp mid-October | Even the safest name, at a record |
-| **Alphabet / Amazon / Microsoft** | All-time peaks | Basket avg ~100bp (Sept) | Up from <40bp a year ago |
+| **Alphabet / Amazon / Microsoft** | All-time peaks | Basket avg ~100bp (Sept) | Up from under 40bp a year ago |
 | *CDX IG index (benchmark)* | *~62bp* | — | The "normal" price of IG insurance |
 
 Two features stand out. First, the **levels**: three of the most profitable companies on Earth (Meta, Nvidia, and the hyperscaler basket) are paying record prices for default insurance — not because anyone expects them to default tomorrow, but because the stock of their debt has exploded. Second, the **dispersion**: the gap between Nvidia at ~101bp and CoreWeave at ~1,090bp is the market sorting the AI complex into who owns the cash flows and who rents them.
