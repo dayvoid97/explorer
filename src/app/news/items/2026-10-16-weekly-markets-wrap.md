@@ -43,7 +43,7 @@ While tech burned, energy bid. **Brent crude finished at $109.86**, up 3.7% Frid
 
 ## The week ahead
 
-Earnings season goes up a gear. **Tesla reports Tuesday, October 21** — days after its flying-Roadster spectacle — and **Meta follows**, kicking off Magnificent Seven season just as AI spending faces its harshest scrutiny yet. Then October 28: the FOMC decision at 2 PM, with Alphabet reporting after the close.
+Earnings season goes up a gear. **Tesla reports Wednesday, October 21** — days after its flying-Roadster spectacle — and **Meta follows**, kicking off Magnificent Seven season just as AI spending faces its harshest scrutiny yet. Then October 28: the FOMC decision at 2 PM, with Alphabet reporting after the close.
 
 ![What to watch: Tesla Oct 21, FOMC Oct 28, PCE Oct 29](https://financialgurkha.com/news/weekly-wrap-highlight-3.jpg)
 
