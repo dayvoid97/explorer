@@ -49,8 +49,8 @@ export default function AboutPage() {
         <div className="mt-10 flex flex-wrap gap-4">
           <Link
             href="/about/kanchan"
-            className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-white hover:text-black"
-            style={{ borderColor: GOLD, color: GOLD }}
+            className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-white hover:text-black"
+            style={{ borderColor: GOLD }}
           >
             Who Writes It →
           </Link>

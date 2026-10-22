@@ -454,8 +454,8 @@ export default function AboutNirajPage() {
                   href={SSRN_MLLIQVAR}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="border px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.25em] transition hover:bg-white hover:text-black"
-                  style={{ borderColor: GOLD, color: GOLD }}
+                  className="border px-6 py-2.5 font-mono text-[11px] uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-white hover:text-black"
+                  style={{ borderColor: GOLD }}
                 >
                   Download on SSRN ↓
                 </a>
@@ -685,8 +685,8 @@ export default function AboutNirajPage() {
               href={SSRN_MLLIQVAR}
               target="_blank"
               rel="noopener noreferrer"
-              className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-white hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
+              className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-white hover:text-black"
+              style={{ borderColor: GOLD }}
             >
               Download ML-LiqVaR ↓
             </a>

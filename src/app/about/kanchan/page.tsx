@@ -257,8 +257,8 @@ export default function AboutKanchanPage() {
           <div className="mt-8 flex flex-wrap gap-4">
             <Link
               href="/consult"
-              className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-white hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
+              className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-white hover:text-black"
+              style={{ borderColor: GOLD }}
             >
               Commission Research
             </Link>

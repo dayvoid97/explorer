@@ -57,8 +57,8 @@ export default async function Home() {
               {featured && (
                 <Link
                   href={`/blog/${featured.slug}`}
-                  className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-[#C9A24B] hover:text-black"
-                  style={{ borderColor: GOLD, color: GOLD }}
+                  className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-[#C9A24B] hover:text-black"
+                  style={{ borderColor: GOLD }}
                 >
                   Read the Latest
                 </Link>
@@ -220,8 +220,8 @@ export default async function Home() {
           <div className="mt-10">
             <Link
               href="/consult"
-              className="inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] transition hover:bg-[#C9A24B] hover:text-black"
-              style={{ borderColor: GOLD, color: GOLD }}
+              className="inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-[#C9A24B] hover:text-black"
+              style={{ borderColor: GOLD }}
             >
               Work With Kanchan →
             </Link>
