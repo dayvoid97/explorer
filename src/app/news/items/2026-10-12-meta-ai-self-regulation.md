@@ -3,6 +3,7 @@ date: '10/12/2026'
 headline: "Zuckerberg to AI labs: regulate yourselves — no industry pact needed"
 dek: "Meta's CEO says each AI lab should set its own safety pace instead of signing a joint slowdown deal. Anthropic's CEO wants the opposite. And New York City just decided not to wait for either of them."
 tags: ['AI', 'Meta', 'Regulation']
+image: 'https://financialgurkha.com/news/meta-ai-self-regulation-oct-12-2026.jpg'
 sources:
   - name: "Reuters — Meta's Zuckerberg says AI labs have enough incentive to build safely (Sep 16)"
     url: "https://www.reuters.com/business/metas-zuckerberg-says-ai-labs-have-enough-incentive-build-safely-2026-09-16/"

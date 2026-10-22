@@ -5,7 +5,22 @@ import LinksGrid, { type LinkArticle } from './links-grid'
 
 function parseDate(raw: unknown): { ts: number; label: string } {
   if (typeof raw !== 'string') return { ts: 0, label: '' }
-  const m = raw.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/)
+  const trimmed = raw.trim()
+  const iso = trimmed.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)
+  if (iso) {
+    const ts = new Date(
+      Number(iso[1]),
+      Number(iso[2]) - 1,
+      Number(iso[3])
+    ).getTime()
+    const label = new Date(ts).toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      year: 'numeric',
+    })
+    return { ts: Number.isNaN(ts) ? 0 : ts, label }
+  }
+  const m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/)
   if (!m) return { ts: 0, label: raw }
   const ts = new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2])).getTime()
   const label = new Date(ts).toLocaleDateString('en-US', {

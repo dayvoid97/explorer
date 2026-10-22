@@ -5,7 +5,7 @@ title: 'An Intrinsic Valuation of FIGMA (NYSE:FIG)'
 subtitle: " Figma just crossed the $1bn annual revenue mark and maintains a 40% growth rate. Let's dive deep into Figma's filings and estimate an intrinstic value of the leading collaborative design platform for building meaningful products"
 categories:
   ['Figma', 'Nasdaq Listings', 'investment', 'finance', 'stocks', 'Signals', 'DCF Valuation']
-image: 'https://www.sec.gov/Archives/edgar/data/1579878/000162828025036090/a015-figmaxplatform.jpg'
+image: '/figma.png'
 author: 'Kanchan'
 ---
 

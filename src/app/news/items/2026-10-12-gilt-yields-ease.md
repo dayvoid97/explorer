@@ -3,6 +3,7 @@ date: '10/12/2026'
 headline: "Britain's borrowing costs cool off — just a little"
 dek: "The UK's 10-year borrowing rate dipped to about 5.42% on Monday after hitting a 19-year high last week. Think of it as the market taking a breath, not changing its mind."
 tags: ['UK', 'Bonds', 'Gilt yields']
+image: 'https://financialgurkha.com/news/gilt-yields-ease-oct-12-2026.jpg'
 sources:
   - name: "Dow Jones Newswires via Morningstar — 10-year gilt fell 3bp to 5.425% on Oct 12 after a 19-year high of 5.527% last week (LSEG data)"
     url: "https://www.morningstar.com/news/dow-jones/202610123286/us-futures-mixed-oil-rises-after-russia-hits-ukraine-energy-sites-update"
