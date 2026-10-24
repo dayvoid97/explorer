@@ -1,4 +1,4 @@
-import { getAllNews } from '@/app/lib/news'
+import { getAllNews, newsTimestamp } from '@/app/lib/news'
 
 export const dynamic = 'force-static'
 
@@ -26,7 +26,7 @@ export async function GET() {
 
   const urls = items
     .map((item) => {
-      const parsed = new Date(item.date)
+      const parsed = new Date(newsTimestamp(item.date) || NaN)
       if (isNaN(parsed.getTime())) return null
       if (parsed.getTime() < cutoff) return null
       const ymd = `${parsed.getFullYear()}-${String(parsed.getMonth() + 1).padStart(2, '0')}-${String(parsed.getDate()).padStart(2, '0')}`

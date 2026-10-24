@@ -1,6 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from './lib/markdown'
-import { getAllNews } from './lib/news'
+import { getAllNews, newsTimestamp } from './lib/news'
 
 export const dynamic = 'force-static'
 
@@ -44,7 +44,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const newsItems = await getAllNews()
   const newsEntries: MetadataRoute.Sitemap = newsItems
     .map((item) => {
-      const parsed = new Date(item.date)
+      const parsed = new Date(newsTimestamp(item.date) || NaN)
       const lastModified = isNaN(parsed.getTime()) ? new Date() : parsed
       return {
         url: `${SITE}/news/${item.slug}`,

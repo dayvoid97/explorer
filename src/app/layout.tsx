@@ -9,6 +9,7 @@ import GlobalScrollToTop from './components/GlobalScrollToTop'
 
 import { AdSenseScript } from './components/AdsenseScript'
 import { PostHogProvider } from './providers/PostHogProvider'
+import { ResearchLinkTracker } from './components/ResearchLinkTracker'
 
 export const metadata: Metadata = {
   // metadataBase lets Next resolve relative image paths in OG/Twitter tags to
@@ -214,6 +215,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <AdSenseScript />
           <main className="flex-grow">{children}</main>
           <GlobalScrollToTop />
+          <ResearchLinkTracker />
           <Footer />
         </PostHogProvider>
       </body>

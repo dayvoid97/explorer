@@ -1,0 +1,32 @@
+# Runs the content validator (scripts/validate-content.mjs) whenever articles,
+# news briefs, images or the source-tier list change. Errors fail the check;
+# warnings are listed in the log but do not block.
+name: Validate content
+
+on:
+  push:
+    paths:
+      - 'src/app/blog/posts/**'
+      - 'src/app/news/items/**'
+      - 'public/**'
+      - 'scripts/validate-content.mjs'
+      - 'scripts/source-tiers.json'
+  pull_request:
+    paths:
+      - 'src/app/blog/posts/**'
+      - 'src/app/news/items/**'
+      - 'public/**'
+      - 'scripts/validate-content.mjs'
+      - 'scripts/source-tiers.json'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run validate:content

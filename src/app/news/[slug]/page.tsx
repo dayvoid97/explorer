@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getNewsBySlug } from '@/app/lib/news'
+import { formatNewsDate, getNewsBySlug } from '@/app/lib/news'
+import { NewsThumb } from '@/app/news/news-thumb'
 import {
   makeComponents,
   sanitizeMarkdownForMdx,
@@ -119,13 +120,12 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
 
             {/* Cover image — shown when the brief sets an `image` in frontmatter. */}
             {item.image && (
-              <figure className="mb-8 overflow-hidden rounded-xl border border-amber-100">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
+              <figure className="relative mb-8 aspect-video overflow-hidden rounded-xl border border-amber-100 bg-[#efe6d2]">
+                <NewsThumb
                   src={item.image}
                   alt={item.headline}
-                  className="w-full h-auto"
-                  loading="eager"
+                  sizes="(min-width: 1024px) 700px, 100vw"
+                  priority
                 />
               </figure>
             )}
@@ -133,7 +133,7 @@ export default async function NewsDetailPage({ params }: { params: Promise<{ slu
             <div className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-stone-500">
               <span>Financial Gurkha News Desk</span>
               <span className="text-stone-300">·</span>
-              <time dateTime={toIsoDate(item.date)}>{item.date}</time>
+              <time dateTime={toIsoDate(item.date)}>{formatNewsDate(item.date, 'long')}</time>
             </div>
 
             {item.tags?.length > 0 && (

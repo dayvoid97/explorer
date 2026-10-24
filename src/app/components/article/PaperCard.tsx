@@ -50,7 +50,7 @@ export default function PaperCard({
   }
 
   return (
-    <div className="my-10 border border-black/15 bg-[#0A0A0A] p-6 text-white sm:p-8">
+    <div data-paper-card className="my-10 border border-black/15 bg-[#0A0A0A] p-6 text-white sm:p-8">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}

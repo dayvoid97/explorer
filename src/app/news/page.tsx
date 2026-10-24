@@ -1,6 +1,7 @@
 import Link from 'next/link'
-import { getAllNews } from '@/app/lib/news'
-import { NewsShareButtons } from '@/app/news/share-buttons'
+import { formatNewsDate, getAllNews, type NewsSummary } from '@/app/lib/news'
+import { AdSenseInArticle } from '@/app/components/adsense-in-article'
+import { NewsThumb } from './news-thumb'
 
 export const metadata = {
   title: 'The Daily Brief | Financial Gurkha News',
@@ -20,86 +21,184 @@ export const metadata = {
   },
 }
 
-export default async function NewsIndexPage() {
-  const items = await getAllNews()
-  const sorted = [...items].sort(
-    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+const SERIF = "'Freight Big Pro', Georgia, 'Times New Roman', serif"
+const BODY = "Georgia, 'Times New Roman', serif"
+const GOLD = '#a8873c'
+// Mobile in-article ad after every N briefs in the day-by-day list.
+const BRIEFS_PER_AD = 6
+
+/** First tag, shown as the story's kicker ("META", "OIL"…). */
+function kicker(item: NewsSummary) {
+  return item.tags?.[0] ?? 'Markets'
+}
+
+function Meta({ item }: { item: NewsSummary }) {
+  return (
+    <p className="text-[11px] uppercase tracking-[0.16em] text-stone-500">
+      <span className="font-bold" style={{ color: GOLD }}>
+        {kicker(item)}
+      </span>
+      <span className="mx-2 text-stone-300">·</span>
+      {formatNewsDate(item.date)}
+      <span className="mx-2 text-stone-300">·</span>
+      {item.readMinutes} min read
+    </p>
   )
+}
+
+/** The newest brief, set large at the top of the page. */
+function LeadStory({ item }: { item: NewsSummary }) {
+  return (
+    <Link href={`/news/${item.slug}`} className="group grid items-start gap-6 md:grid-cols-[1.35fr_1fr] md:gap-8">
+      <div className="relative aspect-video overflow-hidden rounded-sm bg-[#efe6d2]">
+        <NewsThumb src={item.image} alt={item.headline} sizes="(min-width: 768px) 560px, 100vw" priority />
+      </div>
+      <div className="flex flex-col justify-center">
+        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.25em]" style={{ color: GOLD }}>
+          Latest brief
+        </p>
+        <h2
+          className="text-3xl font-bold leading-[1.1] text-stone-900 group-hover:underline group-hover:decoration-[#C9A24B] group-hover:decoration-2 group-hover:underline-offset-4 md:text-[1.75rem] lg:text-[2rem]"
+          style={{ fontFamily: SERIF, letterSpacing: '-0.015em' }}
+        >
+          {item.headline}
+        </h2>
+        <p className="mt-4 line-clamp-4 text-[17px] md:line-clamp-3 md:text-base leading-relaxed text-stone-600" style={{ fontFamily: BODY }}>
+          {item.dek}
+        </p>
+        <div className="mt-5">
+          <Meta item={item} />
+        </div>
+      </div>
+    </Link>
+  )
+}
+
+/** One row in the day-by-day list: text on the left, thumbnail on the right. */
+function BriefRow({ item }: { item: NewsSummary }) {
+  return (
+    <Link href={`/news/${item.slug}`} className="group flex gap-4 py-5 sm:gap-6">
+      <div className="min-w-0 flex-1">
+        <h3
+          className="text-[19px] font-bold leading-snug text-stone-900 group-hover:underline group-hover:decoration-[#C9A24B] group-hover:decoration-2 group-hover:underline-offset-4 sm:text-[22px]"
+          style={{ fontFamily: SERIF }}
+        >
+          {item.headline}
+        </h3>
+        <p
+          className="mt-2 line-clamp-2 text-[15px] leading-relaxed text-stone-600 sm:text-base"
+          style={{ fontFamily: BODY }}
+        >
+          {item.dek}
+        </p>
+        <div className="mt-3">
+          <Meta item={item} />
+        </div>
+      </div>
+      <div className="relative mt-1 aspect-[4/3] w-24 shrink-0 self-start overflow-hidden rounded-sm bg-[#efe6d2] sm:aspect-video sm:w-44">
+        <NewsThumb src={item.image} alt="" sizes="(min-width: 640px) 176px, 96px" />
+      </div>
+    </Link>
+  )
+}
+
+/** Briefs after the lead, grouped under a heading for each publication day. */
+function groupByDay(items: NewsSummary[]) {
+  const groups: { label: string; items: NewsSummary[] }[] = []
+  for (const item of items) {
+    const label = formatNewsDate(item.date, 'long')
+    const last = groups[groups.length - 1]
+    if (last && last.label === label) last.items.push(item)
+    else groups.push({ label, items: [item] })
+  }
+  return groups
+}
+
+export default async function NewsIndexPage() {
+  const items = await getAllNews() // newest first
+  const [lead, ...rest] = items
+  const days = groupByDay(rest)
+  const edition = lead ? formatNewsDate(lead.date, 'long') : ''
+
+  let shown = 0 // briefs rendered so far in the list, for ad spacing
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-8">
-      {/* Warm masthead */}
-      <div className="text-center mb-10">
-        <p
-          className="mb-3 text-sm font-bold uppercase"
-          style={{ letterSpacing: '0.28em', color: '#C9A24B' }}
-        >
-          Financial Gurkha
-        </p>
-        <h1
-          className="text-4xl sm:text-5xl font-bold text-stone-900 mb-4"
-          style={{ fontFamily: "'Freight Big Pro', Georgia, serif", letterSpacing: '-0.02em' }}
-        >
-          The Daily Brief
-        </h1>
-        <p
-          className="text-lg text-stone-500 max-w-xl mx-auto leading-relaxed"
-          style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}
-        >
-          The day&apos;s money news, explained like a friend would. No jargon, no panic —
-          just what happened, what it means for you, and where we got it.
-        </p>
-      </div>
+    <main className="px-3 py-6 sm:px-6 sm:py-10">
+      <div className="mx-auto max-w-5xl rounded-sm border border-[#eadfc6] bg-[#FDF9F0] px-5 pb-12 pt-6 shadow-[0_2px_24px_rgba(168,135,60,0.08)] sm:px-10">
+        {/* ---------- Nameplate ---------- */}
+        <header className="text-center">
+          <div className="flex items-center justify-between text-[10px] uppercase tracking-[0.2em] text-stone-500 sm:text-[11px]">
+            <span>Financial Gurkha</span>
+            <span className="hidden sm:inline">Wall Street · New York</span>
+            <span>{items.length} briefs</span>
+          </div>
+          <div className="mt-3 border-t-[3px] border-double border-stone-800" />
+          <h1
+            className="py-4 text-5xl font-bold leading-none text-stone-900 sm:py-5 sm:text-7xl"
+            style={{ fontFamily: SERIF, letterSpacing: '-0.02em' }}
+          >
+            The Daily Brief
+          </h1>
+          <div className="border-t border-stone-800" />
+          <div className="flex flex-col items-center justify-between gap-1 py-2 text-[11px] uppercase tracking-[0.18em] text-stone-600 sm:flex-row">
+            <span>{edition}</span>
+            <span className="normal-case tracking-normal italic text-stone-500" style={{ fontFamily: BODY }}>
+              The day&apos;s money news, explained like a friend would.
+            </span>
+          </div>
+          <div className="border-t border-stone-800" />
+        </header>
 
-      {sorted.length === 0 ? (
-        <div className="rounded-2xl border border-amber-100 bg-[#FDF9F0] p-10 text-center">
-          <p className="text-stone-500 text-lg" style={{ fontFamily: 'Georgia, serif' }}>
+        {!lead ? (
+          <p className="py-16 text-center text-lg text-stone-500" style={{ fontFamily: BODY }}>
             The news desk is brewing its first brief. Check back soon.
           </p>
-        </div>
-      ) : (
-        <div className="space-y-6">
-          {sorted.map((item) => (
-            <article
-              key={item.slug}
-              className="rounded-2xl border border-amber-100 bg-[#FDF9F0] p-6 sm:p-8 shadow-[0_2px_16px_rgba(201,162,75,0.06)] hover:shadow-[0_4px_28px_rgba(201,162,75,0.14)] hover:-translate-y-0.5 transition"
-            >
-              <Link href={`/news/${item.slug}`} className="block">
-                <div className="flex items-center gap-3 mb-3 text-sm text-stone-400">
-                  <time>{item.date}</time>
-                  {item.tags?.[0] && (
-                    <>
-                      <span>·</span>
-                      <span className="text-amber-700 font-semibold">{item.tags[0]}</span>
-                    </>
-                  )}
-                </div>
-                <h2
-                  className="text-2xl font-bold text-stone-900 mb-3 leading-snug"
-                  style={{ fontFamily: "'Freight Big Pro', Georgia, serif" }}
-                >
-                  {item.headline}
+        ) : (
+          <>
+            <section className="pt-8" aria-label="Latest brief">
+              <LeadStory item={lead} />
+            </section>
+
+            <AdSenseInArticle position="news_index_lead" />
+
+            {days.map((day) => (
+              <section key={day.label} className="mt-10" aria-label={day.label}>
+                <h2 className="flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.25em] text-stone-800">
+                  {day.label === edition ? `More from ${day.label}` : day.label}
+                  <span className="h-px flex-1 bg-stone-300" />
                 </h2>
-                <p className="text-stone-600 leading-relaxed" style={{ fontFamily: 'Georgia, serif' }}>
-                  {item.dek}
-                </p>
-                <span className="inline-block mt-4 text-sm font-bold text-amber-700">
-                  Read the brief →
-                </span>
-              </Link>
-              <div className="mt-4 pt-4 border-t border-amber-100/70">
-                <NewsShareButtons
-                  compact
-                  title={item.headline}
-                  url={`https://financialgurkha.com/news/${item.slug}`}
-                  image={item.image}
-                  excerpt={item.dek}
-                />
-              </div>
-            </article>
-          ))}
-        </div>
-      )}
+                <div className="divide-y divide-[#eadfc6]">
+                  {day.items.map((item) => {
+                    shown += 1
+                    return (
+                      <div key={item.slug}>
+                        <BriefRow item={item} />
+                        {shown % BRIEFS_PER_AD === 0 && shown < rest.length && (
+                          <AdSenseInArticle position={`news_index_${shown}`} />
+                        )}
+                      </div>
+                    )
+                  })}
+                </div>
+              </section>
+            ))}
+
+            <footer className="mt-12 border-t border-stone-300 pt-5 text-center text-sm text-stone-500" style={{ fontFamily: BODY }}>
+              <p className="italic">
+                Plain-English explainers, not advice. Every brief lists its sources.
+              </p>
+              <p className="mt-2">
+                <a
+                  href="/rss.xml"
+                  className="font-semibold text-stone-700 underline decoration-[#C9A24B] decoration-2 underline-offset-4 hover:text-stone-900"
+                >
+                  Follow by RSS
+                </a>
+              </p>
+            </footer>
+          </>
+        )}
+      </div>
     </main>
   )
 }

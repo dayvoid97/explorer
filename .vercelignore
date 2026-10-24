@@ -19,3 +19,8 @@ WEBSOCKET_SETUP.md
 
 # source photo for the Spotlight review (reproduces The Indypendent's full page; unused)
 public/spotlight-books/spotlight-books-october-600-years-of-capitalism-economic-history.png
+
+# workflow docs and production handoffs are internal
+docs
+production
+.github

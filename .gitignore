@@ -43,3 +43,15 @@ next-env.d.ts
 
 # editor local history (VS Code "Local History" extension) — never deploy
 .history/
+
+# production handoff folders: text in git, heavy media in the shared drive
+/production/**/*.mp4
+/production/**/*.mov
+/production/**/*.m4a
+/production/**/*.mp3
+/production/**/*.wav
+/production/**/*.psd
+/production/**/*.png
+/production/**/*.jpg
+/production/**/*.jpeg
+/production/**/*.webp

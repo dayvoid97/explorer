@@ -44,11 +44,13 @@ function readArticles(): LinkArticle[] {
         const { data } = matter(
           fs.readFileSync(path.join(blogDir, file), 'utf8')
         )
-        const slug = String(data.slug ?? file.replace(/\.md$/, ''))
+        // The URL slug is the filename, never the frontmatter `slug` (they can
+        // differ, and the frontmatter one then points at a 404).
+        const slug = file.replace(/\.md$/, '')
         const { ts, label } = parseDate(data.date)
         out.push({
           title: String(data.title ?? slug),
-          href: `https://financialgurkha.com/blog/${slug}`,
+          href: `/blog/${slug}`,
           image: String(data.image ?? ''),
           ts,
           dateLabel: label,
@@ -73,7 +75,7 @@ function readArticles(): LinkArticle[] {
         const { ts, label } = parseDate(data.date)
         out.push({
           title: String(data.headline ?? data.title ?? slug),
-          href: `https://financialgurkha.com/news/${slug}`,
+          href: `/news/${slug}`,
           image: String(data.image ?? ''),
           ts,
           dateLabel: label,

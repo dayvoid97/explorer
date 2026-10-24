@@ -88,7 +88,10 @@ export function track(event: string, props: Props = {}) {
   }
 
   try {
-    window.gtag?.('event', event, clean)
+    // GA4 event names may contain only letters, digits and underscores, and
+    // silently drops anything else. "ad-disclaimer-read" reaches GA4 as
+    // "ad_disclaimer_read"; PostHog keeps the original name.
+    window.gtag?.('event', event.replace(/[^A-Za-z0-9_]/g, '_'), clean)
   } catch {
     /* same */
   }

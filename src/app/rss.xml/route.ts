@@ -1,4 +1,4 @@
-import { getAllNews } from '@/app/lib/news'
+import { getAllNews, newsTimestamp } from '@/app/lib/news'
 
 export const dynamic = 'force-static'
 
@@ -23,7 +23,7 @@ export async function GET() {
 
   const sorted = [...items]
     .map((item) => {
-      const parsed = new Date(item.date)
+      const parsed = new Date(newsTimestamp(item.date) || NaN)
       return { ...item, ts: isNaN(parsed.getTime()) ? 0 : parsed.getTime() }
     })
     .sort((a, b) => b.ts - a.ts)

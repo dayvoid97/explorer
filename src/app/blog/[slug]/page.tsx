@@ -213,9 +213,10 @@ export default async function BlogArticlePage({ params }: { params: Promise<{ sl
   // or the "### What's in this report" H3 both slugify to
   // #whats-in-this-report; a hand-written "## Table of Contents" H2 lands on
   // #table-of-contents.
-  const contentsHref = hasManualToc && /^##\s+table of contents/im.test(post.content)
-    ? '#table-of-contents'
-    : '#whats-in-this-report'
+  const contentsHref =
+    hasManualToc && /^##\s+table of contents/im.test(post.content)
+      ? '#table-of-contents'
+      : '#whats-in-this-report'
 
   const articleSchema = {
     '@context': 'https://schema.org',
