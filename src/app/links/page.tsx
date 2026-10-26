@@ -2,33 +2,13 @@ import fs from 'node:fs'
 import path from 'node:path'
 import matter from 'gray-matter'
 import LinksGrid, { type LinkArticle } from './links-grid'
+import { formatNewsDate, newsTimestamp } from '@/app/lib/news'
 
+// One date parser for the whole site (handles MM/DD/YYYY and YYYY-MM-DD as local dates).
 function parseDate(raw: unknown): { ts: number; label: string } {
   if (typeof raw !== 'string') return { ts: 0, label: '' }
-  const trimmed = raw.trim()
-  const iso = trimmed.match(/^(\d{4})-(\d{1,2})-(\d{1,2})/)
-  if (iso) {
-    const ts = new Date(
-      Number(iso[1]),
-      Number(iso[2]) - 1,
-      Number(iso[3])
-    ).getTime()
-    const label = new Date(ts).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    })
-    return { ts: Number.isNaN(ts) ? 0 : ts, label }
-  }
-  const m = trimmed.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/)
-  if (!m) return { ts: 0, label: raw }
-  const ts = new Date(Number(m[3]), Number(m[1]) - 1, Number(m[2])).getTime()
-  const label = new Date(ts).toLocaleDateString('en-US', {
-    month: 'short',
-    day: 'numeric',
-    year: 'numeric',
-  })
-  return { ts: Number.isNaN(ts) ? 0 : ts, label }
+  const ts = newsTimestamp(raw)
+  return { ts, label: ts ? formatNewsDate(raw) : raw }
 }
 
 function readArticles(): LinkArticle[] {
@@ -41,11 +21,7 @@ function readArticles(): LinkArticle[] {
     for (const file of fs.readdirSync(blogDir)) {
       if (!file.endsWith('.md')) continue
       try {
-        const { data } = matter(
-          fs.readFileSync(path.join(blogDir, file), 'utf8')
-        )
-        // The URL slug is the filename, never the frontmatter `slug` (they can
-        // differ, and the frontmatter one then points at a 404).
+        const { data } = matter(fs.readFileSync(path.join(blogDir, file), 'utf8'))
         const slug = file.replace(/\.md$/, '')
         const { ts, label } = parseDate(data.date)
         out.push({
@@ -68,9 +44,7 @@ function readArticles(): LinkArticle[] {
     for (const file of fs.readdirSync(newsDir)) {
       if (!file.endsWith('.md')) continue
       try {
-        const { data } = matter(
-          fs.readFileSync(path.join(newsDir, file), 'utf8')
-        )
+        const { data } = matter(fs.readFileSync(path.join(newsDir, file), 'utf8'))
         const slug = file.replace(/\.md$/, '')
         const { ts, label } = parseDate(data.date)
         out.push({

@@ -7,9 +7,12 @@ The single set of rules for everything published on financialgurkha.com. Kanchan
 
 ## Brand
 
+The site reads these from `src/app/lib/brand.ts`; change them there, not page by page.
+
 | Use | Exact wording |
 | --- | --- |
-| Brand line | Independent market research from Wall Street. |
+| One-line bio | Financial Markets Reporting From Wall Street, New York. Equity Valuations, Earnings Analysis, Macro Research and Technical Analysis. |
+| Positioning (short) | Financial Markets Reporting From Wall Street, New York |
 | Tagline | Financial Gurkha is for the winners. |
 | Name | **Financial Gurkha** (never "Financial Gurkhas") |
 | Location (addresses only) | New York, NY |

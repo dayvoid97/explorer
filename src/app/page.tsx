@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { Playfair_Display } from 'next/font/google'
 import { getAllPosts } from './lib/markdown'
 import { BlogPost } from './blog/[slug]/metadata'
+import { BRAND, BRAND_TITLE } from './lib/brand'
 import NycClock from './components/home/NycClock'
 import StreetGallery from './components/home/StreetGallery'
 
@@ -13,10 +14,9 @@ export const metadata = {
   // Absolute title (no brand suffix) — the root layout template is bypassed
   // deliberately here so the homepage title reads cleanly in search results.
   title: {
-    absolute: 'Financial Gurkha — Markets Research from Wall Street, New York',
+    absolute: BRAND_TITLE,
   },
-  description:
-    'Independent equity valuations, earnings analysis and macro research read straight from SEC filings. Written from Wall Street and Lower Manhattan, New York City. Est. 2022.',
+  description: BRAND.bio,
   alternates: { canonical: 'https://financialgurkha.com' },
 }
 
@@ -33,7 +33,7 @@ export default async function Home() {
         <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
           <div>
             <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-white/50">
-              Independent Markets Research · Est. 2022
+              Financial Markets Reporting · Est. {BRAND.founded}
             </p>
 
             <h1
@@ -45,8 +45,7 @@ export default async function Home() {
             </h1>
 
             <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-white/80">
-              Equity valuations, macro analysis, and market coverage — researched, written, and
-              filed from Wall Street, New York.
+              {BRAND.bio}
             </p>
 
             <div className="mt-8">

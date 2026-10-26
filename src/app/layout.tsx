@@ -10,18 +10,18 @@ import GlobalScrollToTop from './components/GlobalScrollToTop'
 import { AdSenseScript } from './components/AdsenseScript'
 import { PostHogProvider } from './providers/PostHogProvider'
 import { ResearchLinkTracker } from './components/ResearchLinkTracker'
+import { BRAND, BRAND_TITLE } from './lib/brand'
 
 export const metadata: Metadata = {
   // metadataBase lets Next resolve relative image paths in OG/Twitter tags to
   // absolute URLs. Without it, social previews silently fail to load images.
   metadataBase: new URL('https://financialgurkha.com'),
   title: {
-    default: 'Financial Gurkha — Independent Financial Market Research from Wall Street, New York',
+    default: BRAND_TITLE,
     // Child pages supply only their own title; this appends the brand.
     template: '%s | Financial Gurkha',
   },
-  description:
-    'Independent equity valuations, earnings analysis, and macro research read straight from SEC filings. Written from Wall Street and Lower Manhattan, New York City. Est. 2022.',
+  description: BRAND.bio,
   keywords: [
     'financial gurkha',
     'equity research',
@@ -36,7 +36,8 @@ export const metadata: Metadata = {
     'federal reserve analysis',
     'commodities',
     'crypto analysis',
-    'independent markets research',
+    'financial markets reporting',
+    'technical analysis',
     'Kanchan Sharma',
     'Kanchan Sharma Forbes 30 under 30',
     'New York financial analyst',
@@ -54,17 +55,15 @@ export const metadata: Metadata = {
     icon: '/logo.png',
   },
   openGraph: {
-    title: 'Financial Gurkha — Markets Research from Wall Street, New York',
-    description:
-      'Independent equity valuations, earnings analysis, and macro research read straight from SEC filings. New York City.',
+    title: BRAND_TITLE,
+    description: BRAND.bio,
     url: 'https://financialgurkha.com',
     siteName: 'Financial Gurkha',
     images: [
       {
+        // logo.png is 323×250; no size is declared so crawlers read the real one.
         url: '/logo.png',
-        width: 1200,
-        height: 630,
-        alt: 'Financial Gurkha — independent markets research, New York City',
+        alt: BRAND_TITLE,
       },
     ],
     locale: 'en_US',
@@ -72,9 +71,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Financial Gurkha — Markets Research from Wall Street, New York',
-    description:
-      'Independent equity valuations and earnings analysis, read straight from the filings.',
+    title: BRAND_TITLE,
+    description: BRAND.bio,
     images: ['/logo.png'],
   },
   robots: {
@@ -107,15 +105,16 @@ const siteSchema = {
         '@type': 'ImageObject',
         url: 'https://financialgurkha.com/logo.png',
       },
-      description:
-        'Independent markets research publication covering equity valuations, earnings and macro analysis from primary SEC filings.',
-      foundingDate: '2022',
+      description: BRAND.bio,
+      slogan: BRAND.tagline,
+      foundingDate: BRAND.founded,
       knowsAbout: [
         'Equity Valuation',
         'Discounted Cash Flow Analysis',
         'Earnings Analysis',
         'SEC Filings',
         'Macroeconomics',
+        'Technical Analysis',
         'Commodities Trading',
         'Cryptocurrency Markets',
       ],
@@ -170,7 +169,7 @@ const siteSchema = {
       '@id': 'https://financialgurkha.com/#website',
       url: 'https://financialgurkha.com',
       name: 'Financial Gurkha',
-      description: 'Independent markets research from Wall Street, New York.',
+      description: BRAND.bio,
       publisher: { '@id': 'https://financialgurkha.com/#organization' },
       inLanguage: 'en-US',
     },

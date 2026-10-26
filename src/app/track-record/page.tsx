@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { BRAND } from '@/app/lib/brand'
 import { CALLS, PRICES_AS_OF, priceReturn, impliedFromHere } from './data'
 
 const GOLD = '#C9A24B'
@@ -11,7 +12,7 @@ export const metadata = {
   openGraph: {
     title: 'Track Record | Financial Gurkha',
     description:
-      'Every published valuation, dated, with outcomes — wins and misses. Independent markets research, New York City.',
+      `Every published valuation, dated, with outcomes — wins and misses. ${BRAND.positioning}.`,
     url: 'https://financialgurkha.com/track-record',
     type: 'website',
   },

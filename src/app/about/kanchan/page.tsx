@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { BRAND } from '@/app/lib/brand'
 
 const GOLD = '#C9A24B'
 const EMAIL = 'contact@kanchanksharma.com'
@@ -7,12 +8,12 @@ const EMAIL = 'contact@kanchanksharma.com'
 export const metadata = {
   title: 'About Financial Gurkha & Kanchan Sharma',
   description:
-    'Financial Gurkha is an independent markets research publication founded in 2022 and written from New York City by Kanchan Sharma. Equity valuations and earnings analysis sourced from primary SEC filings.',
+    `Financial Gurkha, founded in ${BRAND.founded} by Kanchan Sharma: ${BRAND.bio}`,
   alternates: { canonical: 'https://financialgurkha.com/about/kanchan' },
   openGraph: {
     title: 'About Financial Gurkha & Kanchan Sharma',
     description:
-      'Independent markets research from New York City. Who writes it, how the numbers are sourced, and what this publication is not.',
+      `${BRAND.positioning}. Who writes it, how the numbers are sourced, and what this publication is not.`,
     url: 'https://financialgurkha.com/about/kanchan',
     type: 'profile',
   },
@@ -53,7 +54,7 @@ export default function AboutKanchanPage() {
       {/* ---------- HEADER ---------- */}
       <section className="mx-auto max-w-4xl px-6 pt-16 pb-12 sm:pt-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>
-          About · Independent Markets Research · Est. 2022
+          About · Financial Markets Reporting · Est. {BRAND.founded}
         </p>
         <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
           Who writes Financial Gurkha, and how the numbers get here.

@@ -1,6 +1,7 @@
 // src/app/legal/[policy]/page.tsx
 import { notFound } from 'next/navigation'
 import LegalPolicies from '@/app/components/PolicyComponent'
+import { BRAND } from '@/app/lib/brand'
 
 /**
  * Legal policies for Financial Gurkha.
@@ -207,8 +208,8 @@ export async function generateMetadata({ params }: LegalPageProps) {
     title: found.title,
     description:
       policy === 'editorial'
-        ? 'How Financial Gurkha sources figures, builds valuations, discloses conflicts of interest and handles corrections. Independent markets research, New York City.'
-        : `${found.title} for Financial Gurkha, an independent markets research publication based in New York City.`,
+        ? `How Financial Gurkha sources figures, builds valuations, discloses conflicts of interest and handles corrections. ${BRAND.positioning}.`
+        : `${found.title} for Financial Gurkha. ${BRAND.positioning}.`,
     alternates: { canonical: `https://financialgurkha.com/legal/${policy}` },
   }
 }

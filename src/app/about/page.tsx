@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import Image from 'next/image'
+import { BRAND } from '@/app/lib/brand'
 
 const GOLD = '#C9A24B'
 
 export const metadata = {
   title: 'About Financial Gurkha',
   description:
-    'Financial Gurkha is an independent markets research publication founded in 2022, written from New York City. Equity valuations and earnings analysis read from primary SEC filings.',
+    `Financial Gurkha: ${BRAND.bio} Founded in ${BRAND.founded}.`,
   alternates: { canonical: 'https://financialgurkha.com/about' },
 }
 
@@ -22,7 +23,7 @@ export default function AboutPage() {
     <div className="bg-[#0A0A0A] text-white">
       <section className="mx-auto max-w-4xl px-6 pt-16 pb-12 sm:pt-24">
         <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>
-          Independent Markets Research · Est. 2022 · New York City
+          Financial Markets Reporting · Est. {BRAND.founded} · Wall Street, New York
         </p>
         <h1 className="mt-5 text-4xl font-black leading-tight sm:text-5xl">
           About Financial Gurkha
