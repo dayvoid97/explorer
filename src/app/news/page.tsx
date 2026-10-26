@@ -2,6 +2,8 @@ import Link from 'next/link'
 import { formatNewsDate, getAllNews, type NewsSummary } from '@/app/lib/news'
 import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 import { NewsThumb } from './news-thumb'
+import { NewsRailAd, NewsRowAd } from './news-ads'
+import { NEWS_RAIL_AD_SLOT, NEWS_ROW_AD_EVERY, NEWS_ROW_AD_SLOT } from './news-ad-config'
 
 export const metadata = {
   title: 'The Daily Brief | Financial Gurkha News',
@@ -24,8 +26,14 @@ export const metadata = {
 const SERIF = "'Freight Big Pro', Georgia, 'Times New Roman', serif"
 const BODY = "Georgia, 'Times New Roman', serif"
 const GOLD = '#a8873c'
-// Mobile in-article ad after every N briefs in the day-by-day list.
-const BRIEFS_PER_AD = 6
+/**
+ * Phone and tablet ad row. Uses the dedicated fg-news-mobile unit once its slot
+ * is set; until then falls back to the site's in-article unit so the page keeps
+ * earning.
+ */
+function RowAd({ n }: { n: number }) {
+  return NEWS_ROW_AD_SLOT ? <NewsRowAd n={n} /> : <AdSenseInArticle position={`news_index_${n}`} />
+}
 
 /** First tag, shown as the story's kicker ("META", "OIL"…). */
 function kicker(item: NewsSummary) {
@@ -49,12 +57,23 @@ function Meta({ item }: { item: NewsSummary }) {
 /** The newest brief, set large at the top of the page. */
 function LeadStory({ item }: { item: NewsSummary }) {
   return (
-    <Link href={`/news/${item.slug}`} className="group grid items-start gap-6 md:grid-cols-[1.35fr_1fr] md:gap-8">
+    <Link
+      href={`/news/${item.slug}`}
+      className="group grid items-start gap-6 md:grid-cols-[1.35fr_1fr] md:gap-8"
+    >
       <div className="relative aspect-video overflow-hidden rounded-sm bg-[#efe6d2]">
-        <NewsThumb src={item.image} alt={item.headline} sizes="(min-width: 768px) 560px, 100vw" priority />
+        <NewsThumb
+          src={item.image}
+          alt={item.headline}
+          sizes="(min-width: 768px) 560px, 100vw"
+          priority
+        />
       </div>
       <div className="flex flex-col justify-center">
-        <p className="mb-3 text-[11px] font-bold uppercase tracking-[0.25em]" style={{ color: GOLD }}>
+        <p
+          className="mb-3 text-[11px] font-bold uppercase tracking-[0.25em]"
+          style={{ color: GOLD }}
+        >
           Latest brief
         </p>
         <h2
@@ -63,7 +82,10 @@ function LeadStory({ item }: { item: NewsSummary }) {
         >
           {item.headline}
         </h2>
-        <p className="mt-4 line-clamp-4 text-[17px] md:line-clamp-3 md:text-base leading-relaxed text-stone-600" style={{ fontFamily: BODY }}>
+        <p
+          className="mt-4 line-clamp-4 text-[17px] md:line-clamp-3 md:text-base leading-relaxed text-stone-600"
+          style={{ fontFamily: BODY }}
+        >
           {item.dek}
         </p>
         <div className="mt-5">
@@ -142,7 +164,10 @@ export default async function NewsIndexPage() {
           <div className="border-t border-stone-800" />
           <div className="flex flex-col items-center justify-between gap-1 py-2 text-[11px] uppercase tracking-[0.18em] text-stone-600 sm:flex-row">
             <span>{edition}</span>
-            <span className="normal-case tracking-normal italic text-stone-500" style={{ fontFamily: BODY }}>
+            <span
+              className="normal-case tracking-normal italic text-stone-500"
+              style={{ fontFamily: BODY }}
+            >
               The day&apos;s money news, explained like a friend would.
             </span>
           </div>
@@ -159,31 +184,48 @@ export default async function NewsIndexPage() {
               <LeadStory item={lead} />
             </section>
 
-            <AdSenseInArticle position="news_index_lead" />
+            <RowAd n={0} />
 
-            {days.map((day) => (
-              <section key={day.label} className="mt-10" aria-label={day.label}>
-                <h2 className="flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.25em] text-stone-800">
-                  {day.label === edition ? `More from ${day.label}` : day.label}
-                  <span className="h-px flex-1 bg-stone-300" />
-                </h2>
-                <div className="divide-y divide-[#eadfc6]">
-                  {day.items.map((item) => {
-                    shown += 1
-                    return (
-                      <div key={item.slug}>
-                        <BriefRow item={item} />
-                        {shown % BRIEFS_PER_AD === 0 && shown < rest.length && (
-                          <AdSenseInArticle position={`news_index_${shown}`} />
-                        )}
-                      </div>
-                    )
-                  })}
-                </div>
-              </section>
-            ))}
+            {/* Desktop: the day-by-day list beside a newspaper ad column (once its unit is set). */}
+            <div
+              className={
+                NEWS_RAIL_AD_SLOT ? 'lg:grid lg:grid-cols-[minmax(0,1fr)_300px] lg:gap-10' : ''
+              }
+            >
+              <div className="min-w-0">
+                {days.map((day) => (
+                  <section key={day.label} className="mt-10" aria-label={day.label}>
+                    <h2 className="flex items-center gap-4 text-[11px] font-bold uppercase tracking-[0.25em] text-stone-800">
+                      {day.label === edition ? `More from ${day.label}` : day.label}
+                      <span className="h-px flex-1 bg-stone-300" />
+                    </h2>
+                    <div className="divide-y divide-[#eadfc6]">
+                      {day.items.map((item) => {
+                        shown += 1
+                        return (
+                          <div key={item.slug}>
+                            <BriefRow item={item} />
+                            {shown % NEWS_ROW_AD_EVERY === 0 && shown < rest.length && (
+                              <RowAd n={shown / NEWS_ROW_AD_EVERY} />
+                            )}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </section>
+                ))}
+              </div>
+              {NEWS_RAIL_AD_SLOT && (
+                <aside className="mt-10" aria-label="Advertisement">
+                  <NewsRailAd />
+                </aside>
+              )}
+            </div>
 
-            <footer className="mt-12 border-t border-stone-300 pt-5 text-center text-sm text-stone-500" style={{ fontFamily: BODY }}>
+            <footer
+              className="mt-12 border-t border-stone-300 pt-5 text-center text-sm text-stone-500"
+              style={{ fontFamily: BODY }}
+            >
               <p className="italic">
                 Plain-English explainers, not advice. Every brief lists its sources.
               </p>
