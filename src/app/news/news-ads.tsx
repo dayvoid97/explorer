@@ -4,47 +4,13 @@ import { useEffect, useState } from 'react'
 import { useAdSlot } from '@/app/hooks/useAdSlot'
 import { AdLabel } from '@/app/components/AdLabel'
 
-import { NEWS_AD_CLIENT, NEWS_RAIL_AD_SLOT, NEWS_ROW_AD_SLOT } from './news-ad-config'
+import { NEWS_AD_CLIENT, NEWS_RAIL_AD_SLOT } from './news-ad-config'
 
 /*
- * Ads on the /news front page (slots in ./news-ad-config.ts):
- * - Desktop (lg+): one sticky 300×600 in a newspaper-style ad column beside the
- *   day-by-day list.
- * - Phones and tablets: full-bleed ad rows across the paper, after the lead
- *   story and then every NEWS_ROW_AD_EVERY briefs.
+ * Ads on the /news front page (slot in ./news-ad-config.ts): desktop only, one
+ * sticky 300×600 in a newspaper-style ad column beside the day-by-day list.
+ * No ads on the front page on phones and tablets.
  */
-
-/**
- * Phones and tablets: a full-bleed row across the paper. It cancels the paper's
- * side padding so ads that AdSense stretches to full width stay inside the
- * frame, and it grows with taller ads. Hidden on desktop, so no request there.
- */
-export function NewsRowAd({ n }: { n: number }) {
-  const { ref, shouldRender } = useAdSlot(`news_row_${n}`)
-  if (!NEWS_ROW_AD_SLOT) return null
-  return (
-    <div
-      ref={ref}
-      className="ad-slot -mx-5 my-6 border-y border-stone-300 bg-[#F7F0E1] py-3 sm:-mx-10 lg:hidden"
-    >
-      <div className="px-5 sm:px-10">
-        <AdLabel align="right" />
-      </div>
-      <div className="flex min-h-[250px] w-full items-center justify-center">
-        {shouldRender && (
-          <ins
-            className="adsbygoogle"
-            style={{ display: 'block', width: '100%' }}
-            data-ad-client={NEWS_AD_CLIENT}
-            data-ad-slot={NEWS_ROW_AD_SLOT}
-            data-ad-format="rectangle"
-            data-full-width-responsive="true"
-          />
-        )}
-      </div>
-    </div>
-  )
-}
 
 const DESKTOP_QUERY = '(min-width: 1024px)'
 

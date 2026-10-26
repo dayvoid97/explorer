@@ -8,6 +8,5 @@
  */
 export const NEWS_AD_CLIENT = 'ca-pub-8441965953327461'
 export const NEWS_RAIL_AD_SLOT = '5794294214' // fg-news-desktop-rail (Responsive, pinned to 300×600)
-export const NEWS_ROW_AD_SLOT = '7406758780' // fg-news-mobile (Responsive)
-// Phones and tablets: a row after the lead story, then every N briefs.
-export const NEWS_ROW_AD_EVERY = 8
+// fg-news-mobile (7406758780) is retired from this page: phone ads on the
+// front page were removed. The unit can be reused elsewhere.

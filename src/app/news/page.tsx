@@ -1,9 +1,8 @@
 import Link from 'next/link'
 import { formatNewsDate, getAllNews, type NewsSummary } from '@/app/lib/news'
-import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 import { NewsThumb } from './news-thumb'
-import { NewsRailAd, NewsRowAd } from './news-ads'
-import { NEWS_RAIL_AD_SLOT, NEWS_ROW_AD_EVERY, NEWS_ROW_AD_SLOT } from './news-ad-config'
+import { NewsRailAd } from './news-ads'
+import { NEWS_RAIL_AD_SLOT } from './news-ad-config'
 
 export const metadata = {
   title: 'The Daily Brief | Financial Gurkha News',
@@ -26,14 +25,11 @@ export const metadata = {
 const SERIF = "'Freight Big Pro', Georgia, 'Times New Roman', serif"
 const BODY = "Georgia, 'Times New Roman', serif"
 const GOLD = '#a8873c'
-/**
- * Phone and tablet ad row. Uses the dedicated fg-news-mobile unit once its slot
- * is set; until then falls back to the site's in-article unit so the page keeps
- * earning.
+/*
+ * Ads on this page: desktop only, one sticky 300×600 in the newspaper ad column
+ * (NewsRailAd). Phones and tablets get no ads on the front page; readers meet
+ * the in-article ads inside each brief instead.
  */
-function RowAd({ n }: { n: number }) {
-  return NEWS_ROW_AD_SLOT ? <NewsRowAd n={n} /> : <AdSenseInArticle position={`news_index_${n}`} />
-}
 
 /** First tag, shown as the story's kicker ("META", "OIL"…). */
 function kicker(item: NewsSummary) {
@@ -142,8 +138,6 @@ export default async function NewsIndexPage() {
   const days = groupByDay(rest)
   const edition = lead ? formatNewsDate(lead.date, 'long') : ''
 
-  let shown = 0 // briefs rendered so far in the list, for ad spacing
-
   return (
     <main className="px-3 py-6 sm:px-6 sm:py-10">
       <div className="mx-auto max-w-5xl rounded-sm border border-[#eadfc6] bg-[#FDF9F0] px-5 pb-12 pt-6 shadow-[0_2px_24px_rgba(168,135,60,0.08)] sm:px-10">
@@ -184,8 +178,6 @@ export default async function NewsIndexPage() {
               <LeadStory item={lead} />
             </section>
 
-            <RowAd n={0} />
-
             {/* Desktop: the day-by-day list beside a newspaper ad column (once its unit is set). */}
             <div
               className={
@@ -200,17 +192,9 @@ export default async function NewsIndexPage() {
                       <span className="h-px flex-1 bg-stone-300" />
                     </h2>
                     <div className="divide-y divide-[#eadfc6]">
-                      {day.items.map((item) => {
-                        shown += 1
-                        return (
-                          <div key={item.slug}>
-                            <BriefRow item={item} />
-                            {shown % NEWS_ROW_AD_EVERY === 0 && shown < rest.length && (
-                              <RowAd n={shown / NEWS_ROW_AD_EVERY} />
-                            )}
-                          </div>
-                        )
-                      })}
+                      {day.items.map((item) => (
+                        <BriefRow key={item.slug} item={item} />
+                      ))}
                     </div>
                   </section>
                 ))}
