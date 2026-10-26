@@ -42,41 +42,76 @@ const SERIF = "var(--font-links-serif), Georgia, 'Times New Roman', serif"
 const PRIORITY_CARDS = 6
 
 /*
- * Card ads: one per page, sized exactly 300×250 (the most-bid display size)
- * using AdSense's exact-size method for responsive units: display:inline-block
- * with a fixed width and height, and no data-ad-format, so the ad can never
- * stretch out of its card.
+ * Card ads, woven between posts the way Instagram places "Sponsored" posts in
+ * a profile feed: about one ad per 15–18 posts (3 ads at 51 posts), each a full
+ * screen or more from the next. On desktop each is an exact 300×250 (the
+ * most-bid display size) via AdSense's exact-size method: display:inline-block
+ * with a fixed width and height and no data-ad-format.
  *
- * - Phones and tablets (below lg): a full-width ad card after the 6th tile.
- *   Six tiles is exactly 3 rows on the 2-column phone grid and 2 rows on the
- *   3-column tablet grid, so the grid never gets a hole.
- * - Desktop (lg+): a single tile in the grid at a random position from tile 4
- *   to 9 (rows two and three), picked after the page loads.
+ * - Phones and tablets (below lg): full-bleed ad cards after tiles 6, 24, 42…
+ *   (every 18). Those are multiples of both 2 and 3, so the 2-column phone grid
+ *   and the 3-column tablet grid never get a hole. These are responsive
+ *   rectangles that fill the card, because AdSense stretches many mobile ads to
+ *   the full screen width; the card spans the screen and grows with the ad.
+ * - Desktop (lg+): grid tiles, the first at a random spot in tiles 4–9 (rows
+ *   two and three, picked after the page loads), then every 16 tiles (~5 rows).
  *
- * Only one of the two is ever visible, and the ad loader never requests an ad
- * for a hidden slot, so each page view makes a single ad request.
+ * Only one variant is visible at a time, and the ad loader requests an ad only
+ * when its slot nears the viewport. A reader who never scrolls past the first
+ * rows triggers one request; deeper ads count only when they are actually seen,
+ * which keeps viewability, and so CPM, high.
  */
 const AD_CLIENT = 'ca-pub-8441965953327461'
 const MOBILE_AD_SLOT = '2051198166' // fg-links-display-mobile
 const DESKTOP_AD_SLOT = '5104114795' // fg-links-desktop
-const MOBILE_AD_AFTER = 6
+const MOBILE_AD_FIRST = 6
+const MOBILE_AD_EVERY = 18
+const DESKTOP_AD_EVERY = 16
 const DESKTOP_AD_RANGE: [number, number] = [4, 9]
 
-function CardAd({ variant }: { variant: 'mobile' | 'desktop' }) {
-  const { ref, shouldRender } = useAdSlot(`links_card_${variant}`)
-  const frame =
-    variant === 'mobile'
-      ? 'col-span-full my-1 flex lg:hidden'
-      : 'hidden lg:flex lg:aspect-[3/4]'
+function CardAd({ variant, n }: { variant: 'mobile' | 'desktop'; n: number }) {
+  const { ref, shouldRender } = useAdSlot(`links_card_${variant}_${n}`)
+
+  if (variant === 'mobile') {
+    /*
+     * Phones and tablets: a full-bleed card. AdSense often stretches mobile ads
+     * to the full screen width (and sometimes taller than 250px), so the frame
+     * spans edge to edge (cancelling the page's side padding) and grows with the
+     * ad. Whatever size is served, it stays inside the box.
+     */
+    return (
+      <div
+        ref={ref}
+        className="ad-slot col-span-full -mx-4 my-1 flex flex-col border-y border-[rgba(198,161,91,0.35)] bg-[#141414] py-3 md:-mx-5 lg:hidden"
+      >
+        <div className="px-4">
+          <AdLabel align="right" />
+        </div>
+        <div className="flex min-h-[250px] w-full items-center justify-center">
+          {shouldRender && (
+            <ins
+              className="adsbygoogle"
+              style={{ display: 'block', width: '100%' }}
+              data-ad-client={AD_CLIENT}
+              data-ad-slot={MOBILE_AD_SLOT}
+              data-ad-format="rectangle"
+              data-full-width-responsive="true"
+            />
+          )}
+        </div>
+      </div>
+    )
+  }
+
+  // Desktop: a grid tile holding an exact 300×250 ad, never cropped.
   return (
     <div
       ref={ref}
-      className={`ad-slot ${frame} flex-col items-center border border-[rgba(198,161,91,0.35)] bg-[#141414] p-3`}
+      className="ad-slot hidden flex-col items-center border border-[rgba(198,161,91,0.35)] bg-[#141414] p-3 lg:flex lg:aspect-[3/4]"
     >
       <div className="w-full">
         <AdLabel align="right" />
       </div>
-      {/* The ad is exactly 300×250 and is never cropped. */}
       <div className="flex flex-1 items-center justify-center">
         <div className="h-[250px] w-[300px]">
           {shouldRender && (
@@ -84,7 +119,7 @@ function CardAd({ variant }: { variant: 'mobile' | 'desktop' }) {
               className="adsbygoogle"
               style={{ display: 'inline-block', width: 300, height: 250 }}
               data-ad-client={AD_CLIENT}
-              data-ad-slot={variant === 'mobile' ? MOBILE_AD_SLOT : DESKTOP_AD_SLOT}
+              data-ad-slot={DESKTOP_AD_SLOT}
             />
           )}
         </div>
@@ -358,8 +393,12 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
           {ordered.map((a, i) => (
             <div key={a.href} className="contents">
               <ArticleCard a={a} priority={i < PRIORITY_CARDS} onOpen={() => trackOpen(a, i + 1)} />
-              {i + 1 === MOBILE_AD_AFTER && i + 1 < ordered.length && <CardAd variant="mobile" />}
-              {i + 1 === adAfter && i + 1 < ordered.length && <CardAd variant="desktop" />}
+              {i + 1 < ordered.length && (i + 1 - MOBILE_AD_FIRST) % MOBILE_AD_EVERY === 0 && i + 1 >= MOBILE_AD_FIRST && (
+                <CardAd variant="mobile" n={(i + 1 - MOBILE_AD_FIRST) / MOBILE_AD_EVERY + 1} />
+              )}
+              {adAfter !== null && i + 1 < ordered.length && i + 1 >= adAfter && (i + 1 - adAfter) % DESKTOP_AD_EVERY === 0 && (
+                <CardAd variant="desktop" n={(i + 1 - adAfter) / DESKTOP_AD_EVERY + 1} />
+              )}
             </div>
           ))}
         </div>
