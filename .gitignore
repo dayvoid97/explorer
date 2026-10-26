@@ -55,3 +55,6 @@ next-env.d.ts
 /production/**/*.jpg
 /production/**/*.jpeg
 /production/**/*.webp
+
+# rendered number plates (outputs of npm run plate)
+/plates/

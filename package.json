@@ -9,7 +9,8 @@
     "start": "next start",
     "lint": "next lint",
     "indexnow": "node scripts/submit-indexnow.mjs",
-    "validate:content": "node scripts/validate-content.mjs"
+    "validate:content": "node scripts/validate-content.mjs",
+    "plate": "node scripts/plates/render-plate.mjs"
   },
   "dependencies": {
     "framer-motion": "^12.0.0",

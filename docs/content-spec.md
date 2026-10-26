@@ -101,6 +101,10 @@ Articles dated from 09/20/2026 on should have:
 4. `## Frequently Asked Questions`, formatted as `**Question?**` on one line and the answer on the next ⚠. This feeds Google's FAQ data.
 5. `## Conclusion and Key Takeaways`, then `## Methodology and Sources`.
 
+## Tone
+
+**No ominous, no doomsday**, in articles, images, voiceover or social copy. Neutral to positive: render the facts, keep readers informed, build the base. Energy and spectacle are welcome; menace and dread are not, even when the story is a selloff. Prefer "fell 7%" to "crashed", and "biggest one-day drop since July" to "bloodbath". *(Owner-set, Oct 25, 2026. Video specifics: [video-production.md](./video-production.md).)*
+
 ## Disclosure
 
 - **Author position:** "the author holds / does not hold a position in …", confirmed by the author before publishing.

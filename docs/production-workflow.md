@@ -7,7 +7,7 @@ How a story goes from idea to website, Instagram and Threads, and how what we le
 | | Owns | Hands off |
 | --- | --- | --- |
 | **Kanchan** (editor-in-chief) | What we cover and the angle. Final approval of facts, positions and anything published under the brand | A story brief |
-| **Muse** (research + production) | Deep sourcing (Tier 1/2 for every fact), drafting, Midjourney prompts, video edit, voiceover, captions, posting to Instagram and Threads | A story package, then the posts |
+| **Muse** (research + production) | Deep sourcing (Tier 1/2 for every fact), drafting, Midjourney prompts, video edit, voiceover, captions, posting to Instagram, TikTok and Threads | A story package, then the posts |
 | **Claude** (verification + platform) | Fact-checking the package against its sources, structuring the web article (SEO/AEO/FAQ/ⓘ), the site itself, the validator, analytics and the weekly scorecard | A reviewed article and a fact sheet the social posts are cut from |
 
 ## The handoff folder
@@ -50,17 +50,13 @@ https://financialgurkha.com/links?utm_source=instagram&utm_medium=social&utm_cam
 
 The `/links` page records a `links-card-click` event (PostHog + GA4) with the article opened, its position, and these tags.
 
-## Voice
+## Video
 
-Goal: one consistent, recognizable **Financial Gurkha voice** on every reel.
+Instagram Reels and TikTok follow the full pipeline in [video-production.md](./video-production.md): tension and hardest number first, the abstraction ladder for visuals, timed scripts from verified facts, rendered number plates (`npm run plate`), and a QA gate before posting. Each video gets a `video-brief.md` from [templates/video-brief.md](./templates/video-brief.md) in the story's production folder.
 
-1. **Try Muse's built-in voice first.** Since Meta Connect 2026, Muse can generate voice you direct by prompt. Keep it if it holds up over 5 reels in a blind listen against the paid option.
-2. **Otherwise, use ElevenLabs Creator** (about $22/month; confirm on elevenlabs.io/pricing). It's the first plan with a **Professional Voice Clone**. Clone **Kanchan's own voice** once, and every reel sounds like the founder. Starter (about $6) also has commercial rights, but only instant cloning, which is lower fidelity.
-3. **Script rules** for the voiceover:
-   - Numbers written as spoken: "five point three six five percent".
-   - Under 150 words for a 60-second reel.
-   - Every number taken from the reviewed fact table.
-4. **Disclosure:** reels with AI-generated voice get Meta's AI label. The caption says "Voice generated with AI" if the voice is a clone.
+**Voice:** Fish Audio "Anchor News" at 1.25×, numbers written as spoken, about 3 spoken words per second of video. Reels with AI-generated voice or imagery get Meta's AI label on Instagram and the AI-generated content label on TikTok.
+
+**Tone law:** no ominous, no doomsday, in images, voiceover or copy. Neutral to positive, even on a selloff. See [content-spec.md](./content-spec.md#tone).
 
 ## Weekly scorecard (Claude)
 
