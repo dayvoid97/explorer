@@ -215,11 +215,8 @@ export default async function NewsIndexPage() {
                   </section>
                 ))}
               </div>
-              {NEWS_RAIL_AD_SLOT && (
-                <aside className="mt-10" aria-label="Advertisement">
-                  <NewsRailAd />
-                </aside>
-              )}
+              {/* Desktop only; renders nothing on phones and tablets. */}
+              <NewsRailAd />
             </div>
 
             <footer
