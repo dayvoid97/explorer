@@ -54,7 +54,9 @@ The `/links` page records a `links-card-click` event (PostHog + GA4) with the ar
 
 Instagram Reels and TikTok follow the full pipeline in [video-production.md](./video-production.md): tension and hardest number first, the abstraction ladder for visuals, timed scripts from verified facts, rendered number plates (`npm run plate`), and a QA gate before posting. Each video gets a `video-brief.md` from [templates/video-brief.md](./templates/video-brief.md) in the story's production folder.
 
-**Voice:** Fish Audio "Anchor News" at 1.25×, numbers written as spoken, about 3 spoken words per second of video. Reels with AI-generated voice or imagery get Meta's AI label on Instagram and the AI-generated content label on TikTok.
+**Look and assembly:** every reel uses the Gurkha Splash frame. `npm run video` turns a storyboard (`production/<story>/video.json`) into a finished reel: Fish voiceover, Midjourney footage via APIFrame, frame, plates, word-by-word captions and end card.
+
+**Voice:** Fish Audio "Anchor News" at 1.25×, numbers written as spoken, about 3 spoken words per second of video, with sparse `[excited]` / `[emphasis]` cues. Reels with AI-generated voice or imagery get Meta's AI label on Instagram and the AI-generated content label on TikTok.
 
 **Tone law:** no ominous, no doomsday, in images, voiceover or copy. Neutral to positive, even on a selloff. See [content-spec.md](./content-spec.md#tone).
 

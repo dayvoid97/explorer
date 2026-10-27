@@ -13,7 +13,7 @@ Related: [content-spec.md](./content-spec.md) (rules for everything published), 
 | Motion, scale, light, precision, speed | Skulls, sirens, storms-as-doom, cracked earth, burning cities |
 | "fell 7%", "biggest one-day drop since July" | "crashed", "collapse", "bloodbath", "panic", "brace yourself" |
 | "What it means for you" | Countdowns, warnings, "before it's too late" |
-| Gold and navy, warm rim light | Red-alarm lighting, horror palettes |
+| Black and gold, warm light, gold paint splashes | Red-alarm lighting, horror palettes |
 
 A story about losses is told as **a turn, rendered with energy**: a tipping scale, a leak, a gauge swinging. Never as a threat to the viewer.
 
@@ -45,16 +45,16 @@ Don't illustrate the topic. Extract the **turn**: the one contradiction in the s
 1. **Make it physical.** One object, one event: a crack spreading through a screen, a leak at lunchtime, a scale tipping.
 2. **Climb the ladder in the order the evidence ranks:** **spectacle → physical metaphor → mood.** As of Oct 2026, the flying-Roadster reel and the $2T-number carousel top the produced work, and account views went from 33 to 3,852 in 28 days once the engine ran.
 3. **Human presence beats polish.** Kanchan's own face and voice out-pull every produced graphic. **Make one founder-on-camera video a week:** 20–40 seconds on the week's biggest number, with Muse adding plates and subtitles.
-4. **The house look:** dark navy, gold rim lighting, cinematic.
+4. **The house look:** the Gurkha Splash frame (below) around punchy, high-contrast footage with deep blacks and warm gold highlights. No navy.
 5. **Midjourney does backgrounds only.** Never text and never numbers; the number is composited at stage 6.
 
 **Prompt pattern:** `scene + tension object + palette + "no text, no words" + aspect flag`
 
 ```
-a single glass scale on a marble trading desk tipping sharply to one side, Wall Street at dusk through tall windows, dark navy, gold rim lighting, cinematic, shallow depth of field, no text, no words --ar 9:16
+a single glass scale on a marble trading desk tipping sharply to one side, Wall Street at dusk through tall windows, cinematic, high contrast, deep black shadows, warm gold highlights, one vivid accent color, no text, no words --ar 3:4
 ```
 
-Aspect flags: `--ar 9:16` for reels and TikTok, `--ar 4:5` for carousels, `--ar 16:9` for the web cover.
+Aspect flags: `--ar 3:4` for reel and TikTok footage (it fills the frame's window), `--ar 4:5` for carousels, `--ar 16:9` for the web cover. `npm run video` adds the house style words and the aspect for you.
 
 ## Stage 4: the script
 
@@ -74,17 +74,69 @@ Aspect flags: `--ar 9:16` for reels and TikTok, `--ar 4:5` for carousels, `--ar 
 
 ## Stage 6: assembly and the frame
 
-All formats are 9:16, 1080×1920, for both Instagram Reels and TikTok. Layout, top to bottom:
+### The look: Gurkha Splash
 
-| Zone (approx.) | What goes there |
+Every reel uses the same frame, built from the logo's colors: near-black `#080808`, off-white `#F8F8F8` and logo gold `#C8A048` (plus lighter and darker golds for the paint). The footage plays in a clean window in the middle; gold and white paint splashes burst out toward the edges. Colors and layout live in `scripts/brand/style.mjs`.
+
+![Gurkha Splash frame](../brand/video/frames/frame-1.png)
+
+| Zone (1080×1920) | What goes there |
 | --- | --- |
-| Top ~240px | Nothing important: platform UI and status bar |
-| 240–1680px | **The 3:4 grid crop.** Instagram's profile grid shows only this band of the cover, so the tension object and the number must sit inside it |
-| Plate | **Low, just above the subtitles.** `npm run plate` places it with its bottom edge ~430px from the bottom |
-| ~1500–1650px | Burned-in subtitles |
-| Bottom ~250px and right ~120px | Platform captions and buttons; keep clear |
+| Top, y 0–330 | Paint splashes, and the **Financial Gurkha** wordmark just above the window |
+| **Window, x 60–1020, y 330–1610 (3:4)** | The footage. It sits inside Instagram's 3:4 grid crop, so the cover tile shows the whole shot |
+| Inside the window, low | Number plate (`--position low`), then the captions just below it at y ≈ 1545 |
+| Under the window | `FINANCIALGURKHA.COM`, then splashes. The bottom ~250px is under the platform UI, so nothing important goes there |
 
-Pixel bands are approximate. Check the first export against each app's preview before posting.
+- **One frame per series.** `npm run frame -- --seed N` renders a variant with a different splash pattern; set `"frameSeed"` in the storyboard and keep it for the whole series. Committed frames are in `brand/video/frames/`.
+- **Captions:** word by word, white Inter Black, up to three words at a time; the word being spoken turns gold and pops. Timed from Fish Audio's word timestamps, so they always match the voice.
+- **Motion:** a slow punch-in on every shot keeps the frame alive even when the footage holds.
+- **End card:** 1.8 seconds of the stacked wordmark, the tagline and "Full breakdown · link in bio".
+- **Loudness:** the final mix is normalized to -14 LUFS, the level Instagram and TikTok play at.
+- **Fonts** are bundled in `brand/video/fonts/` (Playfair Display for the wordmark and numbers, Inter Black for captions; both SIL Open Font License), so every machine renders the same frame.
+
+### Making a reel: `npm run video`
+
+Write the script into a storyboard at `production/<YYYY-MM-DD>-<slug>/video.json`, then:
+
+```bash
+npm run video -- production/<story>/video.json --dry-run   # check prompts and word counts, no API calls
+npm run video -- production/<story>/video.json             # voice, footage, assembly
+npm run video -- production/<story>/video.json --scene 03-why --only images,video --force   # redo one shot
+```
+
+```jsonc
+{
+  "title": "<Company> Q3 earnings",
+  "frameSeed": 1,
+  "voice": { "model": "s2.1-pro", "speed": 1.25 },        // voice id from FISH_AUDIO_VOICE_ID ("Anchor News")
+  "midjourney": { "sref": "<style reference, optional>" },
+  "music": { "file": "bed.mp3", "volume": 0.1 },           // optional
+  "scenes": [
+    {
+      "id": "01-hook",
+      "narration": "[excited] <Company> just made [emphasis] <number, as spoken> in three months.",
+      "imagePrompt": "a single gold chip on a black glass table lifting into a column of light",
+      "motionPrompt": "slow push-in, light rising",
+      "motion": "high",                                      // Midjourney video motion: low | high
+      "plate": { "number": "<$NNB>", "label": "<what the number is>", "kicker": "<short hook>" }
+    }
+  ]
+}
+```
+
+- One scene per shot, one sentence per scene. Midjourney clips run about 5 seconds, so keep each line around 12–15 words.
+- `"imageFile"` uses your own image instead of Midjourney; `"imageIndex"` (1–4) picks another of Midjourney's four candidates.
+- Media lands in `production/<story>/render/` (git-ignored); the finished reel is `render/<story>.mp4`.
+- Keys go in `.env.local`: `FISH_AUDIO_API_KEY`, `FISH_AUDIO_VOICE_ID`, `APIFRAME_API_KEY`. If APIFrame stops working, set `"videoProvider": "runway"` and add `RUNWAYML_API_SECRET`.
+
+### Voice direction
+
+Fish Audio's S2 voices take delivery cues in square brackets. They steer the read and are never spoken or captioned.
+
+- Open the hook with energy: `[excited]` or `[confident]`.
+- Put `[emphasis]` right before the number or word that carries the story.
+- Keep cues sparse: one per sentence at most. Over-directed reads sound fake.
+- Numbers are still written as spoken: "twenty-four billion dollars", not "$24B".
 
 **Number plates:** render them, don't type them in the editor. Every plate then matches across videos:
 

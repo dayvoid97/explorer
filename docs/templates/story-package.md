@@ -20,7 +20,7 @@ Every number and claim in the article, reel and captions comes from this table a
 | Shot | Use | Prompt | Aspect |
 | --- | --- | --- | --- |
 | Cover | Web cover + Threads | | `--ar 16:9` |
-| Reel 1 | Opening | | `--ar 9:16` |
+| Reel 1 | Opening | | `--ar 3:4` |
 
 ## 3. Reel script
 

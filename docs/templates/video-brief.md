@@ -34,9 +34,9 @@ Rows from the story's fact table that this video uses. Every on-screen and spoke
 
 | Shot | Use | Prompt | Aspect |
 | --- | --- | --- | --- |
-| S1 | Hook / cover | | `--ar 9:16` |
-| S2 | | | `--ar 9:16` |
-| S3 | | | `--ar 9:16` |
+| S1 | Hook / cover | | `--ar 3:4` |
+| S2 | | | `--ar 3:4` |
+| S3 | | | `--ar 3:4` |
 
 ## 4. Script (Fish "Anchor News", 1.25×)
 
@@ -49,6 +49,8 @@ Rows from the story's fact table that this video uses. Every on-screen and spoke
 | 36–40s | | Full breakdown at the link in bio. | | |
 
 **Word count:** __ / budget __
+
+**Storyboard:** `production/<folder>/video.json` → `npm run video` (see docs/video-production.md, stage 6)
 
 ## 5. Captions
 

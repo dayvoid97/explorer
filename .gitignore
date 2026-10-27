@@ -51,6 +51,7 @@ next-env.d.ts
 /production/**/*.mp3
 /production/**/*.wav
 /production/**/*.psd
+/production/**/render/
 /production/**/*.png
 /production/**/*.jpg
 /production/**/*.jpeg

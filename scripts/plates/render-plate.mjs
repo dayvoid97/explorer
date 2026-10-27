@@ -24,6 +24,8 @@ import fs from 'node:fs'
 import os from 'node:os'
 import path from 'node:path'
 import { execFileSync } from 'node:child_process'
+import { fileURLToPath } from 'node:url'
+import { PALETTE } from '../brand/style.mjs'
 
 const args = process.argv.slice(2)
 const opt = (name, fallback = '') => {
@@ -64,24 +66,27 @@ const placement =
       ? `top:${Math.round(H * 0.18)}px; transform:translateX(-50%);`
       : `bottom:${gap}px; transform:translateX(-50%);`
 
+const fontsDir = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../../brand/video/fonts')
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 // Long numbers shrink so they always fit on one line.
 const numberSize = Math.min(300, Math.floor((W * 0.86) / Math.max(3, number.length * 0.62)))
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>
+  @font-face{font-family:"FG Serif";src:url("file://${fontsDir}/PlayfairDisplay.ttf");font-weight:400 900;}
+  @font-face{font-family:"FG Sans";src:url("file://${fontsDir}/Inter-Black.otf");font-weight:900;}
   html,body{margin:0;background:transparent;}
   .frame{position:relative;width:${W}px;height:${H}px;overflow:hidden;}
   .plate{position:absolute;left:50%;${placement}
     display:flex;flex-direction:column;align-items:center;gap:18px;
     padding:34px 56px 38px;border-radius:28px;max-width:${Math.round(W * 0.88)}px;
-    background:linear-gradient(180deg,rgba(10,16,32,0.78),rgba(10,16,32,0.9));
-    border:2px solid rgba(201,162,75,0.75);
-    box-shadow:0 0 0 1px rgba(227,194,122,0.15), 0 24px 60px rgba(0,0,0,0.45), 0 0 60px rgba(201,162,75,0.18);}
-  .kicker{font:700 30px/1 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;letter-spacing:7px;
-    text-transform:uppercase;color:#C9A24B;}
-  .number{font:700 ${numberSize}px/0.92 "Times New Roman",Georgia,serif;color:#E3C27A;letter-spacing:-2px;
-    white-space:nowrap;text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 30px rgba(227,194,122,0.35);}
-  .label{font:600 44px/1.2 -apple-system,"Helvetica Neue",Helvetica,Arial,sans-serif;color:#F4EFE6;
+    background:linear-gradient(180deg,rgba(8,8,8,0.82),rgba(8,8,8,0.94));
+    border:3px solid ${PALETTE.gold};
+    box-shadow:0 24px 60px rgba(0,0,0,0.5), 0 0 60px rgba(200,160,72,0.25);}
+  .kicker{font:900 30px/1 "FG Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;letter-spacing:7px;
+    text-transform:uppercase;color:${PALETTE.gold};}
+  .number{font:900 ${numberSize}px/0.92 "FG Serif",Georgia,serif;color:${PALETTE.goldBright};letter-spacing:-2px;
+    white-space:nowrap;text-shadow:0 2px 0 rgba(0,0,0,0.35),0 0 30px rgba(232,192,98,0.35);}
+  .label{font:900 44px/1.2 "FG Sans",-apple-system,"Helvetica Neue",Arial,sans-serif;color:${PALETTE.white};
     text-align:center;max-width:${Math.round(W * 0.78)}px;}
 </style></head><body><div class="frame"><div class="plate">
   ${kicker ? `<div class="kicker">${esc(kicker)}</div>` : ''}
@@ -102,6 +107,9 @@ const browser =
     '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
     '/Applications/Chromium.app/Contents/MacOS/Chromium',
+    '/usr/bin/google-chrome',
+    '/usr/bin/chromium',
+    '/usr/bin/chromium-browser',
   ].find((p) => fs.existsSync(p))
 if (!browser) {
   console.error('No Chrome or Brave found. Set CHROME_PATH to a Chromium-based browser.')
@@ -113,6 +121,10 @@ execFileSync(
   [
     '--headless=new',
     '--disable-gpu',
+    // Chrome refuses to run as root (containers, CI) unless its sandbox is off
+    ...(process.getuid && process.getuid() === 0 ? ['--no-sandbox'] : []),
+    '--allow-file-access-from-files',
+    '--virtual-time-budget=3000', // let the bundled fonts load before the screenshot
     '--hide-scrollbars',
     '--default-background-color=00000000', // transparent PNG
     '--force-device-scale-factor=1',
