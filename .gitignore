@@ -58,3 +58,6 @@ next-env.d.ts
 
 # rendered number plates (outputs of npm run plate)
 /plates/
+
+# raw S-1 filing photos (HEIC, ~250MB) — source material, never deploy
+/public/anthropic-ipo-s1-filing/
