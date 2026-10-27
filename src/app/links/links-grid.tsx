@@ -356,9 +356,7 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
               <p style={{ fontFamily: SERIF }} className="font-semibold">
                 Financial Gurkha
               </p>
-              <p className="text-[#b9ae94]">
-                {BRAND.bio}
-              </p>
+              <p className="text-[#b9ae94]">{BRAND.bio}</p>
             </div>
           </div>
         </header>
@@ -393,12 +391,17 @@ export default function LinksGrid({ articles }: { articles: LinkArticle[] }) {
           {ordered.map((a, i) => (
             <div key={a.href} className="contents">
               <ArticleCard a={a} priority={i < PRIORITY_CARDS} onOpen={() => trackOpen(a, i + 1)} />
-              {i + 1 < ordered.length && (i + 1 - MOBILE_AD_FIRST) % MOBILE_AD_EVERY === 0 && i + 1 >= MOBILE_AD_FIRST && (
-                <CardAd variant="mobile" n={(i + 1 - MOBILE_AD_FIRST) / MOBILE_AD_EVERY + 1} />
-              )}
-              {adAfter !== null && i + 1 < ordered.length && i + 1 >= adAfter && (i + 1 - adAfter) % DESKTOP_AD_EVERY === 0 && (
-                <CardAd variant="desktop" n={(i + 1 - adAfter) / DESKTOP_AD_EVERY + 1} />
-              )}
+              {i + 1 < ordered.length &&
+                (i + 1 - MOBILE_AD_FIRST) % MOBILE_AD_EVERY === 0 &&
+                i + 1 >= MOBILE_AD_FIRST && (
+                  <CardAd variant="mobile" n={(i + 1 - MOBILE_AD_FIRST) / MOBILE_AD_EVERY + 1} />
+                )}
+              {adAfter !== null &&
+                i + 1 < ordered.length &&
+                i + 1 >= adAfter &&
+                (i + 1 - adAfter) % DESKTOP_AD_EVERY === 0 && (
+                  <CardAd variant="desktop" n={(i + 1 - adAfter) / DESKTOP_AD_EVERY + 1} />
+                )}
             </div>
           ))}
         </div>

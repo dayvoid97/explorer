@@ -38,6 +38,7 @@ _Disclaimer: This article is for educational purposes only and is not investment
 ### What's in this report
 
 - [The 60-Second Version](#the-60-second-version)
+  - [What's in this report](#whats-in-this-report)
 - [1. What a Virtual Collaborator Is](#1-what-a-virtual-collaborator-is)
 - [2. The Product Line](#2-the-product-line)
 - [3. Eli Lilly: Claude Across a 50,000-Person Company](#3-eli-lilly-claude-across-a-50000-person-company)
@@ -45,6 +46,7 @@ _Disclaimer: This article is for educational purposes only and is not investment
 - [5. The Adoption Numbers](#5-the-adoption-numbers)
 - [6. Where This Is Heading](#6-where-this-is-heading)
 - [Frequently Asked Questions](#frequently-asked-questions)
+- [Methodology and Sources](#methodology-and-sources)
 
 ---
 
@@ -58,18 +60,19 @@ The distinction from a chatbot: a chatbot answers questions; a Virtual Collabora
 
 ## 2. The Product Line
 
-| Layer | Product | What it does |
-| :--- | :--- | :--- |
-| Models | **Mythos** | Most capable class; offered to vetted organizations for cybersecurity and life sciences work |
-| | **Fable** | The generally available version of the Mythos-class model, with production safeguards (Fable 5.1, Sept 2026) |
-| | **Opus** | Reasoning workhorse; Opus 5.5 is the “enterprise daily driver” |
-| | **Sonnet / Haiku** | Balanced everyday model; fastest, lowest-cost model |
-| Platform | **Claude Platform** | Building blocks for developers to build their own agents |
-| Applications | **Claude Code** | Plans, writes, tests and debugs production code |
-| | **Claude Cowork** | Reads files, navigates applications, completes multi-step desktop work; merging with Claude.ai |
-| | Claude Security, Design, Science | Vertical applications |
+| Layer        | Product                          | What it does                                                                                                 |
+| :----------- | :------------------------------- | :----------------------------------------------------------------------------------------------------------- |
+| Models       | **Mythos**                       | Most capable class; offered to vetted organizations for cybersecurity and life sciences work                 |
+|              | **Fable**                        | The generally available version of the Mythos-class model, with production safeguards (Fable 5.1, Sept 2026) |
+|              | **Opus**                         | Reasoning workhorse; Opus 5.5 is the “enterprise daily driver”                                               |
+|              | **Sonnet / Haiku**               | Balanced everyday model; fastest, lowest-cost model                                                          |
+| Platform     | **Claude Platform**              | Building blocks for developers to build their own agents                                                     |
+| Applications | **Claude Code**                  | Plans, writes, tests and debugs production code                                                              |
+|              | **Claude Cowork**                | Reads files, navigates applications, completes multi-step desktop work; merging with Claude.ai               |
+|              | Claude Security, Design, Science | Vertical applications                                                                                        |
 
 Two details from the filing:
+
 - **Safety shapes releases.** Mythos was first released only to selected organizations through **Project Glasswing**, backed by up to $100 million for cyber-defense, rather than to everyone.
 - **The pace is fast.** Anthropic launched **250** new model versions, features and applications in the first nine months of 2026. NASA engineers used Claude Code to plan the first AI-planned drive of the Mars Perseverance rover.
 
@@ -77,13 +80,14 @@ Two details from the filing:
 
 ![Anthropic’s Eli Lilly case study in the S-1](/anthropic-s1/s1-case-study-eli-lilly.jpg)
 
-| Result | Figure |
-| :--- | :--- |
-| Employees with Claude Enterprise access | **50,000+** |
-| Expansion since rollout | **5×** |
+| Result                                                     | Figure            |
+| :--------------------------------------------------------- | :---------------- |
+| Employees with Claude Enterprise access                    | **50,000+**       |
+| Expansion since rollout                                    | **5×**            |
 | Full-time employees actively using Claude in key functions | **more than 85%** |
 
 The timeline:
+
 - **2024:** Lilly started building Anthropic’s models into its internal AI platform and developer tools, through Amazon Bedrock.
 - **July 2025:** Claude Enterprise rolled out to about **10,000** people, mostly in research.
 - **April 2026:** available company-wide. The filing describes Lilly as the first large pharmaceutical company to do so.
@@ -91,10 +95,12 @@ The timeline:
 The five heaviest-using functions are legal and compliance, technology, finance, oncology and research.
 
 **What changed in the work:**
+
 - **Biologists** who used spreadsheet macros now build working web apps with Claude in a couple of hours.
 - **Chemists** visualize complex data in real time to find new atomic configurations, work that would once have taken hours.
 
 **It is a two-way partnership.**
+
 - **Controls:** Lilly helped design Claude Enterprise’s controls, including a private connection that keeps internal systems off the public internet, and data-loss-prevention hooks that audit data passing through Claude.
 - **Internal marketplace:** Lilly built a marketplace where teams publish skills, with Claude doing a first-pass review.
 - **Next:** in October 2026 Lilly began piloting **Claude Science**, Anthropic’s workbench for scientists.
@@ -122,13 +128,13 @@ The five heaviest-using functions are legal and compliance, technology, finance,
 
 ## 5. The Adoption Numbers
 
-| Metric (as of Sept 30, 2026) | Figure |
-| :--- | :--- |
-| Customers paying $100,000+ a year | more than 11,900 (about 950 a year earlier) |
-| Customers paying $1M+ / $10M+ | more than 1,900 / about 250 |
-| Net revenue retention | about 900% |
-| Fortune 500 companies paying $100K+ | more than 50% |
-| Their Anthropic spend as a share of total expenses | under 0.1% on average |
+| Metric (as of Sept 30, 2026)                       | Figure                                      |
+| :------------------------------------------------- | :------------------------------------------ |
+| Customers paying $100,000+ a year                  | more than 11,900 (about 950 a year earlier) |
+| Customers paying $1M+ / $10M+                      | more than 1,900 / about 250                 |
+| Net revenue retention                              | about 900%                                  |
+| Fortune 500 companies paying $100K+                | more than 50%                               |
+| Their Anthropic spend as a share of total expenses | under 0.1% on average                       |
 
 The last line is the filing’s growth argument in a single number: even its most committed big customers spend a sliver of their budgets on Claude so far.
 
