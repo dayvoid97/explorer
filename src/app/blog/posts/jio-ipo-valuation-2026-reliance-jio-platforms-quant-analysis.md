@@ -1,5 +1,5 @@
 ---
-date: '10/26/2026'
+date: '10/27/2026'
 title: 'Pricing a Telecom Giant: Inside the Reliance Jio IPO Valuation'
 subtitle: "India's largest-ever IPO was 22 times oversubscribed. A quant's read of the prospectus shows the ₹1,119 price already assumes a decade of 15% cash-flow growth and a return on equity more than twice what Jio earns today."
 categories:

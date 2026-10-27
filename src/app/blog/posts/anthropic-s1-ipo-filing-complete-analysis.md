@@ -1,5 +1,5 @@
 ---
-date: '10/26/2026'
+date: '10/27/2026'
 title: 'Inside Anthropic’s S-1: The Complete Breakdown of the IPO Filing'
 subtitle: 'Anthropic filed to list on Nasdaq as ANT. Revenue went from $41 million in 2023 to $16.3 billion in the first half of 2026 alone, the company posted its first operating profit, it holds $131.7 billion of cash, and a trust plus the seven co-founders will control the board. We read the filing and explain every number that matters: growth, governance, pay, products, customers, cash, compute deals, risks and the discount rate.'
 categories:
