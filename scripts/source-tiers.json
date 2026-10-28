@@ -44,7 +44,9 @@
     "euronext.com",
     "lseg.com",
     "jpx.co.jp",
-    "hkex.com.hk"
+    "hkex.com.hk",
+    "nseindia.com",
+    "bseindia.com"
   ],
   "tier1Patterns": [
     "^investors?\\.",
