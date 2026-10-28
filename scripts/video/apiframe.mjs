@@ -12,9 +12,11 @@ const JOB_TIMEOUT_MS = 15 * 60 * 1000
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
 
 async function request(method, endpoint, { json, form } = {}, attempt = 0) {
+  // Without a key in the environment, the request goes out bare: in a cloud
+  // environment with network secrets, the proxy adds the credential itself
   const key = process.env.APIFRAME_API_KEY
-  if (!key) throw new Error('APIFRAME_API_KEY is not set')
-  const headers = { 'X-API-Key': key }
+  const headers = {}
+  if (key) headers['X-API-Key'] = key
   if (json) headers['Content-Type'] = 'application/json'
 
   const res = await fetch(`${APIFRAME_BASE_URL}${endpoint}`, {
@@ -27,6 +29,7 @@ async function request(method, endpoint, { json, form } = {}, attempt = 0) {
     await sleep(2000 * 2 ** attempt)
     return request(method, endpoint, { json, form }, attempt + 1)
   }
+  if (res.status === 401) throw new Error(`APIFrame rejected the key (401): set APIFRAME_API_KEY. ${await res.text()}`)
   if (!res.ok) {
     throw new Error(`APIFrame ${method} ${endpoint} failed (${res.status}): ${await res.text()}`)
   }

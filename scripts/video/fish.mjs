@@ -11,10 +11,11 @@
 const FISH_BASE_URL = process.env.FISH_AUDIO_BASE_URL || 'https://api.fish.audio'
 
 export async function speak({ text, voiceId, model, speed = 1, language = 'en' }) {
+  // Without a key in the environment, the request goes out bare: in a cloud
+  // environment with network secrets, the proxy adds the credential itself
   const apiKey = process.env.FISH_AUDIO_API_KEY
-  if (!apiKey) throw new Error('FISH_AUDIO_API_KEY is not set')
-
-  const headers = { Authorization: `Bearer ${apiKey}`, 'Content-Type': 'application/json' }
+  const headers = { 'Content-Type': 'application/json' }
+  if (apiKey) headers.Authorization = `Bearer ${apiKey}`
   const ttsModel = model || process.env.FISH_AUDIO_MODEL
   if (ttsModel) headers.model = ttsModel // the model is chosen by header, not body
 
@@ -30,6 +31,7 @@ export async function speak({ text, voiceId, model, speed = 1, language = 'en' }
   if (!res.ok) {
     const detail = await res.text()
     if (res.status === 402) throw new Error(`Fish Audio: out of credits (402) ${detail}`)
+    if (res.status === 401) throw new Error(`Fish Audio rejected the key (401): set FISH_AUDIO_API_KEY. ${detail}`)
     throw new Error(`Fish Audio TTS failed (${res.status}): ${detail}`)
   }
 
