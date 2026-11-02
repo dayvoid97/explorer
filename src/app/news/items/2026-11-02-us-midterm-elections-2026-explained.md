@@ -9,6 +9,10 @@ tags:
   - Midterms
 image: '/news/2026-11-02-us-midterm-elections-2026-explained.jpg'
 sources:
+  - name: 'Reuters — Investors gaming out Congress control for spending, AI outlook (Nov 2, 2026: what each outcome means for fiscal policy, shutdown and debt-limit risk)'
+    url: 'https://www.reuters.com/business/finance/investors-gaming-out-congress-control-spending-ai-outlook-2026-11-02/'
+  - name: 'Reuters — Trump heads to Iowa, Kansas for rallies before midterms (Nov 1, 2026: 35 Senate seats and 435 House seats on the ballot; more than 52 million early votes per the University of Florida Election Lab)'
+    url: 'https://www.reuters.com/world/us/trump-heads-iowa-kansas-rallies-before-midterms-2026-11-01/'
   - name: 'Wikipedia — 2026 United States elections (seats contested, 120th Congress, special elections in Florida and Ohio)'
     url: 'https://en.wikipedia.org/wiki/2026_United_States_elections'
   - name: 'Political.org — The 2026 Midterm Elections Explained (current party division from House Clerk and U.S. Senate; Cook Political Report toss-up counts, Oct 2026)'
@@ -19,7 +23,7 @@ sources:
 
 ## What happens on Tuesday
 
-The 2026 midterm elections fall on Tuesday, November 3, midway through President Donald Trump's second term. Midterms decide Congress, not the presidency — but they determine who writes the laws, approves the spending and confirms the appointments for the rest of the term. This year's vote will seat the 120th United States Congress, which governs alongside Trump through 2027 and 2028. Early voting is already well advanced: about 51 million ballots had been cast before Election Day, according to tracking compiled from 47 reporting states.
+The 2026 midterm elections fall on Tuesday, November 3, midway through President Donald Trump's second term. Midterms decide Congress, not the presidency — but they determine who writes the laws, approves the spending and confirms the appointments for the rest of the term. This year's vote will seat the 120th United States Congress, which governs alongside Trump through 2027 and 2028. Early voting is already well advanced: more than 52 million ballots had been cast before Election Day, according to the University of Florida's Election Lab — a record for a midterm election.
 
 ## The House: all 435 seats, a four-seat race
 
