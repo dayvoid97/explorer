@@ -73,7 +73,7 @@ export default function robots(): MetadataRoute.Robots {
         disallow: DISALLOWED,
       },
     ],
-    sitemap: [`${SITE}/sitemap.xml`, `${SITE}/news-sitemap.xml`],
-    host: SITE,
+    // The index lists every section sitemap, including the Google News one
+    sitemap: `${SITE}/sitemap.xml`,
   }
 }

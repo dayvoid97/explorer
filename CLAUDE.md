@@ -12,6 +12,9 @@ Next.js 15 app. The rules live in `docs/`; read them before publishing anything:
 - Every figure needs a Tier 1/2 source (content-spec.md). Report results against estimates and
   the prior year. No buy/sell calls or price targets of our own.
 - Run `npm run validate:content` and fix every ✖ before pushing. Work on a branch, never `main`.
+- **Distribution is automatic** once content merges to `main` (docs/production-workflow.md,
+  "Distribution"): sitemaps and RSS rebuild on deploy, and the Broadcast workflow pings IndexNow and
+  WebSub. Don't add build-time pings or fake `lastmod` dates; set `updated` only for real changes.
 
 ## Video: the Gurkha Splash style
 

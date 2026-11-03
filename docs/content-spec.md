@@ -41,6 +41,7 @@ subtitle: 'One or two sentences. Becomes the Google description and the share te
 categories: ['Treasury Yields', 'Bond Market']   # list ✖
 image: '/article-slug/cover.jpg'   # local file ⚠ if missing or hotlinked, ✖ if path is wrong
 author: 'Kanchan'                  # or 'Niraj Neupane' ✖
+updated: '11/04/2026'              # optional: only when the piece materially changes
 ---
 ```
 
@@ -56,8 +57,11 @@ image: "/news/slug-oct-22-2026.jpg"
 sources:                           # ✖ at least one Tier 1 or Tier 2
   - name: "Reuters — Headline of the report (Oct 22, 2026)"
     url: "https://www.reuters.com/…"
+updated: "11/04/2026"              # optional: only when the brief materially changes
 ---
 ```
+
+**`updated`** is the date of the last real change (a correction, new numbers, a rewritten section), never a typo fix. It becomes the page's `lastmod` in the sitemaps, which is how Google decides what to recrawl, so bumping it for trivial edits teaches Google to ignore it.
 
 ## Sources
 

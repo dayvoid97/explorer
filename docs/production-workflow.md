@@ -60,6 +60,21 @@ Instagram Reels and TikTok follow the full pipeline in [video-production.md](./v
 
 **Tone law:** no ominous, no doomsday, in images, voiceover or copy. Neutral to positive, even on a selloff. See [content-spec.md](./content-spec.md#tone).
 
+## Distribution: automatic on publish
+
+Merging a brief or article to `main` is the publish button. Everything after that is automatic:
+
+1. **Vercel deploys** the site. The sitemaps and feeds are rebuilt from the content files in the same deploy:
+   - `/sitemap.xml`: the index, the one URL registered in Google Search Console and Bing Webmaster Tools. It lists `/sitemap-pages.xml`, `/news/sitemap.xml`, `/blog/sitemap.xml` and the Google News sitemap `/news-sitemap.xml` (briefs from the last two days).
+   - RSS: `/rss.xml` (The Daily Brief), `/blog/rss.xml` (research), `/feed.xml` (everything). Every page links all three for feed-reader discovery.
+2. **The Broadcast workflow** (`.github/workflows/broadcast.yml`) runs when Vercel reports the production deploy live. It finds the briefs and articles that deploy added, changed or removed, and announces them:
+   - **IndexNow** → Bing, Yandex, Naver, Seznam, Yep and the other IndexNow engines recrawl within minutes.
+   - **WebSub** → feed readers and aggregators subscribed to our feeds get the new items pushed.
+   - **Google** has no ping. It recrawls from `/sitemap.xml`, guided by accurate `lastmod` dates (see `updated` in content-spec.md).
+3. **Muse** posts to Instagram, Facebook, Threads and TikTok. `/feed.xml` is also the clean hook for any automation (Zapier, Make, IFTTT) that should fire on new content.
+
+Each run's summary (which URLs went out, and each service's answer) is on the workflow's page under Actions. To re-send, run **Broadcast** by hand from the Actions tab (it re-announces everything dated in the last 48 hours), or locally: `npm run broadcast -- --hours 48 --dry-run`.
+
 ## Weekly scorecard (Claude)
 
 Every Monday, from PostHog and GA4:

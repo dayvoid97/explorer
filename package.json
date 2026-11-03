@@ -5,10 +5,9 @@
   "scripts": {
     "dev": "next dev ",
     "build": "next build",
-    "postbuild": "node scripts/submit-indexnow.mjs",
     "start": "next start",
     "lint": "next lint",
-    "indexnow": "node scripts/submit-indexnow.mjs",
+    "broadcast": "node scripts/broadcast.mjs",
     "validate:content": "node scripts/validate-content.mjs",
     "plate": "node scripts/plates/render-plate.mjs",
     "frame": "node scripts/brand/render-frame.mjs",

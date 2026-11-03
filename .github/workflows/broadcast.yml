@@ -1,0 +1,60 @@
+name: Broadcast
+
+# After every successful production deploy, tell search engines (IndexNow) and
+# feed hubs (WebSub) about the content that deploy published or changed.
+# Vercel reports each deploy to GitHub, so this runs only once the pages are live.
+on:
+  deployment_status:
+  workflow_dispatch:
+    inputs:
+      hours:
+        description: 'Re-broadcast everything the sitemaps date within this many hours'
+        default: '48'
+
+permissions:
+  contents: read
+  deployments: read
+
+concurrency:
+  group: broadcast
+  cancel-in-progress: false
+
+jobs:
+  broadcast:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      (github.event.deployment_status.state == 'success' &&
+       github.event.deployment.environment == 'Production')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: List content changed since the previous production deploy
+        if: github.event_name == 'deployment_status'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHA: ${{ github.event.deployment.sha }}
+          DEPLOYMENT_ID: ${{ github.event.deployment.id }}
+        run: |
+          previous=$(gh api "repos/${{ github.repository }}/deployments?environment=Production&per_page=20" \
+            --jq "[.[] | select(.id < $DEPLOYMENT_ID and .sha != \"$SHA\")][0].sha // empty")
+          if [ -n "$previous" ] && git cat-file -e "$previous^{commit}" 2>/dev/null; then
+            git diff --name-status "$previous" "$SHA" -- src/app/news/items src/app/blog/posts > changed.txt
+            echo "Changed since $previous:"; cat changed.txt
+          else
+            echo "No previous production deploy found; falling back to the sitemaps' dates"
+          fi
+
+      - name: Broadcast
+        run: |
+          if [ -f changed.txt ]; then
+            node scripts/broadcast.mjs --files changed.txt
+          else
+            node scripts/broadcast.mjs --hours "${{ inputs.hours || '48' }}"
+          fi

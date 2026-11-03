@@ -11,6 +11,7 @@ import { AdSenseScript } from './components/AdsenseScript'
 import { PostHogProvider } from './providers/PostHogProvider'
 import { ResearchLinkTracker } from './components/ResearchLinkTracker'
 import { BRAND, BRAND_TITLE } from './lib/brand'
+import { FEEDS } from './lib/feed-links'
 
 export const metadata: Metadata = {
   // metadataBase lets Next resolve relative image paths in OG/Twitter tags to
@@ -48,9 +49,9 @@ export const metadata: Metadata = {
   publisher: 'Financial Gurkha',
   applicationName: 'Financial Gurkha',
   category: 'finance',
-  alternates: {
-    canonical: '/',
-  },
+  // No site-wide canonical here: Next.js hands it to every page that doesn't
+  // set its own, which pointed pages like /links and /winners at the homepage
+  // and got them dropped from Google as duplicates. Pages set their own.
   icons: {
     icon: '/logo.png',
   },
@@ -185,6 +186,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           content="kCNuZr5CtsCqdB-qpgskyWfPOdIs_CWW--FeTAmOXK0"
         />
         {/* robots / googlebot directives now come from the Metadata API above. */}
+        {/* Feed discovery on every page. Written here rather than in metadata
+            alternates, which a page's own alternates would replace wholesale. */}
+        {FEEDS.map((feed) => (
+          <link key={feed.path} rel="alternate" type="application/rss+xml" title={feed.title} href={feed.path} />
+        ))}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
