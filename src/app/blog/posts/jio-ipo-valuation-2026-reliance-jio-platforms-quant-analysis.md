@@ -390,6 +390,21 @@ _Views expressed are the author's own and do not represent any employer. This ar
 
 ---
 
+## Listing update — October 28, 2026 (first trading day)
+
+NSE's official first-day figures are in, and they sit at the friendly end of this model's range:
+
+| First-day marker (NSE, Oct 28) | Figure |
+|---|---|
+| **Open** | ₹1,358.00 (+21.4% vs the ₹1,119 issue price) |
+| **Official close** | **₹1,417.50** (+26.7%) |
+| Intraday range | ₹1,357 – ₹1,423.90 |
+| VWAP | ₹1,368.97 |
+| Market value at close | ≈ ₹13.0 lakh crore (vs ₹10.3 lakh crore at issue) |
+| P/E at close | ≈ 43.5x (vs 34.3x at the issue price) |
+
+Three notes. First, ₹1,419 was the last traded price, not the official close — the close is ₹1,417.50. Second, a strong listing does not re-run this model: at the close, the market is paying for *more* than the 15.4% ten-year free-cash-flow growth the issue price already implied, and the implied ROE gap this piece flagged widens rather than closes. Whether the Section 12 arithmetic gets re-run at the new price is a desk decision, not an automatic update — the FY26 inputs (9.4% ROE, 51.9% EBITDA margin, ARPU of ₹214) are unchanged by a listing pop. Third, no 2020 investor sold into the debut: the issue carried no offer for sale, so Meta, Google and the other eleven financial and strategic holders from the 2020 rounds still hold their stakes — each of which is now worth roughly two-and-a-half to three times its entry price, as detailed in our companion piece on the investors of 2020.
+
 ### Sources
 
 **IPO terms and subscription**

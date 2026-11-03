@@ -13,6 +13,13 @@ export interface ResearchPaper {
 export const TRACKED_PAPERS: Record<string, ResearchPaper> = {
   '7502499': { key: 'cter', title: 'Conditional Tail Episode Risk', author: 'Niraj Neupane' },
   '7534899': { key: 'ster', title: 'Systemic Tail Episode Risk', author: 'Niraj Neupane' },
+  '7652318': { key: 'when-backtests-lie', title: 'When Backtests Lie', author: 'Niraj Neupane' },
+  '7222958': { key: 'ml-liqvar', title: 'ML-LiqVaR', author: 'Niraj Neupane' },
+  '7170418': {
+    key: 'var-backtesting-sr11-7',
+    title: 'Backtesting Value-at-Risk Models Under SR 11-7',
+    author: 'Niraj Neupane',
+  },
 }
 
 /** Code repositories that belong to a tracked paper, by GitHub "owner/repo". */
