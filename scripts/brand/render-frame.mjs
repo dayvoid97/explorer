@@ -18,12 +18,9 @@
  *
  * Needs Chrome, Brave or Chromium. Set CHROME_PATH if it is not found automatically.
  */
-import fs from 'node:fs'
-import os from 'node:os'
 import path from 'node:path'
-import { execFileSync } from 'node:child_process'
-import { fileURLToPath } from 'node:url'
 import { FRAME, PALETTE } from './style.mjs'
+import { FONT_FACES, screenshot } from './screenshot.mjs'
 
 const args = process.argv.slice(2)
 const opt = (name, fallback = '') => {
@@ -33,8 +30,6 @@ const opt = (name, fallback = '') => {
 const seed = Number(opt('seed', '1'))
 const endcard = args.includes('--endcard')
 
-const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
-const fontsDir = path.join(root, 'brand/video/fonts')
 const { width: W, height: H, window: win } = FRAME
 
 // Deterministic randomness: the same seed always gives the same splashes
@@ -157,10 +152,6 @@ function edgeSplats() {
     .join('')
 }
 
-const fontFaces = `
-  @font-face{font-family:"FG Serif";src:url("file://${fontsDir}/PlayfairDisplay.ttf");font-weight:400 900;}
-  @font-face{font-family:"FG Sans";src:url("file://${fontsDir}/Inter-Black.otf");font-weight:900;}`
-
 const defs = `<defs>
   <filter id="ink" x="-50%" y="-50%" width="200%" height="200%">
     <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="3" seed="${seed}" result="noise"/>
@@ -178,7 +169,7 @@ const wordmark = (size, y) => `
     <span style="color:${PALETTE.white}">Financial</span> <span style="color:${PALETTE.gold}">Gurkha</span>
   </div>`
 
-const frameHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaces}
+const frameHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${FONT_FACES}
   html,body{margin:0;background:transparent;}
   .frame{position:relative;width:${W}px;height:${H}px;overflow:hidden;}
   svg{position:absolute;inset:0;}
@@ -201,7 +192,7 @@ ${wordmark(76, win.y - 112)}
 <div class="url">financialgurkha.com</div>
 </div></body></html>`
 
-const endcardHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${fontFaces}
+const endcardHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${FONT_FACES}
   html,body{margin:0;background:${PALETTE.black};}
   .frame{position:relative;width:${W}px;height:${H}px;overflow:hidden;}
   svg{position:absolute;inset:0;}
@@ -224,41 +215,5 @@ const endcardHtml = `<!doctype html><html><head><meta charset="utf-8"><style>${f
 </div></body></html>`
 
 const out = path.resolve(opt('out', `brand/video/frames/${endcard ? 'endcard' : 'frame'}-${seed}.png`))
-fs.mkdirSync(path.dirname(out), { recursive: true })
-const tmp = path.join(fs.mkdtempSync(path.join(os.tmpdir(), 'fg-frame-')), 'frame.html')
-fs.writeFileSync(tmp, endcard ? endcardHtml : frameHtml)
-
-const browser =
-  process.env.CHROME_PATH ||
-  [
-    '/Applications/Brave Browser.app/Contents/MacOS/Brave Browser',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-    '/Applications/Chromium.app/Contents/MacOS/Chromium',
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium',
-    '/usr/bin/chromium-browser',
-  ].find((p) => fs.existsSync(p))
-if (!browser) {
-  console.error('No Chrome, Brave or Chromium found. Set CHROME_PATH to a Chromium-based browser.')
-  process.exit(1)
-}
-
-execFileSync(
-  browser,
-  [
-    '--headless=new',
-    '--disable-gpu',
-    // Chrome refuses to run as root (containers, CI) unless its sandbox is off
-    ...(process.getuid && process.getuid() === 0 ? ['--no-sandbox'] : []),
-    '--hide-scrollbars',
-    '--allow-file-access-from-files',
-    '--default-background-color=00000000', // transparent window in the frame
-    '--force-device-scale-factor=1',
-    '--virtual-time-budget=3000', // let the bundled fonts load before the screenshot
-    `--window-size=${W},${H}`,
-    `--screenshot=${out}`,
-    `file://${tmp}`,
-  ],
-  { stdio: 'ignore' }
-)
+screenshot(endcard ? endcardHtml : frameHtml, { width: W, height: H, out, transparent: !endcard })
 console.log(`${endcard ? 'End card' : 'Frame'} written: ${path.relative(process.cwd(), out)} (${W}×${H}, seed ${seed})`)

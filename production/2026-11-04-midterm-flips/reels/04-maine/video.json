@@ -1,0 +1,61 @@
+{
+  "title": "Maine and the Canada tariff waiver",
+  "article": "/blog/maine-2026-collins-jackson-canada-tariff-waiver",
+  "frameSeed": 1,
+  "videoProvider": "still",
+  "voice": {
+    "voiceId": "63d5460e91e2411fa2e6bf95e7456f03",
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "narration": "[excited] Eleven days before the vote, Maine got a break on Canada tariffs.",
+      "imagePrompt": "a quiet border crossing in the Maine woods at sunrise, a lone truck on the road",
+      "motionPrompt": "slow push-in toward the crossing",
+      "motion": "high",
+      "plate": {
+        "number": "Oct 23",
+        "label": "9 categories of Canadian goods exempted",
+        "kicker": "Maine"
+      }
+    },
+    {
+      "id": "02",
+      "narration": "The fifty percent tariffs had hit about twenty billion dollars of Canadian goods.",
+      "imagePrompt": "stacks of lumber and wooden crates of blueberries in a warm-lit warehouse",
+      "motionPrompt": "slow lateral dolly",
+      "motion": "low",
+      "plate": {
+        "number": "50%",
+        "label": "Tariff on ~$20B of Canadian goods"
+      }
+    },
+    {
+      "id": "03",
+      "narration": "Senator Collins took credit for the waiver. Troy Jackson said it was too little, too late.",
+      "imagePrompt": "a Maine harbor at dawn with lobster boats and golden light on the water",
+      "motionPrompt": "slow orbit across the harbor",
+      "motion": "low"
+    },
+    {
+      "id": "04",
+      "narration": "Jackson won, about fifty-four to forty-six, ending nearly thirty years in the seat.",
+      "imagePrompt": "a logging road through tall pines in Aroostook County with sun rays",
+      "motionPrompt": "slow push-in down the road",
+      "motion": "low",
+      "plate": {
+        "number": "53.8–46.1",
+        "label": "Jackson over Collins, 86% counted"
+      }
+    },
+    {
+      "id": "05",
+      "narration": "Full breakdown at Financial Gurkha. Link in bio.",
+      "imagePrompt": "Portland Head Light lighthouse at sunrise, waves glowing gold",
+      "motionPrompt": "slow pull-back",
+      "motion": "low"
+    }
+  ]
+}

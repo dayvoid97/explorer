@@ -1,0 +1,65 @@
+{
+  "title": "How Texas flipped",
+  "article": "/blog/texas-flips-2026-talarico-hinojosa-latino-voters-prices",
+  "frameSeed": 1,
+  "videoProvider": "still",
+  "voice": {
+    "voiceId": "63d5460e91e2411fa2e6bf95e7456f03",
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "narration": "[excited] Texas elected a Democratic senator for the first time since nineteen eighty-eight.",
+      "imagePrompt": "a lone star shaped constellation glowing gold over a Texas desert night",
+      "motionPrompt": "slow push-in toward the stars",
+      "motion": "high",
+      "plate": {
+        "number": "1988",
+        "label": "Last Democratic Senate win in Texas, until now",
+        "kicker": "Texas"
+      }
+    },
+    {
+      "id": "02",
+      "narration": "James Talarico beat Ken Paxton, about fifty-five to forty-three.",
+      "imagePrompt": "the Texas Capitol building at golden hour, no people",
+      "motionPrompt": "slow tilt up the dome",
+      "motion": "low",
+      "plate": {
+        "number": "~55–43",
+        "label": "Talarico over Paxton"
+      }
+    },
+    {
+      "id": "03",
+      "narration": "On the border, Cameron County swung from Trump plus six to Talarico plus thirty-eight.",
+      "imagePrompt": "palm trees and citrus groves along the Rio Grande at sunset",
+      "motionPrompt": "slow lateral dolly",
+      "motion": "low",
+      "plate": {
+        "number": "+38",
+        "label": "Cameron County, early returns (Trump +6 in 2024)"
+      }
+    },
+    {
+      "id": "04",
+      "narration": "Voters pointed to high prices, and Gina Hinojosa beat Governor Abbott too.",
+      "imagePrompt": "a neighborhood grocery store glowing warm at dusk on a quiet street",
+      "motionPrompt": "slow push-in toward the storefront",
+      "motion": "low",
+      "plate": {
+        "number": "53–46",
+        "label": "Hinojosa over Abbott, 83% counted"
+      }
+    },
+    {
+      "id": "05",
+      "narration": "Full breakdown at Financial Gurkha. Link in bio.",
+      "imagePrompt": "Austin skyline at blue hour with warm gold lights reflecting on the river",
+      "motionPrompt": "slow pull-back",
+      "motion": "low"
+    }
+  ]
+}

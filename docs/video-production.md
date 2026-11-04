@@ -128,6 +128,7 @@ npm run video -- production/<story>/video.json --scene 03-why --only images,vide
 - `"imageFile"` uses your own image instead of Midjourney; `"imageIndex"` (1–4) picks another of Midjourney's four candidates.
 - Media lands in `production/<story>/render/` (git-ignored); the finished reel is `render/<story>.mp4`.
 - Keys go in `.env.local`: `FISH_AUDIO_API_KEY`, `FISH_AUDIO_VOICE_ID`, `APIFRAME_API_KEY`. If APIFrame stops working, set `"videoProvider": "runway"` and add `RUNWAYML_API_SECRET`.
+- **Footage cost.** `"videoProvider": "midjourney"` (default) animates each still with Midjourney video: 10 + 48 APIFrame credits a scene. `"videoProvider": "still"` adds a slow camera move to the still locally with ffmpeg: 10 credits a scene, and nothing at all for scenes with an `"imageFile"`.
 
 ### Voice direction
 

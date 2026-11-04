@@ -1,0 +1,65 @@
+{
+  "title": "The seven Senate flips of 2026",
+  "article": "/blog/midterms-2026-seven-senate-flips-what-moved-each-state",
+  "frameSeed": 1,
+  "videoProvider": "still",
+  "voice": {
+    "voiceId": "63d5460e91e2411fa2e6bf95e7456f03",
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "narration": "[excited] Seven Senate seats flipped on Tuesday, and each state flipped for its own reason.",
+      "imagePrompt": "seven golden lanterns rising into a deep night sky over a dark American prairie",
+      "motionPrompt": "slow push-in, lanterns rising",
+      "motion": "high",
+      "plate": {
+        "number": "7",
+        "label": "Senate seats flipped to Democrats",
+        "kicker": "Midterms 2026"
+      }
+    },
+    {
+      "id": "02",
+      "narration": "Texas came back on prices, led by Latino voters along the border.",
+      "imagePrompt": "a long straight road through Rio Grande Valley farmland at golden hour",
+      "motionPrompt": "slow push-in along the road",
+      "motion": "low",
+      "plate": {
+        "number": "1988",
+        "label": "Last Democratic Senate win in Texas, until now"
+      }
+    },
+    {
+      "id": "03",
+      "narration": "In Kansas and Iowa, farm country elected Democrats, with tariffs and health care on the ballot.",
+      "imagePrompt": "an endless Kansas wheat field at sunset with a lone grain elevator",
+      "motionPrompt": "slow lateral dolly across the wheat",
+      "motion": "low",
+      "plate": {
+        "number": "1932",
+        "label": "Kansas's last Democratic senator before this week"
+      }
+    },
+    {
+      "id": "04",
+      "narration": "Maine got a Canada tariff waiver eleven days out, and Senator Collins still lost.",
+      "imagePrompt": "Maine potato fields meeting a pine forest at sunrise, mist over the ground",
+      "motionPrompt": "slow tilt up toward the sunrise",
+      "motion": "low",
+      "plate": {
+        "number": "Oct 23",
+        "label": "Canada tariff waiver signed"
+      }
+    },
+    {
+      "id": "05",
+      "narration": "And no, Kentucky did not flip. Full breakdown at Financial Gurkha. Link in bio.",
+      "imagePrompt": "the dome of the U.S. Capitol at dawn in warm gold light, seen from far away",
+      "motionPrompt": "slow pull-back",
+      "motion": "low"
+    }
+  ]
+}

@@ -151,6 +151,10 @@ async function stepVideo() {
     const prompt = scene.motionPrompt || scene.imagePrompt
     if (dryRun) return log(scene, `would animate with ${provider}: ${prompt}`)
     log(scene, `animating with ${provider}`)
+    if (provider === 'still') {
+      stillClip(scene, out)
+      return
+    }
     if (provider === 'runway') {
       fs.writeFileSync(out, await runway.animate({ jpeg: windowJpeg(scene), prompt }))
       return
@@ -164,6 +168,29 @@ async function stepVideo() {
     if (!videos.length) throw new Error(`APIFrame job ${jobId} returned no video`)
     fs.writeFileSync(out, await apiframe.download(videos[0]))
   })
+}
+
+// The "still" provider: a slow camera move over the keyframe, made locally with
+// ffmpeg. One Midjourney image per scene instead of an image plus a video.
+const STILL_SECONDS = 6
+function stillClip(scene, out) {
+  const frames = STILL_SECONDS * FPS
+  // Upscale first so the move is smooth rather than stepping a pixel at a time
+  const big = `scale=${win.w * 2}:${win.h * 2}:force_original_aspect_ratio=increase,crop=${win.w * 2}:${win.h * 2}`
+  const drift = scene.motion === 'high' ? 0.0011 : 0.0006
+  ffmpeg([
+    '-i',
+    keyframe(scene),
+    '-vf',
+    `${big},zoompan=z='1+${drift}*on':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)':d=${frames}:s=${win.w}x${win.h}:fps=${FPS}`,
+    '-frames:v',
+    String(frames),
+    '-pix_fmt',
+    'yuv420p',
+    '-c:v',
+    'libx264',
+    out,
+  ])
 }
 
 function brandAsset(kind) {

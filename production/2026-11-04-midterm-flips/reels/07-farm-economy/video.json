@@ -1,0 +1,65 @@
+{
+  "title": "The 2026 farm economy in numbers",
+  "article": "/blog/farm-economy-2026-diesel-fertilizer-soybean-exports-bankruptcies",
+  "frameSeed": 1,
+  "videoProvider": "still",
+  "voice": {
+    "voiceId": "63d5460e91e2411fa2e6bf95e7456f03",
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "scenes": [
+    {
+      "id": "01",
+      "narration": "[excited] Farm country went into this election selling less and paying more.",
+      "imagePrompt": "a grain silo and soybean field at golden hour under a vast sky",
+      "motionPrompt": "slow push-in toward the silo",
+      "motion": "high",
+      "plate": {
+        "number": "13-yr low",
+        "label": "Soybean exports, 2025–26",
+        "kicker": "The farm economy"
+      }
+    },
+    {
+      "id": "02",
+      "narration": "Diesel jumped from three seventy-six to five fifty-one a gallon.",
+      "imagePrompt": "a diesel fuel pump beside a green tractor at dawn on a farm",
+      "motionPrompt": "slow rack focus from pump to tractor",
+      "motion": "low",
+      "plate": {
+        "number": "+47%",
+        "label": "Diesel: $3.76 → $5.51 a gallon"
+      }
+    },
+    {
+      "id": "03",
+      "narration": "Fertilizer prices surged, and seven in ten farmers couldn't afford all they needed.",
+      "imagePrompt": "white fertilizer granules pouring from a spreader over dark soil in morning light",
+      "motionPrompt": "slow push-in",
+      "motion": "low",
+      "plate": {
+        "number": "70%",
+        "label": "Farmers who couldn't afford all their fertilizer"
+      }
+    },
+    {
+      "id": "04",
+      "narration": "Farm bankruptcies rose nineteen percent, and the farm bill expired in September.",
+      "imagePrompt": "an empty farmhouse kitchen table with paperwork and a coffee cup at sunrise",
+      "motionPrompt": "slow lateral dolly",
+      "motion": "low",
+      "plate": {
+        "number": "+19%",
+        "label": "Farm bankruptcies, year to June 2026"
+      }
+    },
+    {
+      "id": "05",
+      "narration": "Full breakdown at Financial Gurkha. Link in bio.",
+      "imagePrompt": "combine harvesters working a wheat field at sunset, golden dust in the air",
+      "motionPrompt": "slow pull-back",
+      "motion": "low"
+    }
+  ]
+}
