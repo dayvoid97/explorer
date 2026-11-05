@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
 import { Menu, X, Sun, Moon } from 'lucide-react'
+import NavSearch from './search/NavSearch'
 
 // --- Nav Data (for simplicity and consolidation) ---
 // Frontend-only mode: blog + winners only. No account/API routes.
@@ -29,6 +30,7 @@ function DesktopNavLinks() {
 
   return (
     <div className="hidden md:flex items-center space-x-6">
+      <NavSearch variant="desktop" />
       <Link href="/blog" className={commonLinkClasses} style={customStyle}>
         Blog
       </Link>
@@ -193,6 +195,10 @@ export default function Navbar() {
             <div className="px-4 sm:px-6">
               {' '}
               {/* 💡 Ensure padding matches main nav padding */}
+              {/* On phones the search box lives in the menu: the masthead needs the whole top row */}
+              <div className="pt-3">
+                <NavSearch variant="mobile" onNavigate={() => setIsMobileMenuOpen(false)} />
+              </div>
               <MobileNavLinks onLinkClick={() => setIsMobileMenuOpen(false)} />
             </div>
           </div>

@@ -17,6 +17,8 @@ Next.js 15 app. The rules live in `docs/`; read them before publishing anything:
 - **Homepage** (`src/app/page.tsx`): black-and-white, Bloomberg-style. The market strip and panel read
   `src/app/lib/markets/` (Treasury, New York Fed, ECB: no key; indexes need `FMP_API_KEY` on Vercel,
   otherwise the index groups are hidden). Nothing on it says "Wall Street" outright; keep it implicit.
+- **Site search** (nav box and `/search`) is fuzzy, in the browser, over `/api/search-index`
+  (`src/app/lib/search/`), rebuilt every deploy. New MDX components also need handling in `toPlainText`.
 - **Distribution is automatic** once content merges to `main` (docs/production-workflow.md,
   "Distribution"): sitemaps and RSS rebuild on deploy, and the Broadcast workflow pings IndexNow and
   WebSub. Don't add build-time pings or fake `lastmod` dates; set `updated` only for real changes.

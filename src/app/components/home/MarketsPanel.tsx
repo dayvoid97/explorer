@@ -1,5 +1,9 @@
 import type { MarketData } from '@/app/lib/markets'
 import { formatAsOf, formatChange, formatValue } from '@/app/lib/markets/format'
+import MarketsAd from './MarketsAd'
+
+// The ad takes the columns the data doesn't: beside two or three groups, or a full row under four
+const AD_SPAN = { 1: 'lg:col-span-3', 2: 'lg:col-span-2', 3: 'lg:col-span-1', 4: 'lg:col-span-4' } as const
 
 /** All four market groups as compact tables, with dates and sources shown. */
 export default function MarketsPanel({ data }: { data: MarketData }) {
@@ -51,6 +55,9 @@ export default function MarketsPanel({ data }: { data: MarketData }) {
             </div>
           )
         })}
+        <div className={`sm:col-span-2 ${AD_SPAN[Math.min(data.groups.length, 4) as 1 | 2 | 3 | 4]}`}>
+          <MarketsAd />
+        </div>
       </div>
       <p className="mt-4 text-[11px] leading-relaxed text-black/50">
         Rates: U.S. Treasury par yields and New York Fed reference rates, latest published. Currencies: European Central Bank
