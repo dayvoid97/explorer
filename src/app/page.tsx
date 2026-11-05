@@ -1,14 +1,13 @@
 import Link from 'next/link'
-import { Playfair_Display } from 'next/font/google'
+import { Inter } from 'next/font/google'
 import { getAllPosts } from './lib/markdown'
-import { BlogPost } from './blog/[slug]/metadata'
+import { formatNewsDate, getAllNews, newsTimestamp, type NewsSummary } from './lib/news'
+import { getMarkets } from './lib/markets'
 import { BRAND, BRAND_TITLE } from './lib/brand'
-import NycClock from './components/home/NycClock'
-import StreetGallery from './components/home/StreetGallery'
+import MarketStrip from './components/home/MarketStrip'
+import MarketsPanel from './components/home/MarketsPanel'
 
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700', '900'] })
-
-const GOLD = '#C9A24B'
+const inter = Inter({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800', '900'] })
 
 export const metadata = {
   // Absolute title (no brand suffix) — the root layout template is bypassed
@@ -20,216 +19,152 @@ export const metadata = {
   alternates: { canonical: 'https://financialgurkha.com' },
 }
 
+// Market data and the newest briefs refresh every 10 minutes
+export const revalidate = 600
+
+/**
+ * The homepage, in black and white: the market strip, then the day's briefs,
+ * the markets panel, then research.
+ */
+const kicker = (item: NewsSummary) => item.tags?.[0] ?? 'Markets'
+
+function Kicker({ children }: { children: React.ReactNode }) {
+  return <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-black/60">{children}</p>
+}
+
+function SectionHead({ title, href, cta }: { title: string; href: string; cta: string }) {
+  return (
+    <div className="flex items-baseline justify-between border-t-2 border-black pt-4">
+      <h2 className="text-[13px] font-black uppercase tracking-[0.16em]">{title}</h2>
+      <Link href={href} className="text-[12px] font-semibold hover:underline">
+        {cta} →
+      </Link>
+    </div>
+  )
+}
+
 export default async function Home() {
-  const posts: Omit<BlogPost, 'content'>[] = await getAllPosts()
-  const sorted = [...posts].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  const featured = sorted[0]
-  const rest = sorted.slice(1, 7)
+  const [news, posts, markets] = await Promise.all([getAllNews(), getAllPosts(), getMarkets()])
+  const research = [...posts]
+    .filter((p) => p.slug)
+    .sort((a, b) => newsTimestamp(b.date) - newsTimestamp(a.date))
+    .slice(0, 5)
+
+  const [lead, ...others] = news
+  const latest = others.slice(0, 6)
+  const more = others.slice(6, 10)
+  const today = new Date().toLocaleDateString('en-US', {
+    timeZone: 'America/New_York',
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+  })
 
   return (
-    <div className="bg-[#0A0A0A] text-white">
-      {/* ============ HERO ============ */}
-      <section className="relative mx-auto max-w-6xl px-6 pt-16 pb-20 sm:pt-24">
-        <div className="grid items-center gap-12 lg:grid-cols-[1.2fr_1fr]">
-          <div>
-            <p className="font-mono text-[11px] uppercase tracking-[0.35em] text-white/50">
-              Financial Markets Reporting · Est. {BRAND.founded}
-            </p>
+    <div className={`${inter.className} bg-white text-black`}>
+      <MarketStrip initial={markets} />
 
-            <h1
-              className={`${playfair.className} mt-6 text-6xl font-black leading-[0.95] sm:text-7xl lg:text-8xl`}
-            >
-              Financial
-              <br />
-              <span style={{ color: GOLD }}>Gurkha</span>
-            </h1>
-
-            <p className="mt-8 max-w-md text-lg font-light leading-relaxed text-white/80">
-              {BRAND.bio}
-            </p>
-
-            <div className="mt-8">
-              <NycClock />
-            </div>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              {featured && (
-                <Link
-                  href={`/blog/${featured.slug}`}
-                  className="border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-[#C9A24B] hover:text-black"
-                  style={{ borderColor: GOLD }}
-                >
-                  Read the Latest
-                </Link>
-              )}
-              <a
-                href="#from-the-street"
-                className="border border-white/20 px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-white/70 transition hover:border-white hover:text-white"
-              >
-                From the Street
-              </a>
-            </div>
-          </div>
-
-          {/* Hero photo — 14 Wall Street */}
-          <div className="relative hidden lg:block">
-            <div
-              className="absolute -inset-3 translate-x-4 translate-y-4 border"
-              style={{ borderColor: `${GOLD}55` }}
-            />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/kanchan-wallst-financialgurkha.png"
-              alt="Financial Gurkha at 14 Wall Street, New York"
-              className="relative aspect-[3/4] w-full object-cover"
-            />
-            <p className="pt-3 text-right font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-              14 Wall Street · Financial District, NYC
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* ============ DATELINE STRIP ============ */}
-      <div className="border-y border-white/10">
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-6 py-4">
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em] text-white/50">
-            Reported from Wall Street. Published to the world.
-          </p>
-          <p className="font-mono text-[11px] uppercase tracking-[0.3em]" style={{ color: GOLD }}>
-            New York City
-          </p>
-        </div>
-      </div>
-
-      {/* ============ FEATURED ANALYSIS ============ */}
-      {featured && (
-        <section className="mx-auto max-w-6xl px-6 py-20">
-          <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>
-            Featured Analysis
-          </p>
-          <Link href={`/blog/${featured.slug}`} className="group mt-8 grid gap-10 lg:grid-cols-2">
-            {featured.image && (
-              <div className="aspect-[16/10] overflow-hidden bg-white/5">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={featured.image}
-                  alt={featured.title}
-                  className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.02]"
-                />
-              </div>
-            )}
-            <div className="flex flex-col justify-center">
-              <p className="font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-                {featured.date} · {featured.author}
-              </p>
-              <h2
-                className={`${playfair.className} mt-4 text-3xl font-bold leading-tight sm:text-4xl group-hover:underline decoration-1 underline-offset-8`}
-              >
-                {featured.title}
-              </h2>
-              <p className="mt-5 line-clamp-4 font-light leading-relaxed text-white/70">
-                {featured.subtitle}
-              </p>
-              <p
-                className="mt-6 font-mono text-xs uppercase tracking-[0.25em]"
-                style={{ color: GOLD }}
-              >
-                Read the analysis →
-              </p>
-            </div>
+      <div className="mx-auto max-w-[1400px] px-4 pb-20 sm:px-6">
+        <div className="flex items-center justify-between py-4 text-[12px]">
+          <p className="font-semibold">{today}</p>
+          <Link href="/news" className="font-semibold hover:underline">
+            The Daily Brief →
           </Link>
-        </section>
-      )}
+        </div>
 
-      {/* ============ THE LEDGER (latest work) ============ */}
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <div className="flex items-end justify-between">
-            <h2 className={`${playfair.className} text-3xl font-bold sm:text-4xl`}>The Ledger</h2>
-            <Link
-              href="/blog"
-              className="font-mono text-xs uppercase tracking-[0.25em] text-white/50 transition hover:text-white"
-            >
-              All articles →
+        {/* ============ THE DAY'S BRIEFS ============ */}
+        {lead ? (
+          <section aria-label="Today's briefs" className="grid gap-8 border-t-2 border-black pt-6 lg:grid-cols-12">
+            <Link href={`/news/${lead.slug}`} className="group lg:col-span-7">
+              {lead.image ? (
+                <div className="aspect-[16/9] overflow-hidden bg-black/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={lead.image} alt="" className="h-full w-full object-cover" />
+                </div>
+              ) : null}
+              <div className="mt-4">
+                <Kicker>{kicker(lead)}</Kicker>
+                <h1 className="mt-2 text-[32px] font-black leading-[1.08] tracking-[-0.02em] group-hover:underline sm:text-[42px]">{lead.headline}</h1>
+                <p className="mt-3 max-w-2xl text-[17px] leading-relaxed text-black/75">{lead.dek}</p>
+                <p className="mt-3 text-[12px] text-black/50">
+                  {formatNewsDate(lead.date)} · {lead.readMinutes} min read
+                </p>
+              </div>
             </Link>
-          </div>
 
-          <div className="mt-10 grid gap-x-8 gap-y-12 sm:grid-cols-2 lg:grid-cols-3">
-            {rest.map((post) => (
-              <Link key={post.slug} href={`/blog/${post.slug}`} className="group">
-                {post.image && (
-                  <div className="aspect-[16/10] overflow-hidden bg-white/5">
+            <div className="lg:col-span-5">
+              <h2 className="text-[13px] font-black uppercase tracking-[0.16em]">Latest</h2>
+              <ol className="mt-2">
+                {latest.map((item) => (
+                  <li key={item.slug} className="border-b border-black/15 py-4 first:pt-2">
+                    <Link href={`/news/${item.slug}`} className="group block">
+                      <Kicker>{kicker(item)}</Kicker>
+                      <h3 className="mt-1 text-[18px] font-bold leading-snug tracking-[-0.01em] group-hover:underline">{item.headline}</h3>
+                      <p className="mt-1 text-[12px] text-black/50">{formatNewsDate(item.date)}</p>
+                    </Link>
+                  </li>
+                ))}
+              </ol>
+            </div>
+          </section>
+        ) : null}
+
+        {more.length ? (
+          <section aria-label="More briefs" className="mt-10 grid gap-8 border-t border-black/15 pt-6 sm:grid-cols-2 lg:grid-cols-4">
+            {more.map((item) => (
+              <Link key={item.slug} href={`/news/${item.slug}`} className="group">
+                {item.image ? (
+                  <div className="aspect-[16/9] overflow-hidden bg-black/5">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      src={post.image}
-                      alt={post.title}
-                      loading="lazy"
-                      className="h-full w-full object-cover grayscale-[25%] transition duration-700 group-hover:grayscale-0 group-hover:scale-[1.03]"
-                    />
+                    <img src={item.image} alt="" loading="lazy" className="h-full w-full object-cover" />
                   </div>
-                )}
-                <p className="pt-4 font-mono text-[10px] uppercase tracking-[0.25em] text-white/40">
-                  {post.date}
-                </p>
-                <h3
-                  className={`${playfair.className} pt-2 text-xl font-bold leading-snug group-hover:underline decoration-1 underline-offset-4`}
-                >
-                  {post.title}
-                </h3>
-                <p className="line-clamp-2 pt-2 text-sm font-light text-white/60">
-                  {post.subtitle}
-                </p>
+                ) : null}
+                <div className="mt-3">
+                  <Kicker>{kicker(item)}</Kicker>
+                  <h3 className="mt-1 text-[17px] font-bold leading-snug group-hover:underline">{item.headline}</h3>
+                </div>
               </Link>
             ))}
-          </div>
-        </div>
-      </section>
+          </section>
+        ) : null}
 
-      {/* ============ FROM THE STREET ============ */}
-      <section id="from-the-street" className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-20">
-          <p className="font-mono text-[11px] uppercase tracking-[0.35em]" style={{ color: GOLD }}>
-            From the Street
-          </p>
-          <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
-            <h2 className={`${playfair.className} max-w-xl text-3xl font-bold sm:text-4xl`}>
-              We walk the blocks we write about.
-            </h2>
-            <p className="max-w-sm text-sm font-light leading-relaxed text-white/60">
-              Financial Gurkha operates from New York City. Most articles are researched and written
-              from Wall Street and the surrounding Financial District — on the ground, at least
-              twice a week.
-            </p>
-          </div>
-          <div className="mt-10">
-            <StreetGallery />
-          </div>
+        {/* ============ MARKETS ============ */}
+        <div className="mt-14">
+          <MarketsPanel data={markets} />
         </div>
-      </section>
 
-      {/* ============ CLOSING STATEMENT ============ */}
-      <section className="border-t border-white/10">
-        <div className="mx-auto max-w-6xl px-6 py-24 text-center">
-          <p
-            className={`${playfair.className} mx-auto max-w-3xl text-2xl font-normal italic leading-relaxed text-white/85 sm:text-3xl`}
-          >
-            “Markets reward the prepared. We do the preparation in public.”
-          </p>
-          <div className="mt-10">
-            <Link
-              href="/consult"
-              className="inline-block border px-7 py-3 font-mono text-xs uppercase tracking-[0.25em] text-[#C9A24B] transition hover:bg-[#C9A24B] hover:text-black"
-              style={{ borderColor: GOLD }}
-            >
-              Work With Kanchan →
-            </Link>
-          </div>
-          <p className="mt-10 font-mono text-[11px] uppercase tracking-[0.35em] text-white/40">
-            Financial Gurkha · New York City · Est. 2022
-          </p>
-        </div>
-      </section>
+        {/* ============ RESEARCH ============ */}
+        {research.length ? (
+          <section aria-label="Research" className="mt-14">
+            <SectionHead title="Research" href="/blog" cta="All research" />
+            <div className="mt-6 grid gap-8 lg:grid-cols-12">
+              <Link href={`/blog/${research[0].slug}`} className="group lg:col-span-6">
+                {research[0].image ? (
+                  <div className="aspect-[16/9] overflow-hidden bg-black/5">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={research[0].image} alt="" loading="lazy" className="h-full w-full object-cover" />
+                  </div>
+                ) : null}
+                <h3 className="mt-4 text-[26px] font-black leading-tight tracking-[-0.015em] group-hover:underline">{research[0].title}</h3>
+                <p className="mt-2 line-clamp-3 text-[15px] leading-relaxed text-black/70">{research[0].subtitle}</p>
+                <p className="mt-2 text-[12px] text-black/50">
+                  {formatNewsDate(research[0].date)} · {research[0].author}
+                </p>
+              </Link>
+              <div className="grid gap-x-8 sm:grid-cols-2 lg:col-span-6">
+                {research.slice(1).map((post) => (
+                  <Link key={post.slug} href={`/blog/${post.slug}`} className="group border-b border-black/15 py-4 first:pt-0 sm:[&:nth-child(2)]:pt-0">
+                    <Kicker>{post.categories?.[0] ?? 'Research'}</Kicker>
+                    <h3 className="mt-1 text-[18px] font-bold leading-snug group-hover:underline">{post.title}</h3>
+                    <p className="mt-1 line-clamp-2 text-[14px] text-black/65">{post.subtitle}</p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          </section>
+        ) : null}
+      </div>
     </div>
   )
 }
