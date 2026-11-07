@@ -80,6 +80,14 @@ export default function Footer() {
               </li>
               <li>
                 <Link
+                  href="/where-does-financial-gurkha-provision-its-financial-data"
+                  className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
+                >
+                  Our Data Sources
+                </Link>
+              </li>
+              <li>
+                <Link
                   href="/legal/copyright"
                   className="text-sm text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100 transition-colors"
                 >

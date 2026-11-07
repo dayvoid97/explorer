@@ -28,50 +28,53 @@ _Disclaimer: This article is for educational purposes only and is not investment
 
 ## The 60-Second Version
 
-| June 30, 2026 | Figure |
-| :--- | ---: |
-| Cash, equivalents and short-term investments | **$131.7B** |
-| Cash from operations, first half 2026 | **+$3.9B** |
-| Free cash flow (our calculation), first half 2026 | **about +$3.4B** |
-| Net loss, first half 2026 | $(80.7)B |
-| …of which non-cash fair-value charges | about $81B |
-| Accumulated deficit | $(132.9)B, of which **$113.2B** is fair-value changes |
-| Net property and equipment | $1.19B |
+| June 30, 2026                                     |                                                Figure |
+| :------------------------------------------------ | ----------------------------------------------------: |
+| Cash, equivalents and short-term investments      |                                           **$131.7B** |
+| Cash from operations, first half 2026             |                                            **+$3.9B** |
+| Free cash flow (our calculation), first half 2026 |                                      **about +$3.4B** |
+| Net loss, first half 2026                         |                                              $(80.7)B |
+| …of which non-cash fair-value charges             |                                            about $81B |
+| Accumulated deficit                               | $(132.9)B, of which **$113.2B** is fair-value changes |
+| Net property and equipment                        |                                                $1.19B |
 
 ---
 
 ### What's in this report
 
 - [The 60-Second Version](#the-60-second-version)
+  - [What's in this report](#whats-in-this-report)
 - [1. The Balance Sheet](#1-the-balance-sheet)
 - [2. Why the Net Loss Is $80 Billion](#2-why-the-net-loss-is-80-billion)
 - [3. Cash Flow and Free Cash Flow](#3-cash-flow-and-free-cash-flow)
 - [4. Depreciation and Fixed Assets](#4-depreciation-and-fixed-assets)
 - [5. What Changes Next](#5-what-changes-next)
 - [Frequently Asked Questions](#frequently-asked-questions)
+- [Methodology and Sources](#methodology-and-sources)
 
 ---
 
 ## 1. The Balance Sheet
 
-| ($ millions) | Dec 31, 2024 | Dec 31, 2025 | **Jun 30, 2026** |
-| :--- | ---: | ---: | ---: |
-| Cash and cash equivalents | 3,141 | 17,388 | **112,389** |
-| Short-term investments | — | 2,889 | **19,262** |
-| Accounts receivable | 95 | 909 | 5,833 |
-| Restricted cash | 13 | 13 | 2,529 |
-| Property and equipment, net | 19 | 146 | 1,187 |
-| Goodwill | — | 154 | 576 |
-| **Total assets** | **7,752** | **24,661** | **147,358** |
-| Accounts payable and accrued | 333 | 2,511 | 5,422 |
-| Deferred revenue | 28 | 269 | 1,650 |
-| Convertible notes payable | 14,116 | 41,677 | **108,566** |
-| **Total liabilities** | 14,679 | 45,397 | 117,467 |
-| Redeemable convertible preferred stock | 2,874 | 29,769 | 157,510 |
-| Accumulated deficit | (10,040) | (52,154) | (132,902) |
-| Total stockholders’ deficit | (9,801) | (50,505) | (127,619) |
+| ($ millions)                           | Dec 31, 2024 | Dec 31, 2025 | **Jun 30, 2026** |
+| :------------------------------------- | -----------: | -----------: | ---------------: |
+| Cash and cash equivalents              |        3,141 |       17,388 |      **112,389** |
+| Short-term investments                 |            — |        2,889 |       **19,262** |
+| Accounts receivable                    |           95 |          909 |            5,833 |
+| Restricted cash                        |           13 |           13 |            2,529 |
+| Property and equipment, net            |           19 |          146 |            1,187 |
+| Goodwill                               |            — |          154 |              576 |
+| **Total assets**                       |    **7,752** |   **24,661** |      **147,358** |
+| Accounts payable and accrued           |          333 |        2,511 |            5,422 |
+| Deferred revenue                       |           28 |          269 |            1,650 |
+| Convertible notes payable              |       14,116 |       41,677 |      **108,566** |
+| **Total liabilities**                  |       14,679 |       45,397 |          117,467 |
+| Redeemable convertible preferred stock |        2,874 |       29,769 |          157,510 |
+| Accumulated deficit                    |     (10,040) |     (52,154) |        (132,902) |
+| Total stockholders’ deficit            |      (9,801) |     (50,505) |        (127,619) |
 
 **The cash came mostly from investors.** Anthropic raised **$110.4 billion** from preferred stock in the first half of 2026 alone, including:
+
 - **Series G:** $23.5 billion at $25.91 per common-equivalent share, January–February.
 - **Series H:** $45.7 billion at $58.90 per common-equivalent share, May–June, including $10 billion from Google and $5 billion from Amazon.
 
@@ -81,13 +84,13 @@ _Disclaimer: This article is for educational purposes only and is not investment
 
 Anthropic has issued convertible notes that will become shares. As its valuation rose, those notes became more valuable, and under the accounting rules the increase counts as a loss.
 
-| First half 2026 ($M) | |
-| :--- | ---: |
-| Operating loss | (693) |
-| Interest income | 1,111 |
-| Change in fair value of convertible notes, derivatives and SAFEs | **(72,388)** |
-| Other income (expense), mostly fair-value recognition of other instruments | (8,757) |
-| **Net loss** | **(80,748)** |
+| First half 2026 ($M)                                                       |              |
+| :------------------------------------------------------------------------- | -----------: |
+| Operating loss                                                             |        (693) |
+| Interest income                                                            |        1,111 |
+| Change in fair value of convertible notes, derivatives and SAFEs           | **(72,388)** |
+| Other income (expense), mostly fair-value recognition of other instruments |      (8,757) |
+| **Net loss**                                                               | **(80,748)** |
 
 ![The S-1’s income statement](/anthropic-s1/s1-income-statement.jpg)
 
@@ -97,16 +100,16 @@ Amazon’s notes show the effect. **$6.2 billion of principal converts into abou
 
 ## 3. Cash Flow and Free Cash Flow
 
-| ($ millions) | 2023 | 2024 | 2025 | H1 2025 | **H1 2026** |
-| :--- | ---: | ---: | ---: | ---: | ---: |
-| Net loss | (1,531) | (8,309) | (41,965) | (12,969) | (80,748) |
-| + Stock-based compensation | 29 | 192 | 1,158 | 279 | 2,185 |
-| + Fair-value changes (non-cash) | 1,045 | 5,434 | 34,308 | 10,942 | 72,388 |
-| + Other non-cash items | 3 | 28 | 592 | 19 | 8,936 |
-| ± Working capital | (1,173) | (3,037) | 3,270 | 216 | 1,168 |
-| **Cash from operations** | **(1,627)** | **(5,692)** | **(2,637)** | **(1,513)** | **3,929** |
-| Capital expenditure | (2) | (15) | (131) | (18) | (482) |
-| **Free cash flow (FG calculation)** | **(1,629)** | **(5,707)** | **(2,768)** | **(1,531)** | **3,447** |
+| ($ millions)                        |        2023 |        2024 |        2025 |     H1 2025 | **H1 2026** |
+| :---------------------------------- | ----------: | ----------: | ----------: | ----------: | ----------: |
+| Net loss                            |     (1,531) |     (8,309) |    (41,965) |    (12,969) |    (80,748) |
+| + Stock-based compensation          |          29 |         192 |       1,158 |         279 |       2,185 |
+| + Fair-value changes (non-cash)     |       1,045 |       5,434 |      34,308 |      10,942 |      72,388 |
+| + Other non-cash items              |           3 |          28 |         592 |          19 |       8,936 |
+| ± Working capital                   |     (1,173) |     (3,037) |       3,270 |         216 |       1,168 |
+| **Cash from operations**            | **(1,627)** | **(5,692)** | **(2,637)** | **(1,513)** |   **3,929** |
+| Capital expenditure                 |         (2) |        (15) |       (131) |        (18) |       (482) |
+| **Free cash flow (FG calculation)** | **(1,629)** | **(5,707)** | **(2,768)** | **(1,531)** |   **3,447** |
 
 “Other non-cash items” combines depreciation, the donation-matching liability and other financial-instrument charges. Working capital is the sum of the operating asset and liability changes.
 
@@ -118,13 +121,13 @@ Anthropic does not report a free cash flow figure; this is our calculation from 
 
 **Depreciation is tiny today because most compute has been rented as a service.**
 
-| ($ millions) | Dec 2024 | Dec 2025 | Jun 2026 |
-| :--- | ---: | ---: | ---: |
-| Servers, networking and infrastructure equipment | — | 34 | 618 |
-| Construction in progress | 4 | 63 | 536 |
-| Gross property and equipment | 23 | 158 | 1,234 |
-| Accumulated depreciation | (4) | (12) | (47) |
-| **Net** | **19** | **146** | **1,187** |
+| ($ millions)                                     | Dec 2024 | Dec 2025 |  Jun 2026 |
+| :----------------------------------------------- | -------: | -------: | --------: |
+| Servers, networking and infrastructure equipment |        — |       34 |       618 |
+| Construction in progress                         |        4 |       63 |       536 |
+| Gross property and equipment                     |       23 |      158 |     1,234 |
+| Accumulated depreciation                         |      (4) |     (12) |      (47) |
+| **Net**                                          |   **19** |  **146** | **1,187** |
 
 - **Method:** straight-line over 3 to 5 years.
 - **Depreciation expense:** $1M (2023), $3M (2024), $10M (2025), $35M (first half 2026).

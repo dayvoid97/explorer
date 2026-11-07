@@ -1,11 +1,13 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getAllPosts } from '../lib/markdown'
+import { resolveCoverImage as cover } from '../lib/cover-image'
 import { BlogPost } from './[slug]/metadata'
 
 export const metadata = {
   title: 'Markets Research & Equity Valuations',
   description:
-    'Every Financial Gurkha analysis: intrinsic valuations, earnings breakdowns read from SEC filings, Federal Reserve coverage, commodities and crypto research. Written from New York City.',
+    'Every Financial Gurkha analysis: valuations, earnings breakdowns, Federal Reserve coverage, commodities and crypto research. Written from New York City.',
   alternates: { canonical: 'https://financialgurkha.com/blog' },
   openGraph: {
     title: 'Markets Research & Equity Valuations | Financial Gurkha',
@@ -34,14 +36,25 @@ export default async function BlogListPage() {
         <div className="h-px flex-grow bg-white/10" />
       </div>
       <div className="space-y-8">
-        {sortedPosts.map((post) => (
+        {sortedPosts.map((post, i) => (
           <Link
             key={post.slug || post.date}
             href={`/blog/${post.slug}`}
             className="block hover:opacity-90 transition"
           >
-            {post.image && (
-              <img src={post.image} alt={post.title} className="h-80 w-full object-cover" />
+            {cover(post.image) && (
+              <div className="relative h-80 w-full">
+                <Image
+                  src={cover(post.image)!.src}
+                  alt={post.title}
+                  fill
+                  sizes="(min-width: 768px) 768px, 100vw"
+                  quality={75}
+                  priority={i === 0}
+                  unoptimized={!cover(post.image)!.optimize}
+                  className="object-cover"
+                />
+              </div>
             )}
             <div className="py-4">
               <h2

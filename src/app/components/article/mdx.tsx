@@ -89,7 +89,11 @@ export function makeComponents(hasToc: boolean, contentsHref = '#whats-in-this-r
     blockquote: (props: any) => (
       <blockquote className="border-l-4 border-gray-800 pl-4 italic  my-4" {...props} />
     ),
-    img: (props: any) => <img className="rounded-lg my-6 w-full" {...props} />,
+    // Articles carry 10–17 full-size charts; lazy loading fetches each one only
+    // as the reader scrolls near it, instead of all of them with the page.
+    img: (props: any) => (
+      <img className="rounded-lg my-6 w-full" loading="lazy" decoding="async" {...props} />
+    ),
     code: (props: any) => <code className=" px-2 py-1 rounded text-sm font-mono" {...props} />,
     pre: (props: any) => <pre className=" p-4 rounded-lg overflow-x-auto mb-4" {...props} />,
     table: (props: any) => (

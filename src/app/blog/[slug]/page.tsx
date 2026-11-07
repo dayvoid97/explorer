@@ -20,6 +20,14 @@ import { BlogPost } from './metadata'
 // if the page re-exports it. Without this, every article inherits the root
 // layout's title, description and logo share image.
 export { generateMetadata } from './metadata'
+
+// Build every article at deploy time. Without this the route is dynamic, and
+// each visit re-reads the file and recompiles the MDX on the server.
+// A slug added later still renders on first request and is cached after.
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.filter((p) => p.slug).map((p) => ({ slug: p.slug }))
+}
 import { ShareButtons } from './share-buttons'
 import { AdSenseSidebarAd } from '@/app/components/AdsenseSidebarAd'
 import { AdSenseInArticle } from '@/app/components/adsense-in-article'

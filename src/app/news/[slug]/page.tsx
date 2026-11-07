@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
-import { formatNewsDate, getNewsBySlug } from '@/app/lib/news'
+import { formatNewsDate, getAllNews, getNewsBySlug } from '@/app/lib/news'
 import { NewsThumb } from '@/app/news/news-thumb'
 import {
   makeComponents,
@@ -15,6 +15,12 @@ import { AdSenseInArticle } from '@/app/components/adsense-in-article'
 import remarkGfm from 'remark-gfm'
 
 export { generateMetadata } from './metadata'
+
+// Build every brief at deploy time instead of rendering it on each visit.
+export async function generateStaticParams() {
+  const items = await getAllNews()
+  return items.map((item) => ({ slug: item.slug }))
+}
 
 // Split the snippet body at the "What it means for you" heading so a mobile
 // in-article ad can sit in the natural pause between the two halves. A second

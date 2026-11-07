@@ -34,6 +34,7 @@ export async function GET() {
       { loc: `${SITE}/track-record` },
       { loc: `${SITE}/legal/editorial` },
       { loc: `${SITE}/how-does-financial-gurkha-make-money` },
+      { loc: `${SITE}/where-does-financial-gurkha-provision-its-financial-data` },
       { loc: `${SITE}/legal/terms` },
       { loc: `${SITE}/legal/privacy` },
       { loc: `${SITE}/winners` },

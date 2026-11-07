@@ -1,4 +1,6 @@
+import Link from 'next/link'
 import type { MarketData } from '@/app/lib/markets'
+import { MARKET_DATA_HREF } from '@/app/lib/data-sources'
 import { formatAsOf, formatChange, formatValue } from '@/app/lib/markets/format'
 import MarketsAd from './MarketsAd'
 
@@ -11,9 +13,17 @@ export default function MarketsPanel({ data }: { data: MarketData }) {
   const hasIndexes = data.groups.some((g) => g.id === 'us' || g.id === 'world')
   return (
     <section aria-labelledby="markets-heading" className="border-t-2 border-black pt-4">
-      <h2 id="markets-heading" className="text-[13px] font-black uppercase tracking-[0.16em]">
-        Markets
-      </h2>
+      <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+        <h2 id="markets-heading" className="text-[13px] font-black uppercase tracking-[0.16em]">
+          Markets
+        </h2>
+        <p className="text-[11px] text-black/50">
+          ⓘ Delayed data, not real-time.{' '}
+          <Link href={MARKET_DATA_HREF} className="underline underline-offset-2 hover:text-black">
+            Where our data comes from
+          </Link>
+        </p>
+      </div>
       <div className="mt-4 grid gap-x-10 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
         {data.groups.map((g) => {
           const asOf = formatAsOf(g.quotes.find((q) => q.asOf)?.asOf ?? '')
@@ -60,7 +70,8 @@ export default function MarketsPanel({ data }: { data: MarketData }) {
         </div>
       </div>
       <p className="mt-4 text-[11px] leading-relaxed text-black/50">
-        Rates: U.S. Treasury par yields and New York Fed reference rates, latest published. Currencies: European Central Bank
+        Rates: U.S. Treasury constant-maturity yields (Federal Reserve H.15, via FRED) and New York Fed reference rates, latest
+        published. Currencies: European Central Bank
         reference rates.{hasIndexes ? ' Indexes: Financial Modeling Prep, delayed.' : ''} Changes are against the prior reading; rates in basis
         points.
       </p>

@@ -1,8 +1,6 @@
 import Link from 'next/link'
 import ConsultCTA from '@/app/components/consult/ConsultCTA'
-import { Playfair_Display } from 'next/font/google'
-
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700', '900'] })
+import { playfair } from '@/app/fonts'
 
 const GOLD = '#C9A24B'
 const EMAIL = 'contact@kanchanksharma.com'

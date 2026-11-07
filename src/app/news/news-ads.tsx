@@ -1,7 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { useAdSlot } from '@/app/hooks/useAdSlot'
+import { useIsDesktop } from '@/app/hooks/useIsDesktop'
 import { AdLabel } from '@/app/components/AdLabel'
 
 import { NEWS_AD_CLIENT, NEWS_RAIL_AD_SLOT } from './news-ad-config'
@@ -11,21 +11,6 @@ import { NEWS_AD_CLIENT, NEWS_RAIL_AD_SLOT } from './news-ad-config'
  * sticky 300×600 in a newspaper-style ad column beside the day-by-day list.
  * No ads on the front page on phones and tablets.
  */
-
-const DESKTOP_QUERY = '(min-width: 1024px)'
-
-/** True only on desktop-width screens, tracking resizes. False during SSR. */
-function useIsDesktop() {
-  const [isDesktop, setIsDesktop] = useState(false)
-  useEffect(() => {
-    const mq = window.matchMedia(DESKTOP_QUERY)
-    const update = () => setIsDesktop(mq.matches)
-    update()
-    mq.addEventListener('change', update)
-    return () => mq.removeEventListener('change', update)
-  }, [])
-  return isDesktop
-}
 
 /**
  * Desktop: the newspaper ad column. A ruled box with the label in small caps,

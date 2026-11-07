@@ -19,42 +19,57 @@ const num = (v: unknown) => {
   return Number.isFinite(n) ? n : null
 }
 
-/* ---------- U.S. Treasury daily par yield curve (CSV) ---------- */
+/* ---------- U.S. Treasury constant-maturity yields, via FRED (CSV) ---------- */
 
-const TENORS = [
-  { header: '3 Mo', id: 'ust3m', label: 'U.S. 3-Month' },
-  { header: '2 Yr', id: 'ust2y', label: 'U.S. 2-Year' },
-  { header: '10 Yr', id: 'ust10y', label: 'U.S. 10-Year' },
-  { header: '30 Yr', id: 'ust30y', label: 'U.S. 30-Year' },
+/** FRED series for the Treasury yields shown. FRED republishes the Fed's H.15 release. */
+export const TREASURY_SERIES = [
+  { series: 'DGS3MO', id: 'ust3m', label: 'U.S. 3-Month' },
+  { series: 'DGS2', id: 'ust2y', label: 'U.S. 2-Year' },
+  { series: 'DGS10', id: 'ust10y', label: 'U.S. 10-Year' },
+  { series: 'DGS30', id: 'ust30y', label: 'U.S. 30-Year' },
 ]
 
-const csvRow = (line: string) => line.split(',').map((c) => c.trim().replace(/^"|"$/g, ''))
-const usDateToIso = (d: string) => {
-  const m = d.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/)
-  return m ? `${m[3]}-${m[1].padStart(2, '0')}-${m[2].padStart(2, '0')}` : d
+type FredSeries = (typeof TREASURY_SERIES)[number]
+
+/** FRED API observations ({ observations: [{ date, value }] }); holidays are "." and are skipped. */
+export function parseFredJson(json: unknown, s: FredSeries): Quote[] {
+  const obs = (json as { observations?: { date?: string; value?: string }[] })?.observations ?? []
+  return fredQuote(
+    obs.map((o) => ({ date: o?.date ?? '', value: num(o?.value) })),
+    s
+  )
 }
 
-export function parseTreasuryCsv(csv: string): Quote[] {
-  const lines = csv.trim().split(/\r?\n/).filter(Boolean)
-  if (lines.length < 2) return []
-  const header = csvRow(lines[0])
-  const rows = lines
-    .slice(1)
-    .map(csvRow)
-    .map((r) => ({ date: usDateToIso(r[0]), cells: r }))
-    .filter((r) => /^\d{4}-\d{2}-\d{2}$/.test(r.date))
+/** The keyless FRED download ("observation_date,DGS10" then one row a day); holidays are blank. */
+export function parseFredCsv(csv: string, s: FredSeries): Quote[] {
+  return fredQuote(
+    csv
+      .trim()
+      .split(/\r?\n/)
+      .slice(1)
+      .map((line) => line.split(','))
+      .map(([date, v]) => ({ date: date?.trim() ?? '', value: num(v) })),
+    s
+  )
+}
+
+function fredQuote(observations: { date: string; value: number | null }[], s: FredSeries): Quote[] {
+  const rows = observations
+    .filter((r): r is { date: string; value: number } => /^\d{4}-\d{2}-\d{2}$/.test(r.date) && r.value !== null)
     .sort((a, b) => b.date.localeCompare(a.date))
   if (!rows.length) return []
   const [latest, previous] = rows
-
-  return TENORS.flatMap((t) => {
-    const col = header.findIndex((h) => h.toLowerCase() === t.header.toLowerCase())
-    if (col < 0) return []
-    const value = num(latest.cells[col])
-    if (value === null) return []
-    const prior = previous ? num(previous.cells[col]) : null
-    return [{ id: t.id, label: t.label, value, change: prior === null ? null : value - prior, kind: 'rate' as const, asOf: latest.date, digits: 2 }]
-  })
+  return [
+    {
+      id: s.id,
+      label: s.label,
+      value: latest.value,
+      change: previous ? latest.value - previous.value : null,
+      kind: 'rate',
+      asOf: latest.date,
+      digits: 2,
+    },
+  ]
 }
 
 /* ---------- New York Fed reference rates (JSON) ---------- */

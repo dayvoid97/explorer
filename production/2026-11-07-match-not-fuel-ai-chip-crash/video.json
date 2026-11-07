@@ -1,0 +1,108 @@
+{
+  "title": "The election was the match, not the fuel",
+  "frameSeed": 2,
+  "voice": {
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "scenes": [
+    {
+      "id": "01-hook",
+      "narration": "[confident] Chip stocks just had the second-worst day in their history: [emphasis] twelve point two five percent.",
+      "imagePrompt": "a vast black glass trading desk covered in neat rows of gold microchips, one section of the rows tilting sharply downward like a wave, Wall Street windows at dusk behind",
+      "motionPrompt": "fast push-in, then the tilted rows ripple downward",
+      "motion": "high",
+      "plate": {
+        "number": "−12.25%",
+        "label": "Philadelphia Semiconductor Index, Nov 5",
+        "kicker": "One session"
+      }
+    },
+    {
+      "id": "02-match",
+      "narration": "Everyone blamed the election. But the election only lit the match. It was not the fuel.",
+      "imagePrompt": "a single struck match glowing warm gold, held above a tall neat stack of polished gold bars on black marble, only the match is lit",
+      "motionPrompt": "slow push-in on the match flame, the gold stack catching its glow",
+      "motion": "low"
+    },
+    {
+      "id": "03-amd",
+      "narration": "Look at AMD. Data-center revenue up [emphasis] ninety-seven percent. The stock fell seventeen percent.",
+      "imagePrompt": "a gleaming gold microchip rising on a glowing gold column while a glass elevator beside it drops smoothly down a black atrium",
+      "motionPrompt": "camera tracks the elevator down while the chip keeps rising",
+      "motion": "high",
+      "plate": {
+        "number": "−17%",
+        "label": "AMD stock, after +97% data-center growth",
+        "kicker": "The AMD paradox"
+      }
+    },
+    {
+      "id": "04-owners",
+      "narration": "When results like that cannot hold a stock up, the market is repricing who owns it.",
+      "imageFile": "../../public/match-not-fuel-ai-chip-crash/photo_nyse_chips.jpg",
+      "motionPrompt": "slow lateral drift across the trading floor"
+    },
+    {
+      "id": "05-memory",
+      "narration": "The biggest drop was memory. Sandisk fell [emphasis] twenty-two percent. Micron, seventeen.",
+      "imagePrompt": "long rows of gold memory modules standing on black velvet, the front row tipping forward like dominoes mid-fall, warm gold rim light",
+      "motionPrompt": "low dolly along the rows as the dominoes tip",
+      "motion": "high",
+      "plate": {
+        "number": "−22%",
+        "label": "Sandisk, Thursday",
+        "kicker": "Memory led"
+      }
+    },
+    {
+      "id": "06-customers",
+      "narration": "Memory prices are now squeezing their own customers. Apple guided its margin down to [emphasis] forty-five percent.",
+      "imagePrompt": "a brass balance scale on a black marble desk, a heavy stack of gold memory chips on one pan outweighing a sleek dark smartphone on the other",
+      "motionPrompt": "slow push-in as the scale settles toward the chips",
+      "motion": "low",
+      "plate": {
+        "number": "45–46%",
+        "label": "Apple's margin guide, down from 47.9%",
+        "kicker": "The squeeze"
+      }
+    },
+    {
+      "id": "07-friday",
+      "narration": "On Friday, AMD bounced [emphasis] eight percent and Nvidia six. Memory fell again.",
+      "imagePrompt": "a polished gold spring bouncing upward off a black marble floor, beside it a gold memory module sliding steadily down a glass ramp",
+      "motionPrompt": "the spring leaps up through frame while the module keeps sliding",
+      "motion": "high",
+      "plate": {
+        "number": "+8%",
+        "label": "AMD, Friday · memory fell again",
+        "kicker": "The Friday test"
+      }
+    },
+    {
+      "id": "08-crowding",
+      "narration": "In a crowded trade, a ten-stock AI basket can carry [emphasis] fifty-seven percent more risk than the calm-day model shows.",
+      "imagePrompt": "ten different gold objects, a microchip, a turbine, a small car, a coin, a server, hanging from one single gold thread and swinging together in unison against a black background",
+      "motionPrompt": "slow orbit as the objects swing as one",
+      "motion": "high",
+      "plate": {
+        "number": "+57%",
+        "label": "Basket VaR, correlation 0.3 → 0.9",
+        "kicker": "Diversification vanished"
+      }
+    },
+    {
+      "id": "09-split",
+      "narration": "The takeaway: the AI trade is splitting into different businesses, with different cycles.",
+      "imagePrompt": "aerial view of a single river of molten gold light splitting cleanly into three separate streams across black stone, calm and precise",
+      "motionPrompt": "crane up and out as the three streams separate",
+      "motion": "low"
+    },
+    {
+      "id": "10-close",
+      "narration": "The full breakdown, by Niraj Neupane, is at the link in bio.",
+      "imageFile": "../../public/match-not-fuel-ai-chip-crash/photo_wall_street_bull.jpg",
+      "motionPrompt": "slow tilt up to the skyline"
+    }
+  ]
+}

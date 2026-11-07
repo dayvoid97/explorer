@@ -1,0 +1,38 @@
+[
+  {
+    "out": "production/2026-11-07-match-not-fuel-ai-chip-crash/render/cards/card-1-the-week.png",
+    "kicker": "CHIPS · NOV 5–6",
+    "title": "The election was the match, not the fuel",
+    "tiles": [
+      { "value": "−12.25%", "label": "Chip index (SOX), Thursday · 2nd-worst day on record" },
+      { "value": "−5.5%", "label": "Nasdaq Composite, Thursday · into correction" },
+      { "value": "−22%", "label": "Sandisk, Thursday · memory led the losses" },
+      { "value": "+4%", "label": "SOX, Friday · memory fell again" }
+    ],
+    "note": "Analysis by Niraj Neupane, CA · financialgurkha.com · Not investment advice"
+  },
+  {
+    "out": "production/2026-11-07-match-not-fuel-ai-chip-crash/render/cards/card-2-amd-paradox.png",
+    "kicker": "THE AMD PARADOX",
+    "title": "The quarter accelerated. The stock fell 17%.",
+    "tiles": [
+      { "value": "+97%", "label": "AMD data-center revenue, Q3 2026" },
+      { "value": "~$17B", "label": "Q4 revenue guide, about +66%" },
+      { "value": "−17%", "label": "AMD stock, Thursday" },
+      { "value": "+8%", "label": "AMD stock, Friday" }
+    ],
+    "note": "Sources: AMD Q3 2026 results; market reports Nov 5–6 · financialgurkha.com"
+  },
+  {
+    "out": "production/2026-11-07-match-not-fuel-ai-chip-crash/render/cards/card-3-memory-squeeze.png",
+    "kicker": "THE MEMORY SQUEEZE",
+    "title": "One company's price is another's cost",
+    "tiles": [
+      { "value": "45–46%", "label": "Apple Dec-quarter gross margin guide, from 47.9%" },
+      { "value": "−26%", "label": "Qualcomm handset revenue, to $5.14B" },
+      { "value": "−17%", "label": "Micron, Thursday · fell again Friday" },
+      { "value": "+57%", "label": "AI-basket VaR as correlation rises 0.3 → 0.9 (illustrative)" }
+    ],
+    "note": "Analysis by Niraj Neupane, CA · financialgurkha.com · Not investment advice"
+  }
+]

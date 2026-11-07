@@ -28,13 +28,13 @@ _Disclaimer: This article is for educational purposes only and is not investment
 
 ## The 60-Second Version
 
-| Period | Revenue | Growth |
-| :--- | ---: | :--- |
-| 2023 | $41M | — |
-| 2024 | $386M | 9.4× |
-| 2025 | $4.59B | 11.9× |
+| Period          |    Revenue | Growth                       |
+| :-------------- | ---------: | :--------------------------- |
+| 2023            |       $41M | —                            |
+| 2024            |      $386M | 9.4×                         |
+| 2025            |     $4.59B | 11.9×                        |
 | First half 2026 | **$16.3B** | 14.0× the first half of 2025 |
-| Q2 2026 | **$11.6B** | 14.7× Q2 2025; 2.44× Q1 2026 |
+| Q2 2026         | **$11.6B** | 14.7× Q2 2025; 2.44× Q1 2026 |
 
 1. **Revenue grew about tenfold a year,** then 14× year on year in the first half of 2026.
 2. **Growth slowed through 2025, then re-accelerated in 2026,** as the agent products Claude Code and Claude Cowork spread.
@@ -45,6 +45,7 @@ _Disclaimer: This article is for educational purposes only and is not investment
 ### What's in this report
 
 - [The 60-Second Version](#the-60-second-version)
+  - [What's in this report](#whats-in-this-report)
 - [1. Annual Revenue](#1-annual-revenue)
 - [2. Half-Year Revenue](#2-half-year-revenue)
 - [3. Quarterly Revenue](#3-quarterly-revenue)
@@ -52,6 +53,7 @@ _Disclaimer: This article is for educational purposes only and is not investment
 - [5. What Kind of Revenue It Is](#5-what-kind-of-revenue-it-is)
 - [6. What the Filing Says About the Future](#6-what-the-filing-says-about-the-future)
 - [Frequently Asked Questions](#frequently-asked-questions)
+- [Methodology and Sources](#methodology-and-sources)
 
 ---
 
@@ -60,33 +62,33 @@ _Disclaimer: This article is for educational purposes only and is not investment
 **Anthropic grew revenue 9.4× in 2024 and 11.9× in 2025.**
 
 | Year | Revenue | Multiple of prior year |
-| :--- | ---: | ---: |
-| 2023 | $41M | — |
-| 2024 | $386M | 9.4× |
-| 2025 | $4,585M | 11.9× |
+| :--- | ------: | ---------------------: |
+| 2023 |    $41M |                      — |
+| 2024 |   $386M |                   9.4× |
+| 2025 | $4,585M |                  11.9× |
 
 ![Annual revenue from $41 million in 2023 to $4.58 billion in 2025, and $16.29 billion in the first half of 2026](/anthropic-s1/anthropic-annual-revenue.jpg)
 
 ## 2. Half-Year Revenue
 
-| Half | Revenue | vs prior half | vs same half a year earlier |
-| :--- | ---: | ---: | ---: |
-| H1 2025 | $1,163M | — | — |
-| H2 2025 | $3,422M | 2.9× | — |
-| **H1 2026** | **$16,286M** | **4.8×** | **14.0×** |
+| Half        |      Revenue | vs prior half | vs same half a year earlier |
+| :---------- | -----------: | ------------: | --------------------------: |
+| H1 2025     |      $1,163M |             — |                           — |
+| H2 2025     |      $3,422M |          2.9× |                           — |
+| **H1 2026** | **$16,286M** |      **4.8×** |                   **14.0×** |
 
 H2 2025 is our arithmetic: full-year $4,585 million less first-half $1,163 million. **Six months of 2026 produced 3.6 times all of 2025.**
 
 ## 3. Quarterly Revenue
 
-| Quarter | Revenue | Quarter-on-quarter |
-| :--- | ---: | ---: |
-| Q1 2025 | $376M | — |
-| Q2 2025 | $787M | 2.09× |
-| Q3 2025 | $1,382M | 1.76× |
-| Q4 2025 | $2,040M | 1.48× |
-| Q1 2026 | $4,731M | 2.32× |
-| **Q2 2026** | **$11,555M** | **2.44×** |
+| Quarter     |      Revenue | Quarter-on-quarter |
+| :---------- | -----------: | -----------------: |
+| Q1 2025     |        $376M |                  — |
+| Q2 2025     |        $787M |              2.09× |
+| Q3 2025     |      $1,382M |              1.76× |
+| Q4 2025     |      $2,040M |              1.48× |
+| Q1 2026     |      $4,731M |              2.32× |
+| **Q2 2026** | **$11,555M** |          **2.44×** |
 
 ![Quarterly revenue bars from $376 million in Q1 2025 to $11.55 billion in Q2 2026](/anthropic-s1/anthropic-quarterly-revenue.jpg)
 
@@ -96,14 +98,14 @@ The quarter-on-quarter multiple shows a curve that **slowed, then re-accelerated
 
 **The turn to profit came from compute getting cheaper per dollar of revenue, not from spending less.**
 
-| Quarter | Compute cost | Compute per $1 of revenue | Operating income (loss) | Margin |
-| :--- | ---: | ---: | ---: | ---: |
-| Q1 2025 | $944M | $2.51 | $(935)M | −249% |
-| Q2 2025 | $1,390M | $1.77 | $(1,200)M | −152% |
-| Q3 2025 | $2,047M | $1.48 | $(3,089)M | −224%\* |
-| Q4 2025 | $2,945M | $1.44 | $(2,836)M | −139% |
-| Q1 2026 | $3,387M | $0.72 | $(1,667)M | −35% |
-| **Q2 2026** | **$5,558M** | **$0.48** | **$974M** | **+8.4%** |
+| Quarter     | Compute cost | Compute per $1 of revenue | Operating income (loss) |    Margin |
+| :---------- | -----------: | ------------------------: | ----------------------: | --------: |
+| Q1 2025     |        $944M |                     $2.51 |                 $(935)M |     −249% |
+| Q2 2025     |      $1,390M |                     $1.77 |               $(1,200)M |     −152% |
+| Q3 2025     |      $2,047M |                     $1.48 |               $(3,089)M |   −224%\* |
+| Q4 2025     |      $2,945M |                     $1.44 |               $(2,836)M |     −139% |
+| Q1 2026     |      $3,387M |                     $0.72 |               $(1,667)M |      −35% |
+| **Q2 2026** |  **$5,558M** |                 **$0.48** |               **$974M** | **+8.4%** |
 
 \*Includes the $1.5 billion _Bartz_ copyright settlement.
 
@@ -119,13 +121,14 @@ On Anthropic’s non-GAAP measure, which excludes stock compensation, the adjust
 
 **Most revenue is pay-as-you-go.** Customers pay per token of model use, rather than fixed subscriptions.
 
-| | Consumption | Subscriptions |
-| :--- | ---: | ---: |
-| 2024 | 75% | 25% |
-| 2025 | 83% | 17% |
-| H1 2026 | 80% | 20% |
+|         | Consumption | Subscriptions |
+| :------ | ----------: | ------------: |
+| 2024    |         75% |           25% |
+| 2025    |         83% |           17% |
+| H1 2026 |         80% |           20% |
 
 Large customers drive it:
+
 - **Customer count:** customers paying $100,000+ a year grew from about 20 at the end of 2023 to more than **11,900** by September 2026. In 2025 they produced 76% of revenue.
 - **Expansion:** existing customers’ spending grew about **9×** in a year (net revenue retention of ~900%).
 - **Breadth:** no customer exceeds 10% of revenue. Beyond the large accounts there are about 40 million smaller customers.
@@ -135,6 +138,7 @@ Large customers drive it:
 ## 6. What the Filing Says About the Future
 
 The filing is candid:
+
 - **Growth will slow.** It expects the growth rate to decline, “possibly significantly.”
 - **New releases drive revenue.** Models released in the prior six months produced over 80% of Q3 2026 revenue.
 - **Seasonality matters.** Customer spending fell about 20% over the 2025–26 holiday weeks, an effect that will show more as growth slows.

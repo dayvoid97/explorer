@@ -1,15 +1,8 @@
 import type { Metadata } from 'next'
 import type { ReactNode } from 'react'
-import { Playfair_Display } from 'next/font/google'
-
-// Self-hosted at build time by next/font, instead of a render-blocking Google
-// Fonts stylesheet requested from inside the page.
-const serif = Playfair_Display({
-  subsets: ['latin'],
-  weight: ['500', '600', '700'],
-  display: 'swap',
-  variable: '--font-links-serif',
-})
+// The brand serif, served from the repo (see app/fonts), exposed to the grid as
+// var(--font-playfair) instead of a render-blocking Google Fonts stylesheet.
+import { playfair as serif } from '@/app/fonts'
 
 export const metadata: Metadata = {
   title: 'Financial Gurkha Links',

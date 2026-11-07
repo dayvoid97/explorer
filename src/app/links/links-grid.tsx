@@ -22,7 +22,7 @@ type SortMode = 'newest' | 'oldest' | 'surprise'
 const INSTAGRAM_URL = 'https://www.instagram.com/financialgurkha/'
 
 // Loaded once with next/font in ./layout.tsx and exposed as a CSS variable.
-const SERIF = "var(--font-links-serif), Georgia, 'Times New Roman', serif"
+const SERIF = "var(--font-playfair), Georgia, 'Times New Roman', serif"
 
 /*
  * Layout

@@ -2,13 +2,14 @@
 
 import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 import { Search } from 'lucide-react'
 import { track } from '@/app/lib/analytics'
 import { tokens } from '@/app/lib/search/engine'
 import { useSearcher } from '@/app/lib/search/use-search'
 import Highlighted from '@/app/components/search/Highlighted'
 import { formatDay } from '@/app/components/search/NavSearch'
+import SearchAd, { SEARCH_AD_AFTER, SEARCH_AD_MIN_RESULTS } from './SearchAd'
 
 /** Full results page: /search?q=… Same fuzzy search as the nav box, with every match and a kind filter. */
 export default function SearchResults() {
@@ -78,26 +79,30 @@ export default function SearchResults() {
         ) : null}
 
         <ol className="mt-2">
-          {shown.map((r) => (
-            <li key={r.doc.id} className="border-b border-black/10 py-5">
-              <Link href={r.doc.url} className="group flex gap-4">
-                <div className="min-w-0 flex-1">
-                  <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-black/50">
-                    {r.doc.kind === 'news' ? 'News' : 'Research'} · {formatDay(r.doc.date)}
-                  </p>
-                  <h2 className="mt-1 text-[20px] font-bold leading-snug group-hover:underline">
-                    <Highlighted text={r.doc.title} words={words} />
-                  </h2>
-                  <p className="mt-1 line-clamp-3 text-[15px] leading-relaxed text-black/65">
-                    <Highlighted text={r.snippet} words={words} />
-                  </p>
-                </div>
-                {r.doc.image ? (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={r.doc.image} alt="" loading="lazy" className="hidden h-24 w-36 shrink-0 object-cover sm:block" />
-                ) : null}
-              </Link>
-            </li>
+          {shown.map((r, i) => (
+            <Fragment key={r.doc.id}>
+              {/* Keyed by query: each new search is a navigation and gets its own ad */}
+              {i === SEARCH_AD_AFTER && shown.length >= SEARCH_AD_MIN_RESULTS ? <SearchAd key={`ad-${q}`} /> : null}
+              <li className="border-b border-black/10 py-5">
+                <Link href={r.doc.url} className="group flex gap-4">
+                  <div className="min-w-0 flex-1">
+                    <p className="text-[11px] font-bold uppercase tracking-[0.14em] text-black/50">
+                      {r.doc.kind === 'news' ? 'News' : 'Research'} · {formatDay(r.doc.date)}
+                    </p>
+                    <h2 className="mt-1 text-[20px] font-bold leading-snug group-hover:underline">
+                      <Highlighted text={r.doc.title} words={words} />
+                    </h2>
+                    <p className="mt-1 line-clamp-3 text-[15px] leading-relaxed text-black/65">
+                      <Highlighted text={r.snippet} words={words} />
+                    </p>
+                  </div>
+                  {r.doc.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={r.doc.image} alt="" loading="lazy" className="hidden h-24 w-36 shrink-0 object-cover sm:block" />
+                  ) : null}
+                </Link>
+              </li>
+            </Fragment>
           ))}
         </ol>
 
