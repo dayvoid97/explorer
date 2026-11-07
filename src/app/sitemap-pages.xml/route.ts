@@ -24,6 +24,8 @@ export async function GET() {
       { loc: `${SITE}/news`, lastmod: newsUpdated },
       { loc: `${SITE}/blog`, lastmod: blogUpdated },
       { loc: `${SITE}/links`, lastmod: latest },
+      { loc: `${SITE}/wall-street` },
+      { loc: `${SITE}/postcards-from-wall-st` },
       { loc: `${SITE}/consult` },
       { loc: `${SITE}/about` },
       // Author pages carry the credentials and methodology that Google's E-E-A-T

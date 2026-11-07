@@ -15,6 +15,15 @@
  * Web formats only (jpg, jpeg, png, webp, avif). Browsers outside Safari cannot
  * show HEIC, so iPhone HEIC files are skipped; convert them to JPEG first.
  */
+/**
+ * "Monthly Postcard Receivers": the postcard audience, counted the way
+ * Spotify counts monthly listeners. It is the @financialgurkha Instagram
+ * follower count, checked by hand (instagram-cli profile) and updated here.
+ * 41 followers, verified 2026-11-07.
+ */
+export const POSTCARD_RECEIVERS = 41
+export const INSTAGRAM_URL = 'https://www.instagram.com/financialgurkha/'
+
 export interface StreetPhoto {
   src: string
   caption: string

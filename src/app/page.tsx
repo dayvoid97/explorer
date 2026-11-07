@@ -308,6 +308,14 @@ export default async function Home() {
             <div className="mt-10">
               <StreetGallery photos={streetPhotos} />
             </div>
+            <div className="mt-8 flex justify-end">
+              <Link
+                href="/wall-street"
+                className="border border-white/20 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-white/70 transition hover:border-white hover:text-white"
+              >
+                See the full wall of postcards →
+              </Link>
+            </div>
           </div>
         </section>
       ) : null}
