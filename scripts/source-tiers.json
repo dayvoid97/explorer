@@ -46,7 +46,8 @@
     "jpx.co.jp",
     "hkex.com.hk",
     "nseindia.com",
-    "bseindia.com"
+    "bseindia.com",
+    "berkshirehathaway.com"
   ],
   "tier1Patterns": [
     "^investors?\\.",
