@@ -83,3 +83,19 @@ Strip away the allegations and the governance facts alone are unusual. The subje
 ## What happens next
 
 Three dated events will move this story, in order: **November 11**, Huang's deadline to answer the House chairmen; **November 17**, Nvidia's quarterly results after the close, where Huang is expected to face analysts for the first time since the announcement; and **November 18**, the closed-door briefing the chairmen have requested. The board's investigation has no public timetable. Until one of those produces new on-record material, the factual record is the one set out above — statements, allegations, and a calendar.
+
+## External Sources
+
+CNN Business. "Nvidia Stock Falls after Investigation into CEO, Bucking Market Rally." *CNN*, 9 Nov. 2026, www.cnn.com/2026/11/09/investing/nvidia-stock-huang-investigation
+
+Huang, Jensen. "A Message to Our Company." *NVIDIA Newsroom*, 8 Nov. 2026, nvidianews.nvidia.com/news/a-message-to-our-company
+
+NVIDIA Board of Directors. "Statement from NVIDIA Board of Directors." *NVIDIA Newsroom*, 8 Nov. 2026, nvidianews.nvidia.com/news/statement-from-nvidia-board-of-directors
+
+"Reactions to Nvidia's Probe into CEO Jensen Huang." *Reuters*, 9 Nov. 2026, www.reuters.com/technology/reactions-nvidias-probe-into-ceo-jensen-huang-2026-11-09/
+
+"Trump Calls Nvidia's Huang 'Honorable,' Says He Has Not Discussed Allegations with Him." *Reuters*, 8 Nov. 2026, www.reuters.com/world/china/trump-calls-nvidias-huang-honorable-says-he-has-not-discussed-allegations-with-2026-11-08/
+
+"What We Know about Nvidia's Probe into CEO Jensen Huang." *Reuters*, 9 Nov. 2026, www.reuters.com/world/asia-pacific/what-we-know-about-nvidias-probe-into-ceo-jensen-huang-2026-11-09/
+
+Additional reporting referenced in the text: *The New York Times* (Oct. 2026), the *Financial Times* (Nov. 2026), and *Bloomberg News* (Oct. 2026).
