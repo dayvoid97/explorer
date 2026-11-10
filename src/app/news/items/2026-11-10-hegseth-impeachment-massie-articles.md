@@ -29,6 +29,14 @@ Massie has **no co-sponsors**. "We're not indicting him for being bad at his job
 
 This is a reintroduction: Massie first moved the same articles in September, but the resolution expired when Johnson sent the House into its pre-election recess early. Massie himself lost his Republican primary to a Trump-backed challenger and leaves office in January.
 
+## The vote math
+
+Two different bars, in two different chambers. The House impeaches by **simple majority**. The Senate convicts — and removes — only by **two-thirds**.
+
+In the House, Republicans hold 218 seats to the Democrats' 214, with one independent who caucuses with the Republicans and two seats vacant: 433 members seated. If all of them vote, an article carries at 217. The 214 Democrats plus Massie make 215, so **two more Republican defections** would impeach a sitting defense secretary for the first time since 1876. That arithmetic is why congressional sources told Reuters the resolution may have the votes — and why Wednesday's first fight is likely a motion to table it, which also takes only a simple majority.
+
+The Senate is a different story. Conviction requires two-thirds of the senators present — **67 votes** if all 100 vote. Republicans hold 53 seats; the Democrats plus the two independents who caucus with them hold 47. Even a completely unified Democratic side would still need **20 Republicans** to cross over and remove a defense secretary their own president is publicly defending, and Republicans need only 34 votes to acquit. That is the math behind Reuters' assessment that conviction appears unlikely — and behind Massie's argument that Trump should replace Hegseth now, while this Senate can still confirm a successor.
+
 ## The response
 
 Hegseth is defiant. In a video last week he dismissed the "sham articles of impeachment" from a "disgruntled, defeated congressman," and at a rare Pentagon press conference on Tuesday — his first briefing-room questions since May — he said: "They will fail again, and if standing with President Trump puts me in that company, I'll take that company every day of the week." Asked Monday whether he had the Republican votes to beat it, he said, "We're not worried about that."
@@ -44,3 +52,4 @@ President Trump is fully behind him. On CBS's 60 Minutes on Sunday: "They want t
 - [Official text — Massie impeachment resolution (massie.house.gov)](https://massie.house.gov/uploadedfiles/hegseth_articles_of_impeachment.pdf)
 - [CNN — The Trap in Trump's Hegseth Defense](https://www.cnn.com/2026/11/10/politics/trump-pete-hegseth-defense-impeachment)
 - NPR — Thomas Massie files articles of impeachment against Defense Secretary Pete Hegseth, November 9, 2026.
+- [Congressional Research Service — Membership of the 119th Congress: A Profile (congress.gov)](https://www.congress.gov/crs-product/R48535) — party divisions for both chambers; current House split per the House Clerk's member list.
