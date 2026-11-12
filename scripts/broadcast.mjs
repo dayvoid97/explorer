@@ -89,26 +89,60 @@ async function isLive(url) {
   }
 }
 
+// A ping that fails for a passing reason (rate limit, timeout, a hub having a bad
+// minute) is a warning: the pages are live and Google reads the sitemaps anyway.
+// Only a setup problem on our side (key file, key or host rejected) fails the run.
+let setupError = false
+const warn = (line) => {
+  say(`Warning: ${line}`)
+  if (process.env.GITHUB_ACTIONS) console.log(`::warning title=Broadcast::${line}`)
+}
+const fail = (line) => {
+  setupError = true
+  say(`Error: ${line}`)
+  if (process.env.GITHUB_ACTIONS) console.log(`::error title=Broadcast::${line}`)
+}
+
 async function indexNow(urlList) {
-  const key = await fetch(`${SITE}/${INDEXNOW_KEY}.txt`).then((r) => (r.ok ? r.text() : ''))
-  if (key.trim() !== INDEXNOW_KEY) throw new Error(`IndexNow key file ${SITE}/${INDEXNOW_KEY}.txt is missing or wrong`)
-  const res = await fetch(INDEXNOW_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify({ host: HOST, key: INDEXNOW_KEY, keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`, urlList }),
-  })
+  const key = await fetch(`${SITE}/${INDEXNOW_KEY}.txt`)
+    .then((r) => (r.ok ? r.text() : ''))
+    .catch(() => '')
+  if (key.trim() !== INDEXNOW_KEY) return fail(`IndexNow key file ${SITE}/${INDEXNOW_KEY}.txt is missing or wrong`)
+  let res
+  try {
+    res = await fetch(INDEXNOW_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({ host: HOST, key: INDEXNOW_KEY, keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`, urlList }),
+      signal: AbortSignal.timeout(30_000),
+    })
+  } catch (err) {
+    return warn(`IndexNow could not be reached (${err.message}); these URLs go out with the next deploy or a manual run`)
+  }
+  const body = (await res.text()).trim().slice(0, 300)
+  const answer = `IndexNow answered ${res.status}${body ? `: ${body}` : ''}`
   // 200 = received, 202 = received and key validation pending
-  if (res.status !== 200 && res.status !== 202) throw new Error(`IndexNow answered ${res.status}: ${await res.text()}`)
-  return res.status
+  if (res.status === 200 || res.status === 202) return say(`\nIndexNow: ${res.status}`)
+  // 400 bad request, 403 key not valid, 422 URLs or key don't match the host: our setup
+  if ([400, 403, 422].includes(res.status)) return fail(answer)
+  // 429 too many requests, 5xx their side: try again later
+  warn(`${answer}. Usually a rate limit from frequent deploys; nothing on the site is affected`)
 }
 
 async function websub(feed) {
-  const res = await fetch(WEBSUB_HUB, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({ 'hub.mode': 'publish', 'hub.url': `${SITE}${feed}` }),
-  })
-  return res.status // 204 = accepted
+  try {
+    const res = await fetch(WEBSUB_HUB, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ 'hub.mode': 'publish', 'hub.url': `${SITE}${feed}` }),
+      signal: AbortSignal.timeout(30_000),
+    })
+    // 204 = accepted
+    if (res.status === 204 || res.status === 200) say(`WebSub ${feed}: ${res.status}`)
+    else warn(`WebSub ${feed} answered ${res.status}`)
+  } catch (err) {
+    warn(`WebSub ${feed} could not be reached (${err.message})`)
+  }
 }
 
 const candidates = opt('files') ? urlsFromFiles(opt('files')) : await urlsFromSitemaps(Number(opt('hours') || 48))
@@ -128,11 +162,12 @@ if (!unique.length) {
   if (dryRun) {
     say('\nDry run: nothing sent.')
   } else {
-    if (urls.length) say(`\nIndexNow: ${await indexNow(urls)}`)
-    for (const feed of FEEDS) say(`WebSub ${feed}: ${await websub(feed)}`)
+    if (urls.length) await indexNow(urls)
+    for (const feed of FEEDS) await websub(feed)
   }
 }
 
 if (process.env.GITHUB_STEP_SUMMARY) {
   fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Broadcast\n\n${summary.join('\n')}\n`)
 }
+if (setupError) process.exitCode = 1

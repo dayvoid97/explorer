@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Postcards from Wall Street — Financial Gurkha',
     description:
-      'We walk the blocks we write about. A wall of our own photographs from Wall Street and the Financial District.',
+      'We walk the blocks we write from. A wall of our own photographs from Wall Street and the Financial District.',
     images: ['/wall-street/wall-street-station-mosaic.jpg'],
   },
 }
@@ -48,11 +48,10 @@ export default async function WallStreetPage({
         </h1>
         <div className="mt-8 flex flex-wrap items-end justify-between gap-8">
           <p className="max-w-xl text-[17px] font-light leading-relaxed text-white/70">
-            We walk the blocks we write about. Financial Gurkha is researched and written from
-            Wall Street and the surrounding Financial District, on the ground at least twice a
-            week, and this is the view from those walks: the canyons, the station mosaic, the
-            banking halls, the bull in miniature. No stock photos. Every frame on this wall is
-            ours.
+            We walk the blocks we write about. Financial Gurkha is researched and written from Wall
+            Street and the surrounding Financial District, on the ground at least twice a week, and
+            this is the view from those walks: the canyons, the station mosaic, the banking halls,
+            the bull in miniature. No stock photos. Every frame on this wall is ours.
           </p>
           <dl className="flex gap-10 font-mono text-[11px] uppercase tracking-[0.2em] text-white/50">
             <div>

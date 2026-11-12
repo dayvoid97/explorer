@@ -129,7 +129,9 @@ export default async function Home() {
                   >
                     {lead.headline}
                   </h1>
-                  <p className="mt-4 line-clamp-4 text-[17px] leading-relaxed text-black/65">{lead.dek}</p>
+                  <p className="mt-4 line-clamp-4 text-[17px] leading-relaxed text-black/65">
+                    {lead.dek}
+                  </p>
                   <p className="mt-3 text-[12px] text-black/50">
                     {formatNewsDate(lead.date)} · {lead.readMinutes} min read
                   </p>
@@ -160,11 +162,17 @@ export default async function Home() {
               >
                 {featured.image ? (
                   <div className="relative aspect-[16/9] overflow-hidden bg-black/5">
-                    <Cover image={featured.image} sizes="(min-width: 1024px) 660px, 100vw" priority />
+                    <Cover
+                      image={featured.image}
+                      sizes="(min-width: 1024px) 660px, 100vw"
+                      priority
+                    />
                   </div>
                 ) : null}
                 <div className="flex-1 bg-black/[0.05] px-6 py-6 text-center sm:px-10">
-                  <p className="text-[15px] font-semibold">{featured.categories?.[0] ?? 'Research'}</p>
+                  <p className="text-[15px] font-semibold">
+                    {featured.categories?.[0] ?? 'Research'}
+                  </p>
                   <h2
                     className={`${serif.className} mt-3 text-[26px] leading-tight group-hover:underline sm:text-[32px]`}
                   >
@@ -197,13 +205,17 @@ export default async function Home() {
                           </div>
                         ) : null}
                         <h3
-                          className={`${serif.className} font-semibold leading-snug group-hover:underline ${
+                          className={`${
+                            serif.className
+                          } font-semibold leading-snug group-hover:underline ${
                             i === 0 ? 'text-[20px]' : 'text-[17px]'
                           }`}
                         >
                           {item.headline}
                         </h3>
-                        <p className="mt-1.5 text-[12px] text-black/50">{formatNewsDate(item.date)}</p>
+                        <p className="mt-1.5 text-[12px] text-black/50">
+                          {formatNewsDate(item.date)}
+                        </p>
                       </Link>
                     </li>
                   ))}
@@ -300,9 +312,9 @@ export default async function Home() {
                 We walk the blocks we write about.
               </h2>
               <p className="max-w-sm text-[15px] leading-relaxed text-white/60">
-                Financial Gurkha operates from New York City. Most articles are researched and written
-                from Wall Street and the surrounding Financial District — on the ground, at least twice
-                a week.
+                Financial Gurkha operates from New York City. Most articles are researched and
+                written from Wall Street and the surrounding Financial District — on the ground, at
+                least twice a week.
               </p>
             </div>
             <div className="mt-10">
