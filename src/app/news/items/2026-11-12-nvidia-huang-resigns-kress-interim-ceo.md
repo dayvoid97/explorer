@@ -1,7 +1,7 @@
 ---
 date: '11/12/2026'
 headline: 'Nvidia CEO Jensen Huang Resigns; CFO Colette Kress Steps In as Interim Chief Executive'
-dek: 'The board accepted Huang''s resignation as CEO and director effective immediately, named Harvey Jones its first-ever chair, and turned to its CFO of 13 years while it searches for a permanent successor. Nvidia''s November 17 earnings report stays on the calendar.'
+dek: "The board accepted Huang's resignation as CEO and director effective immediately, named Harvey Jones its first-ever chair, and turned to its CFO of 13 years while it searches for a permanent successor. Nvidia's November 17 earnings report stays on the calendar."
 tags: ['Nvidia', 'NVDA', 'Jensen Huang', 'Colette Kress', 'CEO Succession']
 image: '/news/nvidia-huang-resigns-kress-interim-ceo.jpg'
 sources:
@@ -56,7 +56,7 @@ For the on-record statements by each party since the board opened its review, se
 
 Nvidia said it will report third-quarter fiscal 2027 results on Tuesday, November 17, at about 1:20 p.m. PT, followed by its call at 2 p.m. PT, as previously scheduled. It will be the first report under Kress as interim CEO, a role she holds alongside her CFO duties. The 8-K gives no timeline for the CEO search.
 
-*Share price moves are intraday snapshots from market data feeds. This brief was drafted with AI assistance from the sources listed and is news reporting, not financial advice.*
+_Share price moves are intraday snapshots from market data feeds. This brief was drafted with AI assistance from the sources listed and is news reporting, not financial advice._
 
 ## Sources
 

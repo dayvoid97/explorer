@@ -59,7 +59,9 @@ function urlsFromFiles(listFile) {
     changed.push({ url: `${SITE}${section.path}${slug}`, removed: status === 'D' })
     fronts.add(section.front)
   }
-  if (fronts.size) for (const front of [...fronts, '/', '/links']) changed.push({ url: front === '/' ? SITE : `${SITE}${front}`, removed: false })
+  if (fronts.size)
+    for (const front of [...fronts, '/', '/links'])
+      changed.push({ url: front === '/' ? SITE : `${SITE}${front}`, removed: false })
   return changed
 }
 
@@ -67,14 +69,17 @@ function urlsFromFiles(listFile) {
 async function urlsFromSitemaps(hours) {
   const cutoff = new Date(Date.now() - hours * 3_600_000).toISOString().slice(0, 10)
   const index = await (await fetch(`${SITE}/sitemap.xml`)).text()
-  const children = [...index.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => m[1]).filter((u) => !u.endsWith('/news-sitemap.xml'))
+  const children = [...index.matchAll(/<loc>([^<]+)<\/loc>/g)]
+    .map((m) => m[1])
+    .filter((u) => !u.endsWith('/news-sitemap.xml'))
   const urls = []
   for (const child of children) {
     const xml = await (await fetch(child)).text()
     for (const [, block] of xml.matchAll(/<url>([\s\S]*?)<\/url>/g)) {
       const loc = block.match(/<loc>([^<]+)<\/loc>/)?.[1]
       const lastmod = block.match(/<lastmod>([^<]+)<\/lastmod>/)?.[1]
-      if (loc && lastmod && lastmod.slice(0, 10) >= cutoff) urls.push({ url: loc.replace(/&amp;/g, '&'), removed: false })
+      if (loc && lastmod && lastmod.slice(0, 10) >= cutoff)
+        urls.push({ url: loc.replace(/&amp;/g, '&'), removed: false })
     }
   }
   return urls
@@ -107,17 +112,25 @@ async function indexNow(urlList) {
   const key = await fetch(`${SITE}/${INDEXNOW_KEY}.txt`)
     .then((r) => (r.ok ? r.text() : ''))
     .catch(() => '')
-  if (key.trim() !== INDEXNOW_KEY) return fail(`IndexNow key file ${SITE}/${INDEXNOW_KEY}.txt is missing or wrong`)
+  if (key.trim() !== INDEXNOW_KEY)
+    return fail(`IndexNow key file ${SITE}/${INDEXNOW_KEY}.txt is missing or wrong`)
   let res
   try {
     res = await fetch(INDEXNOW_ENDPOINT, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json; charset=utf-8' },
-      body: JSON.stringify({ host: HOST, key: INDEXNOW_KEY, keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`, urlList }),
+      body: JSON.stringify({
+        host: HOST,
+        key: INDEXNOW_KEY,
+        keyLocation: `${SITE}/${INDEXNOW_KEY}.txt`,
+        urlList,
+      }),
       signal: AbortSignal.timeout(30_000),
     })
   } catch (err) {
-    return warn(`IndexNow could not be reached (${err.message}); these URLs go out with the next deploy or a manual run`)
+    return warn(
+      `IndexNow could not be reached (${err.message}); these URLs go out with the next deploy or a manual run`
+    )
   }
   const body = (await res.text()).trim().slice(0, 300)
   const answer = `IndexNow answered ${res.status}${body ? `: ${body}` : ''}`
@@ -145,7 +158,9 @@ async function websub(feed) {
   }
 }
 
-const candidates = opt('files') ? urlsFromFiles(opt('files')) : await urlsFromSitemaps(Number(opt('hours') || 48))
+const candidates = opt('files')
+  ? urlsFromFiles(opt('files'))
+  : await urlsFromSitemaps(Number(opt('hours') || 48))
 const unique = [...new Map(candidates.map((c) => [c.url, c])).values()]
 if (!unique.length) {
   say('Nothing new to broadcast.')
