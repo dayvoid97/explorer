@@ -1,68 +1,48 @@
 ---
 date: '11/12/2026'
-headline: 'Nvidia CEO Jensen Huang Resigns; CFO Colette Kress Steps In as Interim Chief Executive'
-dek: "The board accepted Huang's resignation as CEO and director effective immediately, named Harvey Jones its first-ever chair, and turned to its CFO of 13 years while it searches for a permanent successor. Nvidia's November 17 earnings report stays on the calendar."
-tags: ['Nvidia', 'NVDA', 'Jensen Huang', 'Colette Kress', 'CEO Succession']
+headline: 'Jensen Huang Resigns as Nvidia CEO After 33 Years; Colette Kress Named Interim CEO'
+dek: 'The board gave no reason and published no findings from its investigation, as shares fell more than 10 percent pre-market and the search for a permanent successor began.'
+tags: ['Nvidia', 'Jensen Huang', 'Colette Kress', 'NVDA', 'CEO Transition']
 image: '/news/nvidia-huang-resigns-kress-interim-ceo.jpg'
 sources:
-  - name: 'SEC — NVIDIA Corp. Form 8-K, Item 5.02, CEO transition (event date Nov 11, 2026; signed Nov 12, 2026)'
-    url: 'https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvda-20261111.htm'
-  - name: 'NVIDIA — Press release (Exhibit 99.1): NVIDIA Announces CEO Transition (Nov 12, 2026)'
-    url: 'https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvidiaannouncesceotransiti.htm'
-  - name: 'CNBC — Nvidia CEO Jensen Huang resigns: Live updates (Nov 12, 2026)'
-    url: 'https://www.cnbc.com/2026/11/12/nvidia-jensen-huang-ceo-live-updates.html'
-  - name: 'NBC News — Nvidia CEO Jensen Huang resigns after reports of affair and extramarital relationships (Nov 12, 2026)'
-    url: 'https://www.nbcnews.com/tech/tech-news/nvidia-ceo-jensen-huang-resigns-reports-extramarital-relationships-rcna608402'
-  - name: 'NVIDIA — Announces Financial Results for Second Quarter Fiscal 2027 (Aug 26, 2026)'
-    url: 'https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027'
+  - name: 'NVIDIA Newsroom — NVIDIA Announces CEO Transition'
+    url: 'https://nvidianews.nvidia.com/news/nvidia-announces-ceo-transition'
+  - name: 'Reuters — Nvidia CEO Jensen Huang to step down in big blow to AI boom'
+    url: 'https://www.reuters.com/business/retail-consumer/nvidia-ceo-jensen-huang-step-down-big-blow-ai-boom-2026-11-12/'
+  - name: 'The Wall Street Journal — Jensen Huang Has Been Ousted as Nvidia CEO'
+    url: 'https://www.wsj.com/business/nvidia-is-preparing-to-oust-nvidia-ceo-jensen-huang-30f421ad'
 ---
 
-NEW YORK, Nov 12 — Nvidia (Nasdaq: NVDA) said Thursday that Jensen Huang has resigned as president, chief executive officer and member of the board, effective immediately, and that Chief Financial Officer Colette Kress will serve as interim CEO while the board searches for a permanent successor. Shares opened more than 13% lower (CNBC) and were down about 7.5% in intraday trading, according to market data. That leaves the stock roughly 33% below its closing high of $239.24 on October 6.
+SANTA CLARA, Calif., Nov 12 — Jensen Huang resigned as president, chief executive and board member of Nvidia (Nasdaq: NVDA), effective immediately, the company announced on Thursday morning. The exit ends the 33-year run of the co-founder who built the chipmaker into the defining company of the AI era, and it came with no stated reason: the announcement does not say why Huang is leaving and does not mention the independent investigation the board opened four days ago.
 
-## What the filing says
+## The transition
 
-Nvidia disclosed the change in a Form 8-K under Item 5.02, with an event date of November 11 and a signature date of November 12. The board accepted Huang's resignation "effective immediately," and appointed Kress, age 59, interim CEO. She keeps her CFO role while she serves, and the board will consider internal and external candidates for the permanent job.
+Colette Kress, Nvidia's executive vice president and chief financial officer since September 2013, has agreed to serve as interim chief executive. She will keep the CFO job while serving as interim CEO until a permanent successor is named, and the board said it is starting a search that will consider internal and external candidates.
 
-Neither the 8-K nor the accompanying press release gives a reason for the resignation, and neither describes severance, an advisory role or any other arrangement for Huang. The press release thanks him for his "immeasurable contributions" to the company and the industry.
+The board also appointed Harvey C. Jones, a director and the former chief executive of Synopsys, as its first-ever chair. "Colette has helped lead NVIDIA through a period of extraordinary growth and has a deep understanding of our business, customers, operations and financial position," Jones said in the announcement. "The Board has full confidence in Colette and the leadership team, and we expect the company's operations, customer commitments and product roadmap to continue without interruption."
 
-The board also created a new post. Harvey C. Jones, 73, was appointed the company's first-ever Chair of the Board. Jones has served as a director since 1993 and has been managing partner of the family office Square Wave Ventures since 2004. The press release adds that he previously served as CEO and executive chairman of Synopsys. "The Board has full confidence in Colette and the leadership team," Jones said, adding that operations, customer commitments and the product roadmap are expected to continue without interruption.
+Kress, in her first statement as interim chief executive, said she is "committed to building on the extraordinary foundation Jensen created over the last 33 years," adding: "Our focus remains on serving our customers, partners, developers and shareholders." The board thanked Huang for his "immeasurable contributions to the company and the industry." Huang holds about 3.61% of Nvidia's shares and was its fourth-largest shareholder, according to Reuters.
 
-## Who is Colette Kress
+## No reason given
 
-Kress joined Nvidia as executive vice president and CFO in September 2013, which makes her the company's finance chief for about 13 years. Nvidia's 2013 filing introducing her describes a career in technology finance:
+The announcement contains no statement from Huang and no findings from the investigation the board opened on Sunday, November 8, after reports that he had been the target of a foreign intelligence effort. On Tuesday the independent directors put the inquiry in the hands of former acting U.S. Attorney Joon H. Kim and the law firm Wachtell, Lipton, Rosen & Katz. Its status after Thursday's announcement is not addressed.
 
-- **Cisco Systems:** senior vice president and CFO of the Business Technology and Operations Finance organization, from 2010.
-- **Microsoft:** a variety of positions from 1997 to 2010, including CFO of the Server and Tools division from 2006.
-- **Texas Instruments:** eight years in finance roles before Microsoft.
-- **Education:** a B.S. in finance from the University of Arizona and an MBA from Southern Methodist University (Nvidia 8-K, 2013; CNBC).
+The board met late into Wednesday night to decide whether to remove Huang, a person familiar with the matter told Reuters, hours after the New York Times reported a second extramarital relationship, with Kimberly Powell, the vice president of healthcare who reports to him. The Wall Street Journal, which reported on Wednesday that the board was preparing to oust him, headlined Thursday's outcome "Jensen Huang Has Been Ousted as Nvidia CEO." Nvidia's own word for the departure is "resigned."
 
-Nvidia's release says she spent nearly 25 years in finance roles at technology companies before joining. In its statement, she said she is committed to building on the foundation Huang created over 33 years.
+One thread remains open in Washington. Three House committee chairs had asked Huang to respond by Wednesday, November 11, and to give a closed-door briefing on November 18 about the reported foreign-intelligence approach. No public response came, House Foreign Affairs Chairman Brian Mast was preparing a subpoena, TechCrunch reported on Wednesday, and Thursday's announcement does not address the request.
 
-She takes over a company that is still growing quickly. In the quarter ended July 26, Nvidia reported revenue of $96.2 billion, up 106% from $46.7 billion a year earlier and up 18% from the prior quarter. Data Center revenue was $89.0 billion, up 117% year over year, and GAAP net income was $59.7 billion. Nvidia guided third-quarter revenue to $108.0 billion, plus or minus 2%, and said that outlook assumes no Data Center compute revenue from China (company release, Aug. 26).
+## The market reaction
 
-## How the market and analysts are reading it
+Nvidia shares fell more than 10% in pre-market trade, Reuters reported, weighing on the broader market. The stock opened at $151.01, traded as low as $148.80 in the first minutes, and by 10:14 a.m. ET had recovered to $161.47, down 7.1% from the Wednesday close of $173.73, according to Finnhub data. The move caps a brutal week: the shares are down about 19% over five sessions, and Wednesday's after-hours slide alone erased about $350 billion of market value. Nvidia's market capitalization stands at about $4.07 trillion.
 
-Yorkville's Dan Ives told CNBC that Kress is the right person to steady the company in the near term, and that the permanent CEO will probably come from outside. He expects the interim period to last about a year. That is one analyst's estimate, not a company timeline. Stifel cut its price target to $205 from $315 and kept its buy rating, CNBC reported.
+## What happens next
 
-On the share price: Wednesday's close was $173.73. A 7.5% decline puts the stock near $160.70 (173.73 × 0.925), and $160.70 divided by $239.24 is 0.672, or about 33% below the October 6 closing high. CNBC reported the company's market value below $4 trillion and down about $2 trillion since early October. Intraday prices move; the figures here are a snapshot.
-
-## Background on the departure
-
-Nvidia has not stated why Huang resigned, so the context below comes from news reports. NBC News reported that the resignation followed reports of extramarital relationships, one with a woman U.S. intelligence officials believe is a suspected Chinese agent, and another, reported by The New York Times, with an executive who reported to him. NBC said it had not independently verified the Times reporting, and that Nvidia and the executive did not respond to requests for comment. NBC and CNBC also reported that Huang wrote to employees acknowledging he was unfaithful to his wife and apologizing. CNBC reported that he denied compromising national security or Nvidia secrets.
-
-For the on-record statements by each party since the board opened its review, see our [full breakdown](/blog/nvidia-investigation-what-each-party-said). Our earlier [pre-market brief](/news/2026-11-12-premarket-nvidia-board-huang) covers the hours before the announcement.
-
-## What is next
-
-Nvidia said it will report third-quarter fiscal 2027 results on Tuesday, November 17, at about 1:20 p.m. PT, followed by its call at 2 p.m. PT, as previously scheduled. It will be the first report under Kress as interim CEO, a role she holds alongside her CFO duties. The 8-K gives no timeline for the CEO search.
-
-_Share price moves are intraday snapshots from market data feeds. This brief was drafted with AI assistance from the sources listed and is news reporting, not financial advice._
+The first test of the new leadership arrives in five days. Nvidia confirmed it will report third-quarter fiscal 2027 results on Tuesday, November 17, at about 1:20 p.m. PT, with the earnings call at 2 p.m. PT, as previously scheduled — a call Kress has led for years as CFO, now as the executive in charge. Beyond earnings, three questions are unanswered: who the permanent chief executive will be, what the board's investigation concludes, and whether Huang answers Congress.
 
 ## Sources
 
-- [SEC — NVIDIA Corp. Form 8-K, Item 5.02 (Nov 11–12, 2026)](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvda-20261111.htm)
-- [NVIDIA — Exhibit 99.1 press release, "NVIDIA Announces CEO Transition" (Nov 12, 2026)](https://www.sec.gov/Archives/edgar/data/0001045810/000104581026000082/nvidiaannouncesceotransiti.htm)
-- [CNBC — Nvidia CEO Jensen Huang resigns: Live updates (Nov 12, 2026)](https://www.cnbc.com/2026/11/12/nvidia-jensen-huang-ceo-live-updates.html)
-- [NBC News — Nvidia CEO Jensen Huang resigns after reports of affair and extramarital relationships (Nov 12, 2026)](https://www.nbcnews.com/tech/tech-news/nvidia-ceo-jensen-huang-resigns-reports-extramarital-relationships-rcna608402)
-- [NVIDIA — Announces Financial Results for Second Quarter Fiscal 2027 (Aug 26, 2026)](https://nvidianews.nvidia.com/news/nvidia-announces-financial-results-for-second-quarter-fiscal-2027)
-- [SEC — NVIDIA Corp. Form 8-K, appointment of Colette Kress as CFO (Sept 2013)](https://www.sec.gov/Archives/edgar/data/1045810/000104581013000080/form8-kxckress9x14x13.htm)
+- NVIDIA Newsroom, "NVIDIA Announces CEO Transition," November 12, 2026.
+- Reuters, "Nvidia CEO Jensen Huang to step down in big blow to AI boom," November 12, 2026; and "Nvidia board to decide fate of CEO Jensen Huang," November 11–12, 2026.
+- The Wall Street Journal, "Jensen Huang Has Been Ousted as Nvidia CEO," November 12, 2026.
+- TechCrunch, reporting on the House subpoena preparation, November 11, 2026.
+- Market data: Finnhub (Nvidia session prices to 10:14 a.m. ET, November 12, 2026).

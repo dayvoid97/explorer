@@ -13,6 +13,8 @@ sources:
     url: 'https://www.mississippifreepress.org/scott-colom-wins-mississippi-us-senate-race-will-be-states-first-black-senator-in-146-years/'
 ---
 
+**Update — Nov. 12, 2026, 10:19 AM ET:** The board decision this brief was awaiting has been announced. Nvidia said Jensen Huang resigned as president, chief executive and board member, effective immediately, and named Colette Kress interim chief executive. Full follow-up: [Jensen Huang Resigns as Nvidia CEO After 33 Years; Colette Kress Named Interim CEO](https://financialgurkha.com/news/2026-11-12-nvidia-huang-resigns-kress-interim-ceo). The report below was published before the open and stands as written at the time.
+
 NEW YORK, Nov 12 — U.S. stock futures pointed lower before the open on Thursday, with one stock doing most of the damage. S&P 500 futures fell 0.39% to 7,611.00 and Nasdaq futures dropped 0.81% to 28,243.25, while Dow futures were flat at 52,585.00, up 0.01%. Russell 2000 futures eased 0.08% to 2,851.40. The soft open follows a strong Wednesday session in which the S&P 500 rose 1.31% to 7,619.38, the Nasdaq gained 1.60% to 25,466.19 and the Dow added 0.49% to 52,486.49 — a rally the Nvidia board story has now put in doubt.
 
 ## Nvidia: the board watch
