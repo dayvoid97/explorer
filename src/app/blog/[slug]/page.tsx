@@ -90,16 +90,17 @@ const MANUAL_TOC_RE = /^#{2,3}\s+(what's in this report|table of contents)/im
 // it to a paragraph makes MDX treat it as inline content, producing invalid
 // <p>...<div/></p> markup and a hydration error.
 
-// Ad density scales with length: roughly one unit per 1,100 words of body,
+// Ad density scales with length: roughly one unit per 300 words of body,
 // capped at 5. On an 8,000-word piece that is a unit every ~1,600 words, which
 // leaves several screens of uninterrupted reading between them.
-const WORDS_PER_AD = 1100
-const MAX_ADS = 5
+const WORDS_PER_AD = 300
+const MAX_ADS = 3
 // Never place a section unit before this many words — keeps the opening, the
 // 60-second summary and the table of contents (the fast path) to one unit.
-const LEAD_IN_WORDS = 350
+// Approximately 150 words before the first ad is rendered. Likely first ad after the second paragraph
+const LEAD_IN_WORDS = 150
 // Keep the closing stretch (FAQ, takeaways, read-next widget) clear.
-const TAIL_WORDS = 300
+const TAIL_WORDS = 500
 
 function isHeading2(block: string) {
   return /^##\s/.test(block.trim())
@@ -147,7 +148,7 @@ function injectSectionAds(content: string) {
     (_, i) => LEAD_IN_WORDS + (usable * (i + 1)) / (adCount + 1)
   )
 
-  const minGap = Math.max(600, usable / (adCount + 1) / 2)
+  const minGap = Math.max(400, usable / (adCount + 1) / 2)
   const placed: { index: number; wordsBefore: number }[] = []
 
   for (const target of targets) {
