@@ -101,6 +101,13 @@ const MAX_ADS = 3
 const LEAD_IN_WORDS = 150
 // Keep the closing stretch (FAQ, takeaways, read-next widget) clear.
 const TAIL_WORDS = 500
+// The FIRST mobile unit must land within this many words of the start of the body
+// (desktop is unaffected: this unit is `lg:hidden`, desktop uses the sidebar).
+// Articles with a "60-Second Version" already satisfy this through the fixed
+// opening unit; every other article gets its first section unit pulled forward to
+// the boundary nearest FIRST_AD_TARGET_WORDS, never past FIRST_AD_MAX_WORDS.
+const FIRST_AD_TARGET_WORDS = 350
+const FIRST_AD_MAX_WORDS = 500
 
 function isHeading2(block: string) {
   return /^##\s/.test(block.trim())
@@ -111,6 +118,24 @@ function isHeading2(block: string) {
 // same heading, so the two never stack.
 const SIXTY_SECOND_RE = /^##\s+The 60[- ]Second Version/i
 
+// A block that is plain running prose: not a table, list, quote, image, code
+// fence, rule, heading or component, and not an indented list continuation.
+const NOT_PROSE_RE = /^(\||>|[-*+]\s|\d+\.\s|<|!\[|```|#|---)/
+function isProse(block: string) {
+  const b = block.replace(/^\n+/, '')
+  return b.trim().length > 0 && !/^\s/.test(b) && !NOT_PROSE_RE.test(b)
+}
+
+// Whether an ad may be inserted BEFORE block i without splitting anything: not
+// inside a fenced code block, not directly under a heading (that would separate
+// the heading from its first paragraph), and the block that follows must open a
+// new paragraph or sub-section — never the middle of a list or a table.
+function isSafeBreak(blocks: string[], i: number, insideFence: boolean[]) {
+  if (i <= 0 || insideFence[i]) return false
+  if (/^#{1,6}\s/.test(blocks[i - 1].trim())) return false
+  return isProse(blocks[i]) || /^###\s/.test(blocks[i].trim())
+}
+
 function injectSectionAds(content: string) {
   const blocks = content.split('\n\n')
   const words = (s: string) => s.trim().split(/\s+/).filter(Boolean).length
@@ -119,8 +144,14 @@ function injectSectionAds(content: string) {
   // article. Section boundaries are the only place an ad belongs — they are the
   // natural pause, and they guarantee a deep-linked reader meets one quickly.
   const candidates: { index: number; wordsBefore: number }[] = []
+  const before: number[] = [] // words before each block, for paragraph fallbacks
+  const insideFence: boolean[] = [] // is block i inside a ``` fence? (never split one)
   let cumulative = 0
+  let fenced = false
   blocks.forEach((b, i) => {
+    before[i] = cumulative
+    insideFence[i] = fenced
+    if ((b.match(/^```/gm) ?? []).length % 2 === 1) fenced = !fenced
     if (isHeading2(b)) candidates.push({ index: i, wordsBefore: cumulative })
     cumulative += words(b)
   })
@@ -138,18 +169,50 @@ function injectSectionAds(content: string) {
   if (eligible.length === 0) return content
 
   const adCount = Math.min(MAX_ADS, Math.max(1, Math.round(usable / WORDS_PER_AD)))
-
-  // Evenly spaced word targets, each snapped to the NEAREST eligible section
-  // boundary. Walking forward and taking every Nth heading clusters units in
-  // whichever part of the article happens to have short sections — that is how
-  // a long piece ends up with nothing across its final third.
-  const targets = Array.from(
-    { length: adCount },
-    (_, i) => LEAD_IN_WORDS + (usable * (i + 1)) / (adCount + 1)
-  )
-
   const minGap = Math.max(400, usable / (adCount + 1) / 2)
   const placed: { index: number; wordsBefore: number }[] = []
+
+  // First mobile unit: articles with a 60-second summary already open with a
+  // fixed unit; all others get theirs early. Prefer the section boundary nearest
+  // the target (within the max); if no heading falls in that window, use the
+  // safe paragraph break nearest the target instead.
+  const hasSixty = blocks.some((b) => SIXTY_SECOND_RE.test(b.trim()))
+  if (!hasSixty) {
+    const limit = Math.min(FIRST_AD_MAX_WORDS, totalWords - TAIL_WORDS)
+    const nearest = <T extends { wordsBefore: number }>(xs: T[]) =>
+      [...xs].sort(
+        (a, b) =>
+          Math.abs(a.wordsBefore - FIRST_AD_TARGET_WORDS) -
+          Math.abs(b.wordsBefore - FIRST_AD_TARGET_WORDS)
+      )[0]
+    let first = nearest(eligible.filter((c) => c.wordsBefore <= limit))
+    if (!first) {
+      const slots = blocks
+        .map((_, i) => ({ index: i, wordsBefore: before[i] }))
+        .filter(
+          (c) =>
+            c.wordsBefore >= LEAD_IN_WORDS &&
+            c.wordsBefore <= limit &&
+            isSafeBreak(blocks, c.index, insideFence)
+        )
+      first = nearest(slots)
+    }
+    if (first) placed.push(first)
+  }
+
+  // Remaining units: evenly spaced word targets, each snapped to the NEAREST
+  // eligible section boundary. Walking forward and taking every Nth heading
+  // clusters units in whichever part of the article happens to have short
+  // sections — that is how a long piece ends up with nothing across its final
+  // third. When the first unit was pinned early, the rest are spread over what
+  // is left of the article.
+  const start = placed.length ? placed[0].wordsBefore : LEAD_IN_WORDS
+  const remaining = adCount - placed.length
+  const span = totalWords - TAIL_WORDS - start
+  const targets = Array.from(
+    { length: Math.max(0, remaining) },
+    (_, i) => start + (span * (i + 1)) / (remaining + 1)
+  )
 
   for (const target of targets) {
     const pick = eligible
