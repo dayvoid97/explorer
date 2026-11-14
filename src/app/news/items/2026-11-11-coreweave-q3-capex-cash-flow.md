@@ -29,14 +29,14 @@ The GAAP net loss of $709 million barely touches the cash line, because the bigg
 
 Purchases of property and equipment, including capitalized internal-use software, took $9.441 billion of the $9.836 billion total investing outflow — 96 cents of every investing dollar went into data centers and the machines inside them (in millions):
 
-| Investing activities | Q3 2026 | Q3 2025 | Nine months 2026 | Nine months 2025 |
-|---|---|---|---|---|
-| Property and equipment purchases | (9,441) | (3,279) | (23,558) | (6,249) |
-| Investments in unconsolidated joint ventures and variable interest entities | (410) | (1) | (960) | (33) |
-| Strategic investments | (35) | (2) | (173) | (2) |
-| Marketable securities, net | 7 | (47) | 25 | (18) |
-| Other investing, net | 43 | (31) | (44) | (43) |
-| **Net cash used in investing activities** | **(9,836)** | **(3,360)** | **(24,710)** | **(6,345)** |
+| Investing activities                                                        | Q3 2026     | Q3 2025     | Nine months 2026 | Nine months 2025 |
+| --------------------------------------------------------------------------- | ----------- | ----------- | ---------------- | ---------------- |
+| Property and equipment purchases                                            | (9,441)     | (3,279)     | (23,558)         | (6,249)          |
+| Investments in unconsolidated joint ventures and variable interest entities | (410)       | (1)         | (960)            | (33)             |
+| Strategic investments                                                       | (35)        | (2)         | (173)            | (2)              |
+| Marketable securities, net                                                  | 7           | (47)        | 25               | (18)             |
+| Other investing, net                                                        | 43          | (31)        | (44)             | (43)             |
+| **Net cash used in investing activities**                                   | **(9,836)** | **(3,360)** | **(24,710)**     | **(6,345)**      |
 
 How fast is the build growing?
 

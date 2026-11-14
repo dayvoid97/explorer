@@ -41,7 +41,7 @@ Separately, The Information reported Tuesday that the relationship allegedly ena
 
 Huang faces a Wednesday, November 11 deadline to respond to three House committee chairmen seeking a closed-door briefing on November 18. Reuters also reported Tuesday that Nvidia's board — which has no chair and includes three directors serving since the 1990s — faces governance questions about investigating Huang independently. Nvidia reports earnings November 17. No SEC filing related to the investigation had surfaced as of Tuesday morning.
 
-*Share price moves are intraday snapshots from market data feeds. This brief is news reporting, not financial advice.*
+_Share price moves are intraday snapshots from market data feeds. This brief is news reporting, not financial advice._
 
 ## Sources
 

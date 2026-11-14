@@ -28,7 +28,7 @@ The repricing had a name on it before the CPI release. Fed Governor Christopher 
 - The **CBO** warned the U.S. budget deficit trajectory is "not sustainable."
 - **CoreWeave** reports after today's close. Producer prices land Friday at 8:30 a.m. ET.
 
-*Market levels are morning snapshots as reported by AP and market data feeds and will move during the session. This brief is market reporting, not financial advice.*
+_Market levels are morning snapshots as reported by AP and market data feeds and will move during the session. This brief is market reporting, not financial advice._
 
 ## Sources
 

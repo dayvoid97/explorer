@@ -1,0 +1,280 @@
+{
+  "title": "Nvidia after Huang: the stake, the supply chain, the board",
+  "frameSeed": 1,
+  "voice": {
+    "model": "s2.1-pro",
+    "speed": 1.25
+  },
+  "videoProvider": "still",
+  "scenes": [
+    {
+      "id": "01-hook",
+      "narration": "[excited] Jensen Huang just left Nvidia. His stake of 3.5 percent was almost worth $200 one month ago. ",
+      "imagePrompt": "a single small wedge of warm gold light cut from a huge dark glowing disc, floating above a black glass floor in a vast hall",
+      "motionPrompt": "slow push-in, the gold wedge glows brighter",
+      "motion": "high",
+      "plate": {
+        "number": "3.58%",
+        "label": "Huang's stake, 2026 proxy",
+        "kicker": "The founder's share"
+      }
+    },
+    {
+      "id": "02-promise",
+      "narration": "Here is what the filings say about the board, the ownership, and the supply chain.",
+      "imagePrompt": "three ornate gold keys fanned out on a black marble desk under a warm spotlight",
+      "motionPrompt": "slow push-in, light sweeps across the keys",
+      "motion": "low"
+    },
+    {
+      "id": "03-filing",
+      "narration": "On November Twelve, Nvidia's board accepted Jensen Huang's resignation as chief executive and director, effective immediately.",
+      "imagePrompt": "a crisp white document sealed with a gold wax stamp on a black desk, soft warm spotlight, calm and precise",
+      "motionPrompt": "slow push-in on the gold seal",
+      "motion": "low",
+      "plate": {
+        "number": "8-K",
+        "label": "SEC filing, Nov. 12",
+        "kicker": "The filing"
+      }
+    },
+    {
+      "id": "04-reason",
+      "narration": "The SEC filing gives no reason for Jensen's departure. ",
+      "imagePrompt": "a brass magnifying glass resting on a white page, warm gold light across the paper, quiet and careful",
+      "motionPrompt": "slow drift across the page",
+      "motion": "low"
+    },
+    {
+      "id": "05-kress",
+      "narration": "CFO Colette Kress, fifty-nine, becomes interim CEO, and keeps her finance role while the search runs.",
+      "imagePrompt": "a gold relay baton leaving one hand and reaching another across a dark glass track, streaks of warm light",
+      "motionPrompt": "baton glides forward, light trails stream behind it",
+      "motion": "high"
+    },
+    {
+      "id": "06-bio",
+      "narration": "Kress has been CFO since twenty thirteen, after finance roles at Cisco, Microsoft and Texas Instruments.",
+      "imagePrompt": "a winding ribbon of gold light threading through three glass skyscrapers at dusk",
+      "motionPrompt": "slow push-in following the ribbon",
+      "motion": "low"
+    },
+    {
+      "id": "07-chair",
+      "narration": "Harvey Jones, a director since nineteen ninety-three, becomes the board's first-ever chair.",
+      "imagePrompt": "a brand-new leather chair at the head of a long boardroom table, glowing in warm gold light, welcoming, skyline behind",
+      "motionPrompt": "slow push-in toward the chair",
+      "motion": "low"
+    },
+    {
+      "id": "08-search",
+      "narration": "The board will weigh internal and external candidates, and earnings stay on schedule for November seventeenth.",
+      "imagePrompt": "a gold telescope on a rooftop terrace pointing across a glowing city skyline at dusk, wide horizon",
+      "motionPrompt": "slow pan along the horizon",
+      "motion": "low"
+    },
+    {
+      "id": "09-proxy",
+      "narration": "The proxy puts his stake at eight hundred seventy million shares, as of March twenty-third.",
+      "imagePrompt": "a gold ribbon bookmark lying across a thick closed ledger on a black desk, warm lamp light",
+      "motionPrompt": "slow push-in on the ledger",
+      "motion": "low"
+    },
+    {
+      "id": "10-foundation",
+      "narration": "Fifty-nine million of those shares sit in a family foundation he has no financial interest in.",
+      "imagePrompt": "a single small glowing gold coin set apart from a larger pile of coins on a black marble table, gentle light",
+      "motionPrompt": "slow push-in on the lone coin",
+      "motion": "low"
+    },
+    {
+      "id": "11-latest",
+      "narration": "Leave those out, and his latest filing adds up to about three point three percent.",
+      "imagePrompt": "a precision brass scale balancing a stack of gold coins against a glowing white weight, soft light",
+      "motionPrompt": "scale settles gently into balance",
+      "motion": "low"
+    },
+    {
+      "id": "12-value",
+      "narration": "At Wednesday's closing price, that stake was worth about [emphasis] one hundred forty-one billion dollars.",
+      "imagePrompt": "a towering column of stacked gold coins rising into warm light inside a dark vault, dramatic scale",
+      "motionPrompt": "camera tilts up the column of coins",
+      "motion": "high",
+      "plate": {
+        "number": "$141B",
+        "label": "Stake at Wednesday's close",
+        "kicker": "On paper"
+      }
+    },
+    {
+      "id": "13-votes",
+      "narration": "Nvidia has one class of stock, so Huang had no special voting power.",
+      "imagePrompt": "a row of identical gold ballot boxes lined up evenly on a black marble table, perfectly equal",
+      "motionPrompt": "slow dolly along the row",
+      "motion": "low"
+    },
+    {
+      "id": "14-vanguard",
+      "narration": "Vanguard alone holds seven point three percent, more than twice his stake.",
+      "imagePrompt": "one tall gold pillar standing beside a pillar half its height in a dark gallery, warm rim light",
+      "motionPrompt": "slow push-in between the pillars",
+      "motion": "low",
+      "plate": {
+        "number": "2×",
+        "label": "Vanguard vs. Huang's stake",
+        "kicker": "Bigger holder"
+      }
+    },
+    {
+      "id": "15-revenue",
+      "narration": "The business he leaves is still growing. Last quarter's revenue was [emphasis] ninety-six point two billion dollars.",
+      "imagePrompt": "a river of golden light streaming upward through a canyon of black glass data center towers",
+      "motionPrompt": "light surges upward through the canyon",
+      "motion": "high",
+      "plate": {
+        "number": "$96.2B",
+        "label": "Revenue, quarter ended July 26",
+        "kicker": "Up 106% in a year"
+      }
+    },
+    {
+      "id": "16-guidance",
+      "narration": "Guidance for this quarter is one hundred eight billion dollars, plus or minus two percent.",
+      "imagePrompt": "a horizon of warm gold light brightening beyond rows of black server racks",
+      "motionPrompt": "slow push-in as the horizon brightens",
+      "motion": "low",
+      "plate": {
+        "number": "$108B",
+        "label": "Q3 revenue outlook, plus or minus 2%",
+        "kicker": "The guide"
+      }
+    },
+    {
+      "id": "17-customers",
+      "narration": "Two customers alone made up thirty-six percent of last fiscal year's sales.",
+      "imagePrompt": "two huge gold doors in a black wall, far larger than the many small doors around them, warm light",
+      "motionPrompt": "slow push-in toward the two large doors",
+      "motion": "low",
+      "plate": {
+        "number": "36%",
+        "label": "Top two customers, FY26 sales",
+        "kicker": "Concentration"
+      }
+    },
+    {
+      "id": "18-fabless",
+      "narration": "Nvidia designs chips but does not make them. TSMC and Samsung make the wafers.",
+      "imagePrompt": "a glowing gold architect's blueprint hovering above a pristine empty factory floor, black and gold",
+      "motionPrompt": "slow push-in as blueprint lines glow",
+      "motion": "low"
+    },
+    {
+      "id": "19-memory",
+      "narration": "Memory comes from SK Hynix, Micron and Samsung, in a supply chain concentrated mainly in Asia.",
+      "imagePrompt": "rows of glowing gold memory modules stacked like a city skyline against a black sky",
+      "motionPrompt": "slow pan across the skyline of modules",
+      "motion": "low"
+    },
+    {
+      "id": "20-lock",
+      "narration": "To lock in that supply, Nvidia has paid premiums, made deposits, and signed long-term capacity agreements.",
+      "imagePrompt": "a gold shipping container sealed with a heavy brass lock on a black glass dock at dusk",
+      "motionPrompt": "slow push-in on the lock",
+      "motion": "low"
+    },
+    {
+      "id": "21-obligations",
+      "narration": "Its supply and purchase obligations total [emphasis] ninety-five point two billion dollars.",
+      "imagePrompt": "an endless warehouse corridor of gold-lit containers stretching to the horizon, sense of scale",
+      "motionPrompt": "slow dolly down the corridor",
+      "motion": "high",
+      "plate": {
+        "number": "$95.2B",
+        "label": "Purchase and supply obligations",
+        "kicker": "Locked in on paper"
+      }
+    },
+    {
+      "id": "22-tsmc",
+      "narration": "TSMC told investors in October that demand is still far above what it can supply.",
+      "imagePrompt": "a pristine silicon wafer glowing gold under bright light in a spotless fabrication hall, precise robotic arm",
+      "motionPrompt": "slow push-in on the wafer",
+      "motion": "low"
+    },
+    {
+      "id": "23-negotiates",
+      "narration": "So who negotiates those supply allocations day to day? The public record does not say.",
+      "imagePrompt": "a long polished table with three glass chairs and soft gold light, quiet and thoughtful",
+      "motionPrompt": "slow dolly along the table",
+      "motion": "low"
+    },
+    {
+      "id": "24-face",
+      "narration": "What it does show is Huang as the public face of Nvidia's biggest government deals.",
+      "imagePrompt": "a single gold spotlight on an empty keynote stage in a huge dark arena, warm and anticipatory",
+      "motionPrompt": "slow push-in on the spotlight",
+      "motion": "low"
+    },
+    {
+      "id": "25-saudi",
+      "narration": "In Saudi Arabia, a first phase of eighteen thousand chips, and several hundred thousand over five years.",
+      "imagePrompt": "a futuristic desert data center campus glowing gold at sunset, endless dunes, sleek black buildings",
+      "motionPrompt": "slow aerial glide over the campus",
+      "motion": "high"
+    },
+    {
+      "id": "26-washington",
+      "narration": "In Washington, one analyst called him Nvidia's lead voice on China.",
+      "imagePrompt": "a white marble capitol dome at dusk with warm gold light on its columns, serene",
+      "motionPrompt": "slow push-in on the dome",
+      "motion": "low"
+    },
+    {
+      "id": "27-china",
+      "narration": "Yet China is now effectively closed to its data center chips, according to Nvidia's own annual report.",
+      "imagePrompt": "a tall gold gate in a black wall, half open, warm light streaming through the gap",
+      "motionPrompt": "slow push-in toward the gap",
+      "motion": "low"
+    },
+    {
+      "id": "28-team",
+      "narration": "Nvidia's own risk factor points to its executive team, not to one person.",
+      "imagePrompt": "a circle of glowing gold silhouette figures standing shoulder to shoulder, warm light, abstract and faceless",
+      "motionPrompt": "slow orbit around the circle",
+      "motion": "low"
+    },
+    {
+      "id": "29-gap",
+      "narration": "As of Thursday, we found no supplier statement on the change. That is the gap to watch.",
+      "imagePrompt": "a quiet control room with one glowing gold dial pointing at an open gap on a curved gauge",
+      "motionPrompt": "slow push-in on the dial",
+      "motion": "low"
+    },
+    {
+      "id": "30-watch",
+      "narration": "Watch November seventeenth: the first earnings call with Kress as interim chief executive.",
+      "imagePrompt": "a gold hourglass with a stream of glowing light flowing through it against a black background",
+      "motionPrompt": "light streams through the hourglass",
+      "motion": "low",
+      "plate": {
+        "number": "Nov. 17",
+        "label": "First call under Kress",
+        "kicker": "Mark the date"
+      }
+    },
+    {
+      "id": "31-next",
+      "narration": "Then the CEO search, any supplier or customer comments, and Congress's request for a briefing.",
+      "imagePrompt": "a gold compass on black marble pointing forward, soft rays of warm light",
+      "motionPrompt": "compass needle swings and settles",
+      "motion": "low"
+    },
+    {
+      "id": "32-close",
+      "narration": "That is the picture from the filings. Full breakdown at the link in bio.",
+      "imagePrompt": "the Manhattan skyline at dusk with warm gold light reflected on the river, serene and wide",
+      "motionPrompt": "slow push-in over the water",
+      "motion": "low"
+    }
+  ]
+}
