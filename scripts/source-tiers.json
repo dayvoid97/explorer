@@ -47,8 +47,7 @@
     "hkex.com.hk",
     "nseindia.com",
     "bseindia.com",
-    "berkshirehathaway.com",
-    "nvidianews.nvidia.com"
+    "berkshirehathaway.com"
   ],
   "tier1Patterns": [
     "^investors?\\.",
