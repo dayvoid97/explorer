@@ -18,6 +18,8 @@ sources:
     url: 'https://www.federalreserve.gov/releases/h15/default.htm?date=20250328'
 ---
 
+*Update — November 20, 2026: The selloff deepened after midday. Anthropic closed at $88.30, down 9% on the day but above its $83 IPO price. Nvidia tumbled 14% to $125.53 after Reuters reported the SEC was probing its accounting, taking its weekly loss to about 23%. The Nasdaq fell 5.3% and the S&P 500 3.7%, leaving the Nasdaq down 10% for the week — its biggest weekly drop since 2020 — and both the S&P 500 and Dow in correction. The figures below are the midday picture as published.*
+
 The largest IPO in history is two days old, and by midday Friday its stock was back within a dollar of the price it was sold at. Anthropic (Nasdaq: ANT) traded at $84.64 at about 12:35 p.m. ET, down 12.9% on the day, with an intraday low of $84.00 — against an $83 offer price. Around it, the AI selloff deepened into what is on pace to be a seventh straight down day for the S&P 500: the Nasdaq was down about 3% at midday, the S&P 500 about 2%, and the Dow about half a percent. Nvidia fell about 7% to $135.88. And in the bond market, the 10-year Treasury yield slipped below 5% — not because the Federal Reserve sounds friendlier, but because investors are running for safety.
 
 ## Anthropic: the IPO worked, the aftermarket is another story
