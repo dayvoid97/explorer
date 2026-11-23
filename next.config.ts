@@ -44,6 +44,13 @@ module.exports = {
     STREET_PHOTOS: JSON.stringify(streetPhotos()),
   },
   output: 'standalone',
+  // 2026-11-23: Vercel image-optimization quota exhausted (402
+  // OPTIMIZED_IMAGE_REQUEST_PAYMENT_REQUIRED on uncached variants), which
+  // broke hero/cover rendering site-wide. Serve originals directly until
+  // the quota resets or the plan changes; covers are pre-sized.
+  images: {
+    unoptimized: true,
+  },
   outputFileTracingIncludes: {
     '/blog': ['./src/app/blog/posts/**/*'], // Include posts for the blog route
     '/': ['./src/app/blog/posts/**/*'], // Include them if you also render on the home page
