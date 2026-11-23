@@ -24,6 +24,8 @@ sources:
     url: 'https://www.wsj.com/articles/nvidia-board-reinstates-jensen-huang-as-ceo-a6b49914'
 ---
 
+*Update — November 23, 2026: Nvidia closed at $165.05, up 31.5% on the day (+$39.52), its best day in 23 years and a record of about $950 billion added in market value, after trading as high as $171.50. The S&P 500 rose 4.7% and the Nasdaq-100 6.9%, their best day since April. Anthropic did not follow the rally: ANT faded from a $94.24 high to close at $87.64, down 1.4% from Friday's $88.91 close, still above its $83 IPO price. The figures in the brief below are the morning picture as published.*
+
 Jensen Huang is back. Nvidia announced Monday morning, in a release timed about 35 minutes before the opening bell, that its board had voted unanimously to reinstate its co-founder as President, Chief Executive Officer and board member, effective immediately — 11 days after he resigned, and six days after the board's chair said on an earnings call that the board did not intend to bring him back. Nvidia stock leapt about 33% in early trading, the Nasdaq posted one of its biggest one-day gains in years, and the AI selloff that defined last week reversed in a single session. The investigations that surrounded his exit, however, did not end with his return. The board said so itself, in the same release.
 
 ## The decision, in the board's own words
