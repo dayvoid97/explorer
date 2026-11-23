@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { resolveCoverImage } from '@/app/lib/cover-image'
 import { track } from '@/app/lib/analytics'
@@ -174,17 +173,13 @@ function CardImage({ a, priority }: { a: LinkArticle; priority: boolean }) {
       {!loaded && <div className="absolute inset-0 animate-pulse bg-[#1c1c1c]" />}
       <div className="absolute inset-0 transition-transform duration-300 group-hover:scale-105">
         {/* The cover fills the card edge to edge: 9:16 on phones, 3:4 on md+. */}
-        <Image
+        <img
           src={img.src}
           alt={a.title}
-          fill
-          sizes="(min-width: 768px) 310px, 50vw"
-          quality={72}
-          priority={priority}
-          unoptimized={!img.optimize}
+          loading={priority ? 'eager' : 'lazy'}
           onLoad={() => setLoaded(true)}
           onError={() => setFailed(true)}
-          className={`object-cover transition-opacity duration-500 ${
+          className={`absolute inset-0 h-full w-full object-cover transition-opacity duration-500 ${
             loaded ? 'opacity-100' : 'opacity-0'
           }`}
         />

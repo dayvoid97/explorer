@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import { getAllPosts } from '../lib/markdown'
 import { resolveCoverImage as cover } from '../lib/cover-image'
 import { BlogPost } from './[slug]/metadata'
@@ -44,15 +43,11 @@ export default async function BlogListPage() {
           >
             {cover(post.image) && (
               <div className="relative h-80 w-full">
-                <Image
+                <img
                   src={cover(post.image)!.src}
                   alt={post.title}
-                  fill
-                  sizes="(min-width: 768px) 768px, 100vw"
-                  quality={75}
-                  priority={i === 0}
-                  unoptimized={!cover(post.image)!.optimize}
-                  className="object-cover"
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  className="absolute inset-0 h-full w-full object-cover"
                 />
               </div>
             )}

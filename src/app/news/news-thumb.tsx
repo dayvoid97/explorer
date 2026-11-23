@@ -1,23 +1,23 @@
 'use client'
 
-import Image from 'next/image'
 import { useState } from 'react'
 import { resolveCoverImage } from '@/app/lib/cover-image'
 
 /**
- * Cover thumbnail for the news front page. Optimized through next/image when
- * the cover is hosted on this site; a quiet branded panel when there is no
- * cover or it fails to load, so a broken image never shows.
+ * Cover thumbnail for the news front page. Rendered with a plain <img> that
+ * serves the original file directly — no image optimizer in the path (the
+ * Vercel optimizer quota returned 402s and broke cover rendering on
+ * 2026-11-23). A quiet branded panel shows when there is no cover or the
+ * file fails to load, so a broken image never shows.
  */
 export function NewsThumb({
   src,
   alt,
-  sizes,
   priority = false,
 }: {
   src?: string
   alt: string
-  sizes: string
+  sizes?: string
   priority?: boolean
 }) {
   const img = resolveCoverImage(src)
@@ -37,16 +37,12 @@ export function NewsThumb({
   }
 
   return (
-    <Image
+    <img
       src={img.src}
       alt={alt}
-      fill
-      sizes={sizes}
-      quality={75}
-      priority={priority}
-      unoptimized={!img.optimize}
+      loading={priority ? 'eager' : 'lazy'}
       onError={() => setFailed(true)}
-      className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+      className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
     />
   )
 }
